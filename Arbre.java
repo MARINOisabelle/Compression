@@ -10,7 +10,7 @@ public class Arbre{
 	Node racine  = new Node(gauche.poids+droite.poids,(Poids)gauche,(Poids)droite);
 	this.racine = racine;
     }
-    public Arbre Fusionne(Arbre a){
+    public Arbre fusionne(Arbre a){
 	Node racine = new Node(a.racine.poids+this.racine.poids);
 	if(a.racine.poids >= this.racine.poids){
 	    racine.right = a.racine;
@@ -49,5 +49,5 @@ public class Arbre{
 
 
 	}
-
+   
 }
