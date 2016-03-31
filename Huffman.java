@@ -24,7 +24,13 @@ class Huffman{
 	int id2=tab[1];
 	int i1=0;
 	int i2=0;
-	for(int i=0;i<128;i++){
+	for(int i=0;i<127;i++){
+	    if(id1==0){
+		id1=tab[i];
+	    }
+	    else if(id2==0){
+		id2=tab[i];
+	    }
 	    if(tab[i]>0){
 		if(tab[i]<id1){
 		    id2=id1;
@@ -38,8 +44,30 @@ class Huffman{
 		}
 	    }
 	}
-	Arbre a = new Arbre(new Feuille(id1,new Character((char)i1)),new Feuille(id2,new Character((char)i2)));
+	if(id1 !=0 && id2 !=0){
+	    if(id2!=0){
+		Arbre a = new Arbre(new Feuille(id1,new Character((char)i1)),new Feuille(id2,new Character((char)i2)));
+		tab[i1]=0;
+		tab[i2]=0;
+		return a;
+	    }
+	    else{
+		Arbre a = new Arbre(new Feuille(id1,new Character((char)i1)));
+		tab[i1]=0;
+		return a;
+	    }
+	}
+	else{
+	    return null;
+	}
+    }
+    public Arbre arbreComp(FileInputStream fr){
+	int tab[]=compteIter(fr);
+	Arbre a = arbreMin(tab);
+	Arbre c;
+	while((c=arbreMin(tab))!=null){
+	    a.fusionne(c);
+	}
 	return a;
     }
-
 }
