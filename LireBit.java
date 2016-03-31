@@ -5,6 +5,7 @@ public class LireBit extends FilterInputStream {
     public LireBit(InputStream in){
 	super(in);
     }
+
     public boolean lire() throws  IOException{
 	int mask=0x80;
 	int o = this.read();

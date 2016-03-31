@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class Arbre{
-    Node racine;
+    Poids racine;
 
-    public Arbre(Node racine){
+    public Arbre(Poids racine){
 	this.racine = racine;
     }
     public Arbre(Feuille gauche,Feuille droite){
