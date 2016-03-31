@@ -11,4 +11,4 @@ clean:
 	$(RM) *.class
  
 run:
-	java Compression
+	java Compression -i

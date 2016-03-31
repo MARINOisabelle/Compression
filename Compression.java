@@ -6,16 +6,27 @@ import java.io.IOException;
 import java.util.Scanner; 
 
 class Compression{
-	public static void main(String[]args){
-		System.out.println("Quel est le fichier que vous voulez compresser ?");
-		Scanner sc= new Scanner(System.in);
-		String in = sc.nextLine();
-		System.out.println("Quel est le nouveau nom du fichier?");
-		String out = sc.nextLine();
-		out=out+".txt";
-		System.out.println("Vous souhaitez le compresser avec Huffman (1) ou LempelZiv(2)?");
-		int methode = sc.nextInt();
-		
+	public static void main(String[]args) throws IOException{
+		int methode=0;
+		String in="";
+		String out="";
+		if(args[0].equals("-i")){ 
+			System.out.println("Quel est le fichier que vous voulez compresser ?");
+			Scanner sc= new Scanner(System.in);
+			in = sc.nextLine();
+			/*System.out.println("Quel est le nouveau nom du fichier?");
+			out = sc.nextLine();
+			out=out+".zip";*/
+			System.out.println("Vous souhaitez le compresser avec Huffman (1) ou LempelZiv(2)?");
+			methode = sc.nextInt();
+		}
+		else{
+			if(args[0].equals("-lz")){ methode =2;}
+			if(args[0].equals("-h")){ methode =1;}
+			in = args[1];
+			//out=args[2];
+		}	
+		out=in+".comp";
 		FileInputStream fr = null;
 		FileOutputStream fw = null;
 		try {
@@ -24,14 +35,13 @@ class Compression{
 				// fw va écrire dans le nouveau !
 			fr = new FileInputStream(new File(in));
 			fw = new FileOutputStream(new File(out));
-
 			if(methode==1){
-
-			// fw=Huffman.compression(fr, fw);
+				fw.write('1');
+			 fw=Huffman.compression(fr, fw);
 
 			}
-			if(methode==2){
-
+			else if(methode==2){
+				fw.write('2');
 			 fw= LempelZiv.compression(fr,fw);
 			}
 			else{

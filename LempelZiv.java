@@ -9,12 +9,10 @@ import java.util.ArrayList;
 class LempelZiv{
 
 	Arbre a;
-	ArrayList<Integer> l;
 	int nextPoids;
 
 	public LempelZiv(){
 		this.a =new Arbre(new Node(0));
-		this.l= new ArrayList<Integer>();
 		this.nextPoids=1;
 	}
 
@@ -59,46 +57,45 @@ class LempelZiv{
 	}
 
 
-	public  void analyseOctet(LireBit l, Node n, int i){
+	public  Node analyseOctet(LireBit l, Node n, int i){
 		if(i<8){
-		System.out.println("octet " + l.octet[i]);
-		if(l.octet[i]==0 && n.left==null){
-			this.a.addNode(l.octet[i], this.nextPoids, n);
-			// ajouter dans l'arraylist
-			System.out.println("ajout 0");
-			analyseOctet(l, this.a.racine, i+1);
+			System.out.println("octet " + l.octet[i]);
+			if(l.octet[i]==0 && n.left==null){
+				this.a.addNode(l.octet[i], this.nextPoids, n);
+				System.out.println("ajout 0");
+				return analyseOctet(l, (Node)this.a.racine, i+1);
 
-		}
-		else if(l.octet[i]==0 && n.left!=null){
-				analyseOctet(l, (Node)n.left, i+1);
+			}
+			else if(l.octet[i]==0 && n.left!=null){
+					return analyseOctet(l, (Node)n.left, i+1);
 
+			}
+			else if(l.octet[i]==1 && n.right==null){
+				this.a.addNode(l.octet[i], this.nextPoids, n);	
+				System.out.println("ajout 1");
+				return analyseOctet(l, (Node)this.a.racine, i+1);
+			}
+			else if(l.octet[i]==1 && n.right!=null){
+				return analyseOctet(l, (Node)n.right, i+1);
+			}
 		}
-		else if(l.octet[i]==1 && n.right==null){
-			this.a.addNode(l.octet[i], this.nextPoids, n);	
-			System.out.println("ajout 1");
-			// ajouter dans l'arraylist
-			analyseOctet(l, this.a.racine, i+1);
-		}
-		else if(l.octet[i]==1 && n.right!=null){
-			analyseOctet(l, (Node)n.right, i+1);
-		}
-}
+		return n;
 
 	}
 
 	public  void lireFichier(FileInputStream fr){
 			LireBit l = new LireBit(fr);
-			Node n = this.a.racine;
+			Node n = (Node)this.a.racine;
 			try{
-				//while(l.lire()!=false){	
-					l.lire();
-					analyseOctet(l, n, 0);
+				while(l.lire()!=false){	
+				//	l.lire();
+					n=analyseOctet(l, n, 0);
 					for(int i=0;i<8;i++){
 						System.out.println(l.octet[i]);
 					}
 					
 
-				//}
+				}
 				l.close();
 			}
 			catch(IOException e){
