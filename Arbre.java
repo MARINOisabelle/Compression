@@ -35,4 +35,19 @@ public class Arbre{
 	}
 	this.racine = r;
     }
+
+	public void addNode(int number,int poids, Node n){
+		if(number==0 && n.left==null){
+			n.left=new Node(poids);
+		}
+		else if(number==1 && n.right==null){
+			n.right=new Node(poids);
+		}
+		else{
+			System.out.println("Exception: Number est ni 1 ni 0");
+		}
+
+
+	}
+
 }
