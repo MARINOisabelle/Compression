@@ -64,7 +64,7 @@ class Huffman{
 		return a;
 	}
 	else{
-	    if(min2 != -1){
+	    if(min1 != -1){
 		Arbre a = new Arbre(new Feuille(min1,new Character((char)i1)));
 		tab[i1]=0;
 		return a;
