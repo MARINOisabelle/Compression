@@ -37,7 +37,7 @@ class Compression{
 			fw = new FileOutputStream(new File(out));
 			if(methode==1){
 				fw.write('1');
-			 fw=Huffman.compression(fr, fw);
+				//			 fw=Huffman.compression(fr, fw);
 
 			}
 			else if(methode==2){

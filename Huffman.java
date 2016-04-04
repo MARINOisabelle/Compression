@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 class Huffman{
+    public Huffman(){
+	
+    }
     public int[] compteIter(FileInputStream fr){
 	int tab[]=new int[127];
 	int oct;
@@ -17,49 +20,61 @@ class Huffman{
 	    System.out.println("can't read file");
 	    e.printStackTrace();
 	}
+	System.out.println("fin iter");
 	return tab;
     }
-    public Arbre arbreMin(int tab[]){
-	int id1=tab[1];
-	int id2=tab[1];
-	int i1=0;
-	int i2=0;
+    
+     public Arbre arbreMin(int tab[]){
+	int min1=-1;
+	int min2=-1;;
+	int i1=-1;
+	int i2=-1;
 	for(int i=0;i<127;i++){
-	    if(id1==0){
-		id1=tab[i];
-	    }
-	    else if(id2==0){
-		id2=tab[i];
-	    }
-	    if(tab[i]>0){
-		if(tab[i]<id1){
-		    id2=id1;
-		    id1=tab[i];
-		    i2=i1;
-		    i1=i;
+	    if(tab[i]!=0){
+		if(min1!=-1){
+		    if(tab[i]<min1){
+			min2=min1;
+			i2=i1;
+			min1=tab[i];
+			i1=i;
+		    }
+		    else{
+			if(min2!=-1){
+			    if(tab[i]<min2){
+				min2=tab[i];
+				i2=i;
+			    }
+			}
+			else{
+			    min2=tab[i];
+			    i2=i;
+			}
+		    }
 		}
-		else if(tab[i]<id2){
-		    id2=tab[i];
-		    i2=i;
+		else{
+		    min1=tab[i];
+		    i1=i;
 		}
 	    }
 	}
-	if(id1 !=0 && id2 !=0){
-	    if(id2!=0){
-		Arbre a = new Arbre(new Feuille(id1,new Character((char)i1)),new Feuille(id2,new Character((char)i2)));
+	if(min1 !=-1 && min2 !=-1){
+	    Arbre a = new Arbre(new Feuille(min1,new Character((char)i1)),new Feuille(min2,new Character((char)i2)));
 		tab[i1]=0;
 		tab[i2]=0;
 		return a;
-	    }
-	    else{
-		Arbre a = new Arbre(new Feuille(id1,new Character((char)i1)));
+	}
+	else{
+	    if(min2 != -1){
+		Arbre a = new Arbre(new Feuille(min1,new Character((char)i1)));
 		tab[i1]=0;
 		return a;
 	    }
+	    else{
+		return null;
+	    }
 	}
-	else{
-	    return null;
-	}
+	
+	
     }
     public Arbre arbreComp(FileInputStream fr){
 	int tab[]=compteIter(fr);
@@ -71,3 +86,4 @@ class Huffman{
 	return a;
     }
 }
+
