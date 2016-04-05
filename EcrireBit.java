@@ -9,6 +9,7 @@ public class EcrireBit extends FilterOutputStream{
 	this.nbBit=0;
 	this.octet=0x00;
     }
+	
     public void writeBit(int bit) throws IOException{
 	int mask = 0x80;
 	mask = mask>>nbBit;

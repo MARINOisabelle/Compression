@@ -16,83 +16,74 @@ class LempelZiv{
 		this.nextPoids=1;
 	}
 
-	public static void testcopie(FileInputStream fr, FileOutputStream fw){
-		try{// On crée un tableau de byte pour indiquer le nombre de bytes lus à
-						// chaque tour de boucle
-						byte[] buf = new byte[8];
-						// On crée une variable de type int pour y affecter le résultat de
-						// la lecture
-						// Vaut -1 quand c'est fini
-						int n = 0;
-						// Tant que l'affectation dans la variable est possible, on boucle
-						// Lorsque la lecture du fichier est terminée l'affectation n'est
-						// plus possible !
-						// On sort donc de la boucle
-						while ((n = fr.read(buf)) >= 0) {
-						// On écrit dans notre deuxième fichier avec l'objet adéquat
-						fw.write(buf);
-						// On affiche ce qu'a lu notre boucle au format byte et au
-						// format char
-						for (byte bit : buf) {
+	public int[] int2tab(int o){
+	int mask=0x80;
+	if(o == -1)
+	    return null;
+	int octet [] = new int[8];
+	for(int i=0;i<8;i++){
+	    if((o & mask)==0){
+		octet[i]=0;
+		mask = mask>>1;
+	    }
+	    else{
+		octet[i]=1;
+		mask = 	mask>>1;
+	    }
+	}
+	return octet;
+    }
 
-						System.out.print("\t" + bit + "(" + (char) bit + ")");
-						System.out.println("");
-						}
-						//Nous réinitialisons le buffer à vide
-						//au cas où les derniers byte lus ne soient pas un multiple de 8
-						//Ceci permet d'avoir un buffer vierge à chaque lecture et ne pas avoir de doublon en fin de fichier
-						buf = new byte[8];
-						}
-						System.out.println("Copie terminée !");
+
+	public void ecrire(EcrireBit e, int poids, int bit,FileOutputStream fw) throws IOException{
+		int[] octet= int2tab(poids);
+		for(int i=0; i<8; i++){
+			e.writeBit(octet[i]);
 		}
-		catch(FileNotFoundException e) {
-						// Cette exception est levée si l'objet FileInputStream ne trouve
-						// aucun fichier
-			e.printStackTrace();
-		}
-				catch(IOException e) {
-						// Celle-ci se produit lors d'une erreur d'écriture ou de lecture
-						e.printStackTrace();
-		}
+		e.writeBit(bit);
+	
 	}
 
-
-	public  Node analyseOctet(LireBit l, Node n, int i){
+	public  Node analyseOctet(LireBit l,EcrireBit e, Node n, int i, FileOutputStream fw)throws IOException{
 		if(i<8){
-			System.out.println("octet " + l.octet[i]);
+			//System.out.println("octet " + l.octet[i]);
 			if(l.octet[i]==0 && n.left==null){
 				this.a.addNode(l.octet[i], this.nextPoids, n);
 				System.out.println("ajout 0");
-				return analyseOctet(l, (Node)this.a.racine, i+1);
+				ecrire(e,n.poids, 0, fw);	
+				this.nextPoids ++;
+				return analyseOctet(l,e, (Node)this.a.racine, i+1, fw);
 
 			}
 			else if(l.octet[i]==0 && n.left!=null){
-					return analyseOctet(l, (Node)n.left, i+1);
+					return analyseOctet(l,e, (Node)n.left, i+1, fw);
 
 			}
 			else if(l.octet[i]==1 && n.right==null){
 				this.a.addNode(l.octet[i], this.nextPoids, n);	
-				System.out.println("ajout 1");
-				return analyseOctet(l, (Node)this.a.racine, i+1);
+				ecrire(e,n.poids, 1, fw);
+				System.out.println("ajout 1");	
+				this.nextPoids ++;
+				return analyseOctet(l,e, (Node)this.a.racine, i+1, fw);
 			}
 			else if(l.octet[i]==1 && n.right!=null){
-				return analyseOctet(l, (Node)n.right, i+1);
+				return analyseOctet(l,e, (Node)n.right, i+1, fw);
 			}
 		}
 		return n;
 
 	}
 
-	public  void lireFichier(FileInputStream fr){
+	public  void lireFichier(FileInputStream fr, FileOutputStream fw)throws IOException{
 			LireBit l = new LireBit(fr);
+			EcrireBit eb = new EcrireBit(fw);
 			Node n = (Node)this.a.racine;
 			try{
 				while(l.lire()!=false){	
-				//	l.lire();
-					n=analyseOctet(l, n, 0);
-					for(int i=0;i<8;i++){
+					n=analyseOctet(l,eb, n, 0, fw);
+					/*for(int i=0;i<8;i++){
 						System.out.println(l.octet[i]);
-					}
+					}*/
 					
 
 				}
@@ -104,16 +95,10 @@ class LempelZiv{
 			}
     }
 
-	
-	public static FileOutputStream ecrireFichier(FileOutputStream fw){
 
-		return fw;
-	}
-
-	public static FileOutputStream compression(FileInputStream fr, FileOutputStream fw){
+	public static FileOutputStream compression(FileInputStream fr, FileOutputStream fw)throws IOException{
 		LempelZiv lz= new LempelZiv();
-		lz.lireFichier(fr);
-		fw=ecrireFichier(fw);
+		lz.lireFichier(fr, fw);
 		System.out.println("Ziv");
 	
 		return fw;
