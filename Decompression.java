@@ -20,23 +20,23 @@ class Decompression{
 		}
 
 		out =in+".decomp";
-		FileInputStream fr = null;
-		FileOutputStream fw = null;
+		LireBit fr = null;
+		EcrireBit fw = null;
 		try {
-			fr = new FileInputStream(new File(in));
-			fw = new FileOutputStream(new File(out));
+			fr = new LireBit(new FileInputStream(new File(in)));
+			fw = new EcrireBit(new FileOutputStream(new File(out)));
 			int methode= fr.read();
 	
 
 			
 			if(methode==1){
 				System.out.println("Huffman");
-				fw=Huffman.decompression(fr, fw);
+				//Huffman.decompression(fr, fw);
 
 			}
 			if(methode==2){
 				System.out.println("ziv");
-				fw= LempelZiv.decompression(fr,fw);
+				LempelZiv.decompression(fr,fw);
 			}
 			else{
 				System.out.println("Ce fichier n'a pas été compresser");

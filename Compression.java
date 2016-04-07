@@ -23,22 +23,22 @@ class Compression{
 			in = args[1];
 		}	
 		out=in+".comp";
-		FileInputStream fr = null;
-		FileOutputStream fw = null;
+		LireBit fr = null;
+		EcrireBit fw = null;
 		try {
 				// On instancie nos objets :
 				// fr va lire le fichier
 				// fw va écrire dans le nouveau !
-			fr = new FileInputStream(new File(in));
-			fw = new FileOutputStream(new File(out));
+			fr =new LireBit( new FileInputStream(new File(in)));
+			fw = new EcrireBit( new FileOutputStream(new File(out)));
 			if(methode==1){
 				fw.write(1);
-				fw=Huffman.compression(fr, fw);
+				//Huffman.compression(fr, fw);
 
 			}
 			else if(methode==2){
 				fw.write(2);
-			 fw= LempelZiv.compression(fr,fw);
+			 	LempelZiv.compression(fr,fw);
 			}
 			else{
 				System.out.println("Vous n'avez pas choisit de méthode de compression.");
