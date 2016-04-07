@@ -5,10 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 class Huffman{
+    
     public Huffman(){
 	
     }
-    public int[] compteIter(FileInputStream fr){
+    public static int[] compteIter(LireBit fr){
 	int tab[]=new int[127];
 	int oct;
 	try{
@@ -26,7 +27,7 @@ class Huffman{
 	return tab;
     }
     
-     public Arbre arbreMin(int tab[]){
+     public static Arbre arbreMin(int tab[]){
 	int min1=-1;
 	int min2=-1;;
 	int i1=-1;
@@ -78,7 +79,7 @@ class Huffman{
 	
 	
     }
-    public Arbre arbreComp(FileInputStream fr){
+    public static Arbre arbreComp(LireBit fr){
 	int tab[]=compteIter(fr);
 	Arbre a = arbreMin(tab);
 	Arbre c;

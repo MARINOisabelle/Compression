@@ -8,6 +8,7 @@ public class Test{
 		for(int i=0;i<8;i++){
 		    System.out.println(l.octet[i]);
 		}
+		Huffman.arbreComp(l);
 		l.close();
 	    }
 	    catch(IOException e){
