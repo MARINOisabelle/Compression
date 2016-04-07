@@ -6,6 +6,11 @@ public class Node extends Poids{
 	this.right= null;
 	this.left = null;
     }
+    public Node(Feuille droit,Feuille gauche){
+	this.poids = droit.poids+gauche.poids;
+	this.right=droit;
+	this.left=gauche;
+    }
     public Node(int a,Poids l,Poids r){
 	this.poids = a;
 	this.left =l;
@@ -28,9 +33,8 @@ public class Node extends Poids{
 	else{
 	    System.out.println("Exception: Number est ni 1 ni 0");
 	}
-	
-	
     }
+    
     
     public void affiche(){
 	System.out.print(super.poids);

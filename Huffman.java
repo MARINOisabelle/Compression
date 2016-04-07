@@ -21,13 +21,10 @@ class Huffman{
 	    System.out.println("can't read file");
 	    e.printStackTrace();
 	}
-	System.out.println("fin iter");
-	for(int i =0;i<tab.length;i++)
-	    System.out.println(tab[i]);
 	return tab;
     }
     
-     public static Arbre arbreMin(int tab[]){
+     public static int[][] arbreMin(int tab[]){
 	int min1=-1;
 	int min2=-1;;
 	int i1=-1;
@@ -60,33 +57,29 @@ class Huffman{
 		}
 	    }
 	}
-	if(min1 !=-1 && min2 !=-1){
-	    Arbre a = new Arbre(new Feuille(min1,new Character((char)i1)),new Feuille(min2,new Character((char)i2)));
-		tab[i1]=0;
-		tab[i2]=0;
-		return a;
-	}
-	else{
-	    if(min1 != -1){
-		Arbre a = new Arbre(new Feuille(min1,new Character((char)i1)));
-		tab[i1]=0;
-		return a;
-	    }
-	    else{
-		return null;
-	    }
-	}
-	
-	
+	int tab2 [][]= new int[2][2];
+	tab2[0][0]=i1;
+	tab2[0][1]=min1;
+	tab2[1][0]=i2;
+	tab2[1][1]=min2;
+	return tab2;
+       
     }
     public static Arbre arbreComp(LireBit fr){
 	int tab[]=compteIter(fr);
-	Arbre a = arbreMin(tab);
-	Arbre c;
-	while((c=arbreMin(tab))!=null){
-	    a.fusionne(c);
+	int tab2[][]=arbreMin(tab);
+	Arbre principal = null;
+	while(tab2[1][0]!=-1){
+	    Feuille g = new Feuille(tab2[0][1],new Character((char)tab2[0][0]));
+	    Feuille d = new Feuille(tab2[0][1],new Character((char)tab2[0][0]));
+	    Arbre min = new Arbre(g,d);
+	    principal = min.fusionne(principal);
 	}
-	return a;
+	if(tab2[0][0]!=-1){
+	    principal.rajouteFeuille(new Feuille(tab2[0][1],new Character((char)tab2[0][0])));
+	}
+	
+	return principal;
     }
 
 	/*  fonction appeler dans les main de compresion et decompression */
