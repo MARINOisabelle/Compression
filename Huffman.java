@@ -21,6 +21,8 @@ class Huffman{
 	    e.printStackTrace();
 	}
 	System.out.println("fin iter");
+	for(int i =0;i<tab.length;i++)
+	    System.out.println(tab[i]);
 	return tab;
     }
     
