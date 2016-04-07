@@ -87,5 +87,21 @@ class Huffman{
 	}
 	return a;
     }
+
+	/*  fonction appeler dans les main de compresion et decompression */
+	public static FileOutputStream compression(FileInputStream fr, FileOutputStream fw)throws IOException{
+		
+		System.out.println(" Compression : Huffman");
+	
+		return fw;
+	}
+
+	public static FileOutputStream decompression(FileInputStream fr, FileOutputStream fw)throws IOException{
+		
+		System.out.println("Decompression : Huffman");
+	
+		return fw;
+	}
+
 }
 

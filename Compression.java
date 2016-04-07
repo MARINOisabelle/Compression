@@ -14,9 +14,6 @@ class Compression{
 			System.out.println("Quel est le fichier que vous voulez compresser ?");
 			Scanner sc= new Scanner(System.in);
 			in = sc.nextLine();
-			/*System.out.println("Quel est le nouveau nom du fichier?");
-			out = sc.nextLine();
-			out=out+".zip";*/
 			System.out.println("Vous souhaitez le compresser avec Huffman (1) ou LempelZiv(2)?");
 			methode = sc.nextInt();
 		}
@@ -24,7 +21,6 @@ class Compression{
 			if(args[0].equals("-lz")){ methode =2;}
 			if(args[0].equals("-h")){ methode =1;}
 			in = args[1];
-			//out=args[2];
 		}	
 		out=in+".comp";
 		FileInputStream fr = null;
@@ -37,7 +33,7 @@ class Compression{
 			fw = new FileOutputStream(new File(out));
 			if(methode==1){
 				fw.write(1);
-				//			 fw=Huffman.compression(fr, fw);
+				fw=Huffman.compression(fr, fw);
 
 			}
 			else if(methode==2){
