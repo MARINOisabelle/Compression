@@ -6,35 +6,43 @@ import java.io.IOException;
 import java.util.Scanner; 
 
 class Decompression{
-	public static void main(String[]args){
-		System.out.println("Quel est le fichier que vous voulez décompresser ?");
-		Scanner sc= new Scanner(System.in);
-		String in = sc.nextLine();
-		System.out.println("Quel est le nouveau nom du fichier?");
-		String out = sc.nextLine();
-		out=out+".txt";
-		System.out.println("Avec quel mode l'avez vous compressez: Huffman (1) ou LempelZiv(2)?");
-		int methode = sc.nextInt();
-		
+	public static void main(String[]args)throws IOException{
+		String in="";
+		String out="";
+		if(args.length==0){
+			System.out.println("Quel est le fichier que vous voulez décompresser ?");
+			Scanner sc= new Scanner(System.in);
+			in = sc.nextLine();
+
+		}
+		else{
+			in = args[0];
+		}
+
+		out =in+".decomp";
 		FileInputStream fr = null;
 		FileOutputStream fw = null;
 		try {
 			fr = new FileInputStream(new File(in));
 			fw = new FileOutputStream(new File(out));
+			int methode= fr.read();
+	
 
+			
 			if(methode==1){
-
-			// fw=Huffman.decompression(fr, fw);
+				System.out.println("Huffman");
+				fw=Huffman.decompression(fr, fw);
 
 			}
 			if(methode==2){
-
-			// fw= LempelZiv.decompression(fr,fw);
+				System.out.println("ziv");
+				fw= LempelZiv.decompression(fr,fw);
 			}
 			else{
-				System.out.println("Vous n'avez pas choisit de méthode de compression.");
+				System.out.println("Ce fichier n'a pas été compresser");
 
 			}
+			
 		}
 		catch(FileNotFoundException e) {
 						// Cette exception est levée si l'objet FileInputStream ne trouve
