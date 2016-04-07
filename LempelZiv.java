@@ -9,9 +9,9 @@ import java.util.ArrayList;
 class LempelZiv{
 
 	Arbre a;
-	int nextPoids;
-	int nbBit;
-	int puissance;
+	int nextPoids; // poids pour le prochain Node a ajouter
+	int nbBit; //nb de Node dans l'arbre possible pour la puissance 
+	int puissance; // puissance de 2 utile por coder les poids des node
 
 	public LempelZiv(){
 		this.a =new Arbre(new Node(0));
@@ -62,7 +62,7 @@ class LempelZiv{
 	public  Node analyseOctetComp(LireBit l,EcrireBit e, Node n, int i)throws IOException{
 		if(i<8){
 			if(l.octet[i]==0 && n.left==null){
-				this.a.addNode(l.octet[i], this.nextPoids, n);
+				n.addNode(l.octet[i], this.nextPoids);
 				//System.out.println("ajout 0");
 				this.ecrireComp(e,n.poids, 0);	
 				this.nextPoids ++;
@@ -74,7 +74,7 @@ class LempelZiv{
 
 			}
 			else if(l.octet[i]==1 && n.right==null){
-				this.a.addNode(l.octet[i], this.nextPoids, n);	
+				n.addNode(l.octet[i], this.nextPoids);	
 				this.ecrireComp(e,n.poids, 1);
 				//System.out.println("ajout 1");	
 				this.nextPoids ++;
@@ -90,7 +90,6 @@ class LempelZiv{
 
 	public  void lireFichierComp(LireBit l, EcrireBit eb)throws IOException{
 			Node n = (Node)this.a.racine;
-			
 			try{
 				while(l.lire()!=false){	
 					n=analyseOctetComp(l,eb, n, 0);
@@ -114,58 +113,59 @@ class LempelZiv{
    	}
 
 
-	public static void compression(LireBit fr, EcrireBit fw)throws IOException{
+	public static void compression(LireBit fr, EcrireBit fw) throws IOException{
 		LempelZiv lz= new LempelZiv();
 		lz.lireFichierComp(fr, fw);
 	}
 
 	/*Fonctions pour la décompression*/
-	public  Node analyseOctetDecomp(LireBit l,EcrireBit e, Node n, int i)throws IOException{
-		if(i<8){
-			if(l.octet[i]==0 && n.left==null){
-				this.a.addNode(l.octet[i], this.nextPoids, n);
-				//System.out.println("ajout 0");
-				this.ecrireComp(e,n.poids, 0);	
-				this.nextPoids ++;
-				return analyseOctetComp(l,e, (Node)this.a.racine, i+1);
 
-			}
-			else if(l.octet[i]==0 && n.left!=null){
-					return analyseOctetComp(l,e, (Node)n.left, i+1);
 
-			}
-			else if(l.octet[i]==1 && n.right==null){
-				this.a.addNode(l.octet[i], this.nextPoids, n);	
-				this.ecrireComp(e,n.poids, 1);
-				//System.out.println("ajout 1");	
-				this.nextPoids ++;
-				return analyseOctetComp(l,e, (Node)this.a.racine, i+1);
-			}
-			else if(l.octet[i]==1 && n.right!=null){
-				return analyseOctetComp(l,e, (Node)n.right, i+1);
-			}
-		}
-		return n;
 
+
+
+
+
+	public  int[] analyseOctetDecomp(LireBit l,EcrireBit e, int i , int[] tab)throws IOException{
+			if(this.nextPoids>this.nbBit){
+				this.puissance++;
+				this.nbBit=this.nbBit*2;
+			}
+			for(int j=0;j<8;j++){
+				System.out.println(l.octet[j]);
+			}
+			if(puissance<8){
+				while(i<puissance){
+					tab[puissance+i]=l.octet[i];
+					i++;
+					
+					if(i>=puissance){
+						l.lire();
+						return analyseOctetDecomp(l, e, i, tab);
+					}
+				}
+				//int node = tab2int(tab);
+				//this.ecrireDecomp(node, tab[i++]);
+				//nextPoids++;
+				//return analyseOctetDecomp(l, e, i, tab);
+				
+			}	
+		return tab;
 	}
-	public  void lireFichierDecomp(LireBit l, EcrireBit eb)throws IOException{
-			Node n = (Node)this.a.racine;
-			
+
+	public  void lireFichierDecomp(LireBit l, EcrireBit eb) throws IOException{
+			int tab[]=new int[8];
 			try{
 				while(l.lire()!=false){	
-					n=analyseOctetDecomp(l,eb, n, 0);
-					//ecrireDecomp(eb,n.poids, 2);
-					for(int i=0;i<8;i++){
-						System.out.println(l.octet[i]);
-					}
-					
+					tab=this.analyseOctetDecomp(l,eb, 0, tab);
+					//ecrireDecomp(eb,n.poids, 2);				
 
 				}
 				l.close();
 			}
 			catch(IOException e){
-			System.out.println("faux");
-			e.printStackTrace();
+				System.out.println("faux");
+				e.printStackTrace();
 			}
    	}
 
