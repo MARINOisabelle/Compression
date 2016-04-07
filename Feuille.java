@@ -9,4 +9,7 @@ public class Feuille extends Poids{
     public int getPoids(){
 	return this.poids;
     }
+    public void affiche(){
+	System.out.print(this.letter);
+    }
 }
