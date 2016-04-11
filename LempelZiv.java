@@ -66,7 +66,7 @@ class LempelZiv{
 				//System.out.println("ajout 0");
 				this.ecrireComp(e,n.poids, 0);	
 				this.nextPoids ++;
-				return analyseOctetComp(l,e, (Node)this.a.racine, i+1);
+				return analyseOctetComp(l,e, this.a.racine, i+1);
 
 			}
 			else if(l.octet[i]==0 && n.left!=null){
@@ -78,7 +78,7 @@ class LempelZiv{
 				this.ecrireComp(e,n.poids, 1);
 				//System.out.println("ajout 1");	
 				this.nextPoids ++;
-				return analyseOctetComp(l,e, (Node)this.a.racine, i+1);
+				return analyseOctetComp(l,e, this.a.racine, i+1);
 			}
 			else if(l.octet[i]==1 && n.right!=null){
 				return analyseOctetComp(l,e, (Node)n.right, i+1);
@@ -121,34 +121,59 @@ class LempelZiv{
 	/*Fonctions pour la décompression*/
 
 
+	public static int tab2int(int []tab){
+		int res=0;
+		for(int i=0; i<8; i++){
+			if(tab[i]==1){		
+				int j=i+1;
+				while(j<8){
+					tab[i]=tab[i]*2;
+					j++;
+				}
+				res=res+tab[i];	
+			}
+		}
+		return res;
+	}
 
-
-
+	public  Node ecrireDecomp(int node, int bit,EcrireBit e, Node n)throws IOException{
+			System.out.println("node "+ node + " bit "+ bit);
+			if(this.a.racine.poids==node){
+				//n.addNode(bit, node);
+				//System.out.println("ajout 0");
+				return n;
+			}
+			
+		return n;
+	}
 
 
 	public  int[] analyseOctetDecomp(LireBit l,EcrireBit e, int i , int[] tab)throws IOException{
 			if(this.nextPoids>this.nbBit){
 				this.puissance++;
+				System.out.println( "puissance " +puissance);
 				this.nbBit=this.nbBit*2;
 			}
 			for(int j=0;j<8;j++){
-				System.out.println(l.octet[j]);
+			//	System.out.println(l.octet[j]);
 			}
-			if(puissance<8){
-				while(i<puissance){
-					tab[puissance+i]=l.octet[i];
-					i++;
-					
-					if(i>=puissance){
-						l.lire();
-						return analyseOctetDecomp(l, e, i, tab);
-					}
+			 if(this.puissance<9){
+				System.out.println( "i " +i + "puissance "+ this.puissance );
+				for(int k=0; k<puissance; k++){
+						tab[k +8-this.puissance]=l.octet[k];
+				} 
+
+				for(int j=0; j<8; j++){
+					System.out.println(tab[j]);
 				}
-				//int node = tab2int(tab);
-				//this.ecrireDecomp(node, tab[i++]);
-				//nextPoids++;
-				//return analyseOctetDecomp(l, e, i, tab);
 				
+				int node = tab2int(tab);
+				
+				System.out.println(" node "+ node);
+				//this.ecrireDecomp(node, tab[i++], e, this.a.racine);
+				//tab= new int[8];
+				this.nextPoids++;
+				return analyseOctetDecomp(l, e, i, tab);	
 			}	
 		return tab;
 	}

@@ -1,37 +1,54 @@
 \documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} 
-\usepackage[francais]{babel} 
+\usepackage[francais]{babel}
+
+    \title{\textit{Rapport} \\ La compression}
+    \author{Lucas \textsc{Labadens} \and Isabelle \textsc{Marino} }
+    \date{Le \today}
 \begin{document}
-\chapter*{La compression }
-\paragraph*{}
-\begin{tabbing}
-\hspace{1.5cm}\=\hspace{1.5cm}\=\kill
- \\ Lucas Labadens \& Isabelle Marino\\
- \>Olivier Carton 
-\end{tabbing} 
+\maketitle
+ 
 
+\section*{Introduction}
+La compression de données ou codage de source est un processus informatique permettant de transformer un document sous forme binaire en un autre document du même contenant un suite de bit plus courte que le précédent mais pouvant restituer les mêmes informations en utilisant un algorithme de décompression propre à algorithme de compression qui fut utilisé. En d'autre termes, la compression raccourcit la taille des données. La décompression est l'opération inverse de la compression.
 
+Il y a notamment 2 grand type de compression:
+\begin{itemize}
+\item la compression sans perte de données
+\item la compression avec perte de données
+\end{itemize}
+
+Un algorithme de compression sans perte restitue après compression et décompression un document strictement identique à l'originale. Les algorithmes de compression sans perte sont utiles pour les documents, les archives, les fichiers exécutable ou les fichiers texte.
+
+Avec un algorithme de compression avec perte, la suite de bits obtenue après les  compression et décompression est différente de l'originale, mais l'information restituée est très proche. Les algorithmes de compression avec perte sont utiles pour les images, le son et la vidéo.
+
+Les formats de données tels que Zip, RAR, gzip, MP3 et JPEG utilisent des algorithmes de compression de données.
+
+La compression est un procédé très utiliser dans la vie courante pour par exemple envoyer certains document par e-mails ou pour le skockage de documents sur disque dur ou cloud center.  
+Le but de notre projet est de compresser des fichiers sans perte de données. 
+Nous allons donc vous présenter différents algorithmes de compression sans perte de données que nous avons coder puis tester.
+Dans la première partie on présentera entre autres le codage de Huffman statique et celui de Lempel-Ziv. 
 
 \part{Les algorithme de compression}
-\chapter{Huffman statique}
-\section{Definition et Exemple }
-\subsubsection{Defnition}
+\chapter*{Huffman statique}
+\section*{Définition et Exemple }
+\subsubsection*{Défnition}
 blabla 
-\subsection{Exemple}
+\subsection*{Exemple}
 blabla
-\chapter{Lempel-Ziv}
-\section{Definition et Exemple }
-\subsubsection{Defnition}
+\chapter*{Lempel-Ziv}
+\section*{Définition et Exemple }
+\subsubsection*{Défnition}
 blabla 
-\subsection{Exemple}
+\subsection*{Exemple}
 blabla
 \part{Analyse des performances}
-\chapter{Analyse de la compression}
+\chapter*{Analyse de la compression}
 blabla
-\chapter{Analyse du temps d'éxécution }
+\chapter*{Analyse du temps d'éxécution }
 blabla
-\chapter{Comparaison entre les algorithmes}
+\chapter*{Comparaison entre les algorithmes}
 blabla
 
 
