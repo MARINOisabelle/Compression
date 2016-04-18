@@ -100,10 +100,7 @@ class LempelZiv{
 					
 
 				}
-				/*eb.writeBit(1);
-				for(int i=0;i<6;i++){
-					eb.writeBit(0);
-				}*/
+				eb.writeLastBit();
 				l.close();
 			}
 			catch(IOException e){

@@ -23,4 +23,15 @@ public class EcrireBit extends FilterOutputStream{
 	    this.octet=0x00;
 	}
     }
+	
+	public void writeLastBit()throws IOException{
+		writeBit(1);
+		if(nbBit<8){
+			int i=0;
+			for(i=nbBit; i<8;i++){
+				writeBit(0);
+			}
+		}
+			
+    }
 }
