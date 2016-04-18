@@ -29,16 +29,15 @@ class Compression{
 				// On instancie nos objets :
 				// fr va lire le fichier
 				// fw va écrire dans le nouveau !
-			fr =new LireBit( new FileInputStream(new File(in)));
-			fw = new EcrireBit( new FileOutputStream(new File(out)));
 			if(methode==1){
-				fw.write(1);
+				//fw.write(1);
 				
+				//Huffman.compression(in, out);
 
 			}
 			else if(methode==2){
 			    	fr =new LireBit( new FileInputStream(new File(in)));
-			fw = new EcrireBit( new FileOutputStream(new File(out)));
+				fw = new EcrireBit( new FileOutputStream(new File(out)));
 				fw.write(2);
 			 	LempelZiv.compression(fr,fw);
 			}
