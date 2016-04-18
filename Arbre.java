@@ -11,9 +11,9 @@ public class Arbre{
 	Node racine  = new Node(gauche.poids+droite.poids,(Poids)gauche,(Poids)droite);
 	this.racine = racine;
     }
-    public Arbre fusionne(Arbre a){
-	Node racine = new Node(a.racine.poids+this.racine.poids);
-	if(this != null){
+    public void fusionne(Arbre a){
+	if(this.racine != null){
+	    Node racine = new Node(a.racine.poids+this.racine.poids);
 	    if(a.racine.poids >= this.racine.poids){
 		racine.right = a.racine;
 		racine.left = this.racine;
@@ -22,11 +22,11 @@ public class Arbre{
 		racine.right = this.racine;
 		racine.left = this.racine;
 	    }
-	    return new Arbre(racine);
+	    this.racine = racine;
 	    
 	}
 	else{
-	    return this;
+	     this.racine =a.racine;
 	}
     }
     public void rajouteFeuille(Feuille f){

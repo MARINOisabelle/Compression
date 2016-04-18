@@ -10,6 +10,9 @@ public class Feuille extends Poids{
 	return this.poids;
     }
     public void affiche(){
-	System.out.print(this.letter);
+	System.out.println(this.letter+" "+this.poids);
+    }
+    public char getId(){
+	return letter;
     }
 }

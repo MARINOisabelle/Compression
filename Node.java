@@ -22,7 +22,9 @@ public class Node extends Poids{
     public void setPoids(int a){
 	this.poids = a;
     }
-    
+    public Node getNode(){
+	return this;
+    }
     public void addNode(int number,int poids){
 	if(number==0 && this.left==null){
 	    this.left=new Node(poids);
@@ -34,10 +36,20 @@ public class Node extends Poids{
 	    System.out.println("Exception: Number est ni 1 ni 0");
 	}
     }
-    
+    public void addPoids(Poids a,Poids b){
+	this.poids = a.poids+b.poids;
+	if(a.poids>=b.poids){
+	    this.left = b;
+	    this.right = a;
+	}
+	else{
+	    this.left=a;
+	    this.right = b;
+	}
+    }
     
     public void affiche(){
-	System.out.print(super.poids);
+	System.out.println(super.poids);
 	if(this.left !=null)
 	    this.left.affiche();
 	if(this.right !=null)

@@ -1,15 +1,14 @@
 import java.io.*;
 public class Test{
-    public static void main(String[]args){
+    public static void main(String[]args) throws Exception{
 	try{
-	    LireBit l = new LireBit(new FileInputStream(new File("mon.txt")));
+	    
 	    try{
-		l.lire();
-		for(int i=0;i<8;i++){
-		    System.out.println(l.octet[i]);
-		}
-		Huffman.arbreComp(l);
-		l.close();
+		Huffman huffman = new Huffman();
+		huffman.compression("mon.txt","compression");
+		
+		
+		
 	    }
 	    catch(IOException e){
 		System.out.println("faux");
@@ -18,6 +17,12 @@ public class Test{
 	}
 	catch(FileNotFoundException e){
 	    e.printStackTrace();
+	    System.out.println("ne marche a");
+	}
+    }
+    public static void afficheTab(int tab[]){
+	for(int i=97;i<=127;i++){
+	    System.out.println(tab[i]);
 	}
     }
 }
