@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} 
 \usepackage[francais]{babel}
+\usepackage{amssymb}
 
     \title{\textit{Rapport} \\ La compression}
     \author{Lucas \textsc{Labadens} \and Isabelle \textsc{Marino} }
@@ -20,6 +21,7 @@ Il y a notamment 2 grand type de compression:
 \end{itemize}
 
 Un algorithme de compression sans perte restitue après compression et décompression un document strictement identique à l'originale. Les algorithmes de compression sans perte sont utiles pour les documents, les archives, les fichiers exécutable ou les fichiers texte.
+Pour la compression de données sans pertes, on distingue principalement deux types de codage : le codage entropique et le codage algorithmique.
 
 Avec un algorithme de compression avec perte, la suite de bits obtenue après les  compression et décompression est différente de l'originale, mais l'information restituée est très proche. Les algorithmes de compression avec perte sont utiles pour les images, le son et la vidéo.
 
@@ -30,6 +32,8 @@ Le but de notre projet est de compresser des fichiers sans perte de données.
 Nous allons donc vous présenter différents algorithmes de compression sans perte de données que nous avons coder puis tester.
 Dans la première partie on présentera entre autres le codage de Huffman statique et celui de Lempel-Ziv. 
 
+Pour cela nous avons choisit d'utiliser le langage Java pour nous permettre d'avoir des classes structurées et coder les différents algorithmes tout en gardant une structure et des fonctions communes.
+ 
 \part{Les algorithme de compression}
 \chapter*{Huffman statique}
 \section*{Définition et Exemple }
@@ -38,10 +42,34 @@ blabla
 \subsection*{Exemple}
 blabla
 \chapter*{Lempel-Ziv}
-\section*{Définition et Exemple }
-\subsubsection*{Défnition}
-blabla 
-\subsection*{Exemple}
+\section*{Définition }
+
+L'algorithme de compression de Lempel-Ziv est un codage algorithmique.  Le codage algorithmique n’a pas besoin de transmettre des informations autres que le résultat du codage. Donc il n'y a pas besoin de transmettre dans le fichier compressé un code pour décompresser celui-ci. Il y a donc un autre avantage à ce style de compression: la lecture unique du fichier source. En effet, comme l'algorithme ne se base pas sur la récurrence de modèle dans le fichier source, nous pouvons lire et écrire le fichier compresser en même temps, ainsi cette algorithme nécessite une unique lecture du fichier source, ce qui est plutôt intéressant lors de la compression de gros fichier en termes de gain de temps. 
+Cette algorithme s'applique uniquement aux fichiers binaires, c'est à dire à tout fichier fichier dont les symboles sont représentés sur des bits, et donc par conséquent à tout type de document. 
+\subsubsection{Principe de l'algorithme}
+
+Le principe de l'algorithme est le suivant, on découpe le fichier à compresser en facteur t=$ \omega_{0}\omega_{1}\omega_{2}$... tel que $\omega_{0}$ est le mot vide, et pour tout i>0 $\omega_{i}$ est différent de tous les $\omega_{j}$ pour j<i et il existe un unique j<i et une lettre a tel que $\omega_{i}=\omega_{j}a$. 
+Ainsi pour tout i>0, $\omega_{i}$ peut être représenté en $\lceil log_{2}(i) \rceil$ + 1 bits ($\lceil log_{2}(i) \rceil$ pour représenter $\omega_{j}$ et un bit a).
+
+\subsubsection{Compression}
+\paragraph*{}
+Le codage de la compression s'effectue avec un arbre binaire dont les nœuds sont étiquetés par des entiers. Chaque nœud correspond à un $\omega_{i}$. On début avec une unique racine étiquetée à 0.
+A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque l'on ne peut plus se déplacer on crée un nouveau nœud fils $\omega_{i}$ au noeud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivant du 0 ou 1 que l'on est en train de lire.
+On retourne la racine et on passe à l'étape i+1.
+\paragraph*{}
+ Ce que j'ai coder et les problèmes rencontrés
+
+\subsubsection{Décompression}
+\paragraph*{}
+On crée au fur et à mesure de la lecture bit à bit un tableau à 2 dimensions Exemple: t[i]= [nœud][bit] où nœud et bit sont des entiers, nœuds et le nombre lu à la i ème étape et bit le bits lu juste après. 
+On commence en initialisant la première case à  bit=-1 et nœud =-1 , pour pouvoir donner un repère lors de l'écriture de la décompression, il représente la racine de l'arbre de compression.  
+A l'étape i, on lit n=$\lceil log_{2}(i) \rceil$ et et le bit suivant. On stock alors le nombre écrit et et bit suivant.On remonte dans le tableau grâce à n, on lit et le bit stocker dans t[n] et on regarde t[n.noeud] jusqu'à arriver à t[0]. On écrit dans le fichier décompresser la suite de bit lu au fur et à mesure.
+
+\paragraph*{}
+ Ce que j'ai coder et les problèmes rencontrés
+
+ 
+\section*{Exemple}
 blabla
 \part{Analyse des performances}
 \chapter*{Analyse de la compression}
