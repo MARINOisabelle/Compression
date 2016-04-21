@@ -12,7 +12,12 @@ public class Feuille extends Poids{
     public void affiche(){
 	System.out.println(this.letter+" "+this.poids);
     }
-    public char getId(){
-	return letter;
+    public int recherche(char l){
+	if(this.letter == l){
+	    return 2;
+	}
+	else{
+	    return -1;
+	}
     }
 }

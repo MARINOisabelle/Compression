@@ -7,6 +7,7 @@ import java.io.BufferedInputStream;
 import java.nio.channels.*;
 import java.io.IOException;
 
+
 class Huffman{
     
     public Huffman(){
@@ -62,7 +63,51 @@ class Huffman{
 	
        
     }
-    
+    public void ecrireArbre(Arbre a,EcrireBit fw){
+    }
+    public void ecrireLettre(EcrireBit fw,Node a,char lettre){
+	try{
+	    int b = a.recherche(lettre);
+	    int c =0;
+	    while(c!=2){
+		System.out.println(b);
+		fw.writeBit(b);
+		System.out.println("on est au début "+lettre);
+		try{
+		    System.out.println("la petite recherche");
+		    if(b==1){
+		        c  = a.right.recherche(lettre);
+			if(c!=-1 && c!=2){
+			    a= (Node)a.right;
+			    b = c;
+			    System.out.println("après");
+			    System.out.println("on est a 0");
+			}
+		    }
+		    else if(b==0){
+			c = a.left.recherche(lettre);
+			System.out.println("avant");
+			if(c!=-1 && c!=2){
+			    a=(Node)a.left;
+			    b = c;
+			    System.out.println("après");
+			    System.out.println("on est a 1");
+			}
+			    
+		    }
+		    
+		    Thread.sleep(5);
+		}
+		catch(Exception e){}
+	    }
+		
+	    
+	}
+	catch(Exception e){
+	    e.printStackTrace();
+	    System.out.println(e);
+	}
+    }
     public Arbre arbreCompr(LireBit fr) throws Exception{
 	int tab[]=compteIter(fr);
 	Arbre principal = new Arbre(null);
@@ -75,10 +120,7 @@ class Huffman{
 		principal.racine = sup;
 		System.out.println("to1");
 		while((min=feuilleMin(tab))!=null){
-		    sup = new Node(0);
-		    System.out.println("to");
-		    sup.addPoids(principal.racine,min);
-		    principal.racine = sup;
+		    principal.rajouteFeuille(min);
 		}
 		return principal;
 	    }
@@ -94,33 +136,7 @@ class Huffman{
 	}
 	    
     }
-    public void ecrireLettre(EcrireBit fw,Node a,char lettre){
-	try{
-	    char c;
-	    if(( c = a.right.getId()) !='\0'){
-		if(c==lettre){
-		    fw.writeBit(1);
-		}
-		else{
-		    fw.writeBit(0);
-		    ecrireLettre(fw,a.left.getNode(),lettre);
-		}
-	    }
-	    else{
-		if(c==lettre){
-		    fw.writeBit(0);
-		}
-		else{
-		    fw.writeBit(1);
-		    ecrireLettre(fw,a.right.getNode(),lettre);
-		}
-	    }
-	}
-	catch(Exception e){
-	    e.printStackTrace();
-	    System.out.println(e);
-	}
-    }
+    
 	/*  fonction appeler dans les main de compresion et decompression */
     public  void compression(String fr, String fw)throws Exception{
 	LireBit fl = new LireBit(new FileInputStream(new File(fr)));
@@ -135,14 +151,15 @@ class Huffman{
 	    ecrireLettre(fe,a.racine,new Character((char)l));
 	    System.out.println("ecrit");
 	}
+	fe.writeLastBit();
 	fe.close();
+	fl.close();
     }
-   
+    
 	public static void decompression(FileInputStream fr, FileOutputStream fw)throws IOException{
 		
 		System.out.println("Decompression : Huffman");
-	
-		
+			
 	}
 
 }

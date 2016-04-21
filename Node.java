@@ -6,6 +6,18 @@ public class Node extends Poids{
 	this.right= null;
 	this.left = null;
     }
+    public int recherche(char l){
+	int i1 = this.right.recherche(l);
+	int i2 = this.left.recherche(l);
+	if((i1==1 || i1==0)&& i2 == -1)
+	    return 1;
+	if(((i2==1) || i2==0) && i1==-1)
+	    return 0;
+	if(i1==2)
+	    return 1;
+	else
+	    return 0;
+    }
     public Node(Feuille droit,Feuille gauche){
 	this.poids = droit.poids+gauche.poids;
 	this.right=droit;
@@ -22,9 +34,7 @@ public class Node extends Poids{
     public void setPoids(int a){
 	this.poids = a;
     }
-    public Node getNode(){
-	return this;
-    }
+    
     public void addNode(int number,int poids){
 	if(number==0 && this.left==null){
 	    this.left=new Node(poids);
@@ -50,9 +60,14 @@ public class Node extends Poids{
     
     public void affiche(){
 	System.out.println(super.poids);
-	if(this.left !=null)
+	if(this.left !=null){
+	    System.out.print("left");
 	    this.left.affiche();
-	if(this.right !=null)
+	    
+	}
+	if(this.right !=null){
+	    System.out.print("right");
 	    this.right.affiche();
+	}
     }
 }

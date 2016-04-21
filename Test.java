@@ -5,8 +5,10 @@ public class Test{
 	    
 	    try{
 		Huffman huffman = new Huffman();
-		huffman.compression("mon.txt","compression");
-		
+		LireBit fl = new LireBit(new FileInputStream(new File("je")));
+		huffman.arbreCompr(fl).racine.affiche();
+		fl.close();
+		huffman.compression("je","mycomp");
 		
 		
 	    }
