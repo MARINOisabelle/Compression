@@ -53,19 +53,19 @@ class LempelZiv{
 			this.puissance++;
 			this.nbBit=this.nbBit*2;
 		}
-		if(8-puissance>0){
+		if(8-puissance>=0){
 			for(int i=8-this.puissance; i<8; i++){
-				e.writeBit(octet[i] );
+				e.writeBit(octet[i] );	//System.out.println(octet[i]);
 			}
 		}
 		if(bit==1 || bit==0){
-			e.writeBit(bit);
+			e.writeBit(bit); //System.out.println(bit + "\n"); 
 		}
 	
 	}
 
 	public  Node analyseOctetComp(LireBit l,EcrireBit e, Node n, int i)throws IOException{
-		if(i<8){
+		if(i<8){				//System.out.println(nextPoids + "next");
 			if(l.octet[i]==0 && n.left==null){
 				n.addNode(l.octet[i], this.nextPoids);
 				//System.out.println("ajout 0 " + (n.poids));
@@ -105,6 +105,8 @@ class LempelZiv{
 					
 
 				}
+				//System.out.println(nextPoids + "next");
+				this.ecrireComp(eb,n.poids, l.octet[7]);
 				eb.writeLastBit();
 				l.close();
 			}
@@ -146,6 +148,7 @@ class LempelZiv{
 	}
 
 	public  ArrayList<Integer[]> ecrireDecomp(int pere, int bit,EcrireBit e)throws IOException{
+			//System.out.println("dg " + bit + " pere " + pere + " " +list.size() );
 			if(pere>=0 && (bit==0 || bit==1)){
 				Integer t[]= new Integer[2];
 				t[0]=pere; 
@@ -155,6 +158,7 @@ class LempelZiv{
 				ArrayList<Integer> ar = new ArrayList<Integer>();
 				while(list.get(i)[0]!=-1){
 					ar.add(this.list.get(i)[1]); 
+					//System.out.println(" i " + i);
 					i= list.get(i)[0];
 					
 
@@ -169,9 +173,9 @@ class LempelZiv{
 
 
 	public  int[] analyseOctetDecomp(LireBit l,EcrireBit e, int cur_tab , int cur_l, int[] tab)throws IOException{
-			if(this.nextPoids-1>=this.nbBit){
+			if(this.nextPoids>this.nbBit){
 				this.puissance++;
-				//System.out.println( "puissance " +puissance);
+				System.out.println( "puissance " +puissance);
 				this.nbBit=this.nbBit*2;
 			}
 
@@ -210,10 +214,10 @@ class LempelZiv{
 				if(cur_l<8){			// faire un l.lire().next pour connaitre le dernier octet
 					return analyseOctetDecomp(l, e, 0, cur_l, tab);	
 				}
-				if(cur_tab<puissance){
+				if(cur_tab<puissance){ //System.out.println("tab " +cur_tab);
 					if(l.lire()!=false){	
 						this.taille --;
-						return analyseOctetDecomp(l, e, cur_tab,0, tab);	
+						return analyseOctetDecomp(l, e, cur_tab,-cur_tab, tab);	
 					}
 				}
 			}	
