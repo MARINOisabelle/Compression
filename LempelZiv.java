@@ -64,7 +64,7 @@ class LempelZiv{
 	public void ecrireComp(EcrireBit e, int poids, int bit) throws IOException{
 		int[] octet= int2tab(poids);
 		if(this.nextPoids>this.nbBit){
-			this.puissance++; 				System.out.println( "puissance " +puissance);
+			this.puissance++; 	
 			this.nbBit=this.nbBit*2;
 		}
 		if(power-puissance>=0){
@@ -79,10 +79,9 @@ class LempelZiv{
 	}
 
 	public  Node analyseOctetComp(LireBit l,EcrireBit e, Node n, int i)throws IOException{
-		if(i<8){				//System.out.println(nextPoids + "next");
+		if(i<8){
 			if(l.octet[i]==0 && n.left==null){
 				n.addNode(l.octet[i], this.nextPoids);
-				//System.out.println("ajout 0 " + (n.poids));
 				this.ecrireComp(e,n.poids, 0);	
 				this.nextPoids ++;
 				return analyseOctetComp(l,e, this.a.racine, i+1);
@@ -94,7 +93,6 @@ class LempelZiv{
 			}
 			else if(l.octet[i]==1 && n.right==null){
 				n.addNode(l.octet[i], this.nextPoids);	
-				//System.out.println("ajout 1 " + (n.poids) );	
 				this.ecrireComp(e,n.poids, 1);
 				this.nextPoids ++;
 				return analyseOctetComp(l,e, this.a.racine, i+1);
@@ -113,13 +111,7 @@ class LempelZiv{
 			try{
 				while(l.lire()!=false){	
 					n=analyseOctetComp(l,eb, n, 0);
-					/*for(int i=0;i<8;i++){
-						System.out.println(l.octet[i]);
-					}*/
-					
-
 				}
-				//System.out.println(nextPoids + "next");
 				this.ecrireComp(eb,n.poids, l.octet[7]);
 				eb.writeLastBit();
 				l.close();
@@ -163,7 +155,6 @@ class LempelZiv{
 	}
 
 	public  ArrayList<Integer[]> ecrireDecomp(int pere, int bit,EcrireBit e)throws IOException{
-			//System.out.println("dg " + bit + " pere " + pere + " " +list.size() );
 			if(pere>=0 && (bit==0 || bit==1)){
 				Integer t[]= new Integer[2];
 				t[0]=pere; 
@@ -171,13 +162,16 @@ class LempelZiv{
 				list.add(list.size(),t);
 				Integer i=pere;
 				ArrayList<Integer> ar = new ArrayList<Integer>();
-				while(list.get(i)[0]!=-1){
+				if(list.size()<5490){
+					while(list.get(i)[0]!=-1){
 					ar.add(this.list.get(i)[1]); 
-					//System.out.println(" i " + i);
 					i= list.get(i)[0];
 					
 
+					}
 				}
+				else{ System.exit(0);}
+			
 				ecrireList(ar, e);
 				e.writeBit(bit);
 
@@ -190,12 +184,11 @@ class LempelZiv{
 	public  int[] analyseOctetDecomp(LireBit l,EcrireBit e, int cur_tab , int cur_l, int[] tab)throws IOException{
 			if(this.nextPoids>this.nbBit){
 				this.puissance++;
-				System.out.println( "puissance " +puissance);
+			//	System.out.println( "puissance " +puissance);
 				
 				this.nbBit=this.nbBit*2;
 			}
 			if(taille==0){ System.out.println("null");
-				//return null;
 			}
 			 if(this.puissance<=power){
 				int k=0;
@@ -209,13 +202,9 @@ class LempelZiv{
 				} 
 				cur_tab=k;
 				cur_l=cur_l+k;			
-				if(k==puissance) {//System.out.println("tab");
-					/*for(int j=power-cur_tab; j<power; j++){
-						System.out.println(tab[j]);
-
-					}*/						
+				if(k==puissance) {
 					int node = tab2int(tab);
-					if(cur_l<8){// System.out.println("curl " +cur_l);
+					if(cur_l<8){
 						this.ecrireDecomp(node, l.octet[cur_l], e);	
 					}
 					else{
@@ -229,12 +218,11 @@ class LempelZiv{
 					this.nextPoids++;
 					cur_l++; 
 				}
-				if(cur_tab<puissance && cur_l>=7){ //System.out.println("tab " +cur_tab);
+				if(cur_tab<puissance && cur_l>=7){
 					if(l.lire()!=false){	
 						taille--;
 						return analyseOctetDecomp(l, e, cur_tab,-cur_tab, tab);	
 					}
-					//return null;
 				}
 				else if(cur_l<8 && cur_tab>=puissance){
 					return analyseOctetDecomp(l, e, 0, cur_l, tab);	
