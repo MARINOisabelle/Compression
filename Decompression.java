@@ -24,21 +24,18 @@ class Decompression{
 		EcrireBit fw = null;
 		try {
 			File i= new File(in);
-			long tailleIn= i.length();
-			System.out.println("taille " + i.length());
+			long tailleIn= i.length()-1;
+			System.out.println(tailleIn);
 			fr = new LireBit(new FileInputStream(i));
 			fw = new EcrireBit(new FileOutputStream(new File(out)));
 			int methode= fr.read();
-	
 			if(methode==1){
 				System.out.println("Huffman");
 				//Huffman.decompression(fr, fw, tailleIn);
 
 			}
 			if(methode==2){
-				System.out.println("ziv");
-				//fw = new EcrireBit(new FileOutputStream(new File(out)));
-				LempelZiv.decompression(fr,fw);
+				LempelZiv.decompression(fr,fw, tailleIn);
 			}
 			else{
 				System.out.println("Ce fichier n'a pas été compresser");
