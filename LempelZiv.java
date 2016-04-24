@@ -15,6 +15,7 @@ class LempelZiv{
 	ArrayList<Integer[]> list;
 	int power;
 	long taille;
+	int tab[];
 
 
 	public LempelZiv(long taille){
@@ -27,6 +28,8 @@ class LempelZiv{
 		this.list = new ArrayList<Integer[]>();
 		Integer[] tab = {-1,-1};
 		list.add(0,tab);
+		this.tab=new int[power];
+
 	}
 	public LempelZiv(){
 		this.a =new Arbre(new Node(0));
@@ -34,9 +37,8 @@ class LempelZiv{
 		this.nbBit=1;
 		this.puissance=0;
 		this.power=32;
-		this.list = new ArrayList<Integer[]>();
-		Integer[] tab = {-1,-1};
-		list.add(0,tab);
+		//Integer[] tab = {-1,-1};
+		//list.add(0,tab);
 	}
 
 
@@ -154,30 +156,26 @@ class LempelZiv{
 		return res;
 	}
 
-	public  ArrayList<Integer[]> ecrireDecomp(int pere, int bit,EcrireBit e)throws IOException{
+	public  void ecrireDecomp(int pere, int bit,EcrireBit e)throws IOException{
 			if(pere>=0 && (bit==0 || bit==1)){
 				Integer t[]= new Integer[2];
 				t[0]=pere; 
-				t[1]=bit; 
-				list.add(list.size(),t);
+				t[1]=bit;
 				Integer i=pere;
 				ArrayList<Integer> ar = new ArrayList<Integer>();
-				if(list.size()<5490){
+				//if(list.size()<6700){	
+					list.add(list.size(),t);
 					while(list.get(i)[0]!=-1){
 					ar.add(this.list.get(i)[1]); 
 					i= list.get(i)[0];
-					
-
 					}
-				}
-				else{ System.exit(0);}
-			
-				ecrireList(ar, e);
-				e.writeBit(bit);
-
+					ecrireList(ar, e);
+					e.writeBit(bit);
+				//}
+				
+				//else{ System.exit(0);}
 			}
-			
-		return this.list;
+
 	}
 
 
@@ -188,8 +186,8 @@ class LempelZiv{
 				
 				this.nbBit=this.nbBit*2;
 			}
-			if(taille==0){ System.out.println("null");
-			}
+			/*if(taille==0){ System.out.println("null");
+			}*/
 			 if(this.puissance<=power){
 				int k=0;
 				for(k=cur_tab; k<puissance; k++){
@@ -210,7 +208,7 @@ class LempelZiv{
 					else{
 						if(l.lire()!=false && taille>1){
 							cur_l=0;
-							taille--;
+							//taille--;
 							this.ecrireDecomp(node, l.octet[0], e);		
 						}
 					}
@@ -220,7 +218,7 @@ class LempelZiv{
 				}
 				if(cur_tab<puissance && cur_l>=7){
 					if(l.lire()!=false){	
-						taille--;
+						//taille--;
 						return analyseOctetDecomp(l, e, cur_tab,-cur_tab, tab);	
 					}
 				}
@@ -232,7 +230,7 @@ class LempelZiv{
 	}
 
 	public  void lireFichierDecomp(LireBit l, EcrireBit eb) throws IOException{
-			int tab[]=new int[power];
+			//int tab[]=new int[power];
 			this.puissance=0;
 			try{
 				while(l.lire()!=false){	
