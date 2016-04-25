@@ -26,7 +26,7 @@ public class EcrireBit extends FilterOutputStream{
 	
 	public void writeLastBit()throws IOException{
 		writeBit(1);
-		if(nbBit<8){
+		if(nbBit<8 && nbBit!=0){
 			int i=0;
 			for(i=nbBit; i<8;i++){
 				writeBit(0);
