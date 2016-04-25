@@ -6,9 +6,20 @@ public class Test{
 	    try{
 		Huffman huffman = new Huffman();
 		LireBit fl = new LireBit(new FileInputStream(new File("je")));
-		huffman.arbreCompr(fl).racine.affiche();
+		//Arbre a = huffman.arbreCompr(fl);
+		//a.racine.affiche();
+		/*int nb  = a.racine.comptePoids();
+		int tab[] = new int [nb*3];
+		a.racine.tabArbre(0,0,tab,false);
+		for(int i=0;i<tab.length;i++){
+		  
+		    System.out.println(tab[i]);
+		    
+		    
+		    }*/
+		huffman.compression("je","mycomp");   
 		fl.close();
-		huffman.compression("je","mycomp");
+		//huffman.compression("je","mycomp");
 		
 		
 	    }
