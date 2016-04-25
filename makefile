@@ -12,3 +12,4 @@ clean:
  
 run:
 	java Compression -i
+	java Decompression

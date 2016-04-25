@@ -1,1 +1,8 @@
-premier ficher qui servira à la déscription de notre projet : la compression 
+Pour lancer notre projet il y a 3 manières d'y procéder: 
+
+Soit commencer la compression avec make run 
+
+Si vous préférez tout de suite choisir votre mode de compression en console
+taper :
+ java Compression -lz nomdufichier // pour LempelZiv
+ java Compression -h nomdufichier // pour Huffman
