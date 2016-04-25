@@ -152,8 +152,7 @@ class LempelZiv {
 
 	}
 
-	public void analyseOctetDecomp(LireBit l, EcrireBit e, int cur_tab,
-			int cur_l, int[] tab) throws IOException {
+	public void analyseOctetDecomp(LireBit l, EcrireBit e, int[] tab) throws IOException {
 		if (this.nextPoids > this.nbBit) {
 			this.puissance++;
 			// System.out.println( "puissance " +puissance);
@@ -181,7 +180,7 @@ class LempelZiv {
 			l.lire();
 			int k = 3;
 			while (k != -1) {
-				this.analyseOctetDecomp(l, eb, 0, 0, tab);
+				this.analyseOctetDecomp(l, eb,tab);
 			}
 		} catch (IOException e) {
 			System.out.println("faux");
