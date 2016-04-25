@@ -63,7 +63,12 @@ class Huffman{
 	
        
     }
-    public void ecrireArbre(Arbre a,EcrireBit fw){
+    public void ecrireArbre(Arbre a,EcrireBit fw,int taille)throws IOException{
+	int tab[]=new int[taille];
+	a.racine.tabArbre(0,0,tab,false);
+	for(int i=0;i<tab.length;i++){
+	    fw.write(tab[i]);
+	}
     }
     public void ecrireLettre(EcrireBit fw,Node a,char lettre){
 	try{
@@ -146,6 +151,10 @@ class Huffman{
 	fl =  new LireBit(new FileInputStream(new File(fr)));
 	int l ;
 	EcrireBit fe = new EcrireBit(new FileOutputStream(new File(fw)));
+	fe.write(1);
+	int taille=a.taille();
+	fe.write(taille);
+	ecrireArbre(a,fe,taille*3);
 	System.out.println("pas gentil");
 	while((l=fl.read())!=-1){
 	    ecrireLettre(fe,a.racine,new Character((char)l));

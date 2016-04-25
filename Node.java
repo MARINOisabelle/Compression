@@ -1,3 +1,4 @@
+import java.io.IOException;
 public class Node extends Poids{
     Poids right;
     Poids left;
@@ -7,14 +8,18 @@ public class Node extends Poids{
 	this.left = null;
     }
     public int recherche(char l){
-	int i1 = this.right.recherche(l);
-	int i2 = this.left.recherche(l);
-	if((i1==1 || i1==0)&& i2 == -1)
-	    return 1;
-	if(((i2==1) || i2==0) && i1==-1)
-	    return 0;
-	if(i1==2)
-	    return 1;
+	if(this.right !=null){
+	    int i1 = this.right.recherche(l);
+	    int i2 = this.left.recherche(l);
+	    if((i1==1 || i1==0)&& i2 == -1)
+		return 1;
+	    if(((i2==1) || i2==0) && i1==-1)
+		return 0;
+	    if(i1==2)
+		return 1;
+	    else
+		return 0;
+	}
 	else
 	    return 0;
     }
@@ -70,4 +75,26 @@ public class Node extends Poids{
 	    this.right.affiche();
 	}
     }
+    public int comptePoids(){
+	if(this.right != null )
+	    return 1+this.right.comptePoids()+this.left.comptePoids();
+	else
+	    return 1+this.left.comptePoids();
+	
+    }
+    public int  tabArbre(int pl,int pere,int []tab,boolean gauche){
+	tab[pl]=-1;
+	if(pl!=0){
+	    if(gauche)
+		tab[pere+1]=pl;
+	    else
+		tab[pere+2]=pl;
+	}
+	this.left.tabArbre(pl+3,pl,tab,true);
+	if(this.right != null)
+	    this.right.tabArbre(pl+6,pl,tab,false);
+	
+	return 0;
+    }
+    
 }

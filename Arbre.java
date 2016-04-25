@@ -41,5 +41,7 @@ public class Arbre{
 	}
 	this.racine = rac;
     }
-    
+    public int taille(){
+	return this.racine.comptePoids();
+    }
 }
