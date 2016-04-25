@@ -32,7 +32,7 @@ class Compression{
 			if(methode==1){
 				//fw.write(1);
 				
-				Huffman.compression(in, out);
+				//Huffman.compression(in, out);
 
 			}
 			else if(methode==2){
