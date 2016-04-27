@@ -4,6 +4,7 @@
 \usepackage[francais]{babel}
 \usepackage{amssymb}
 \usepackage{pgf, tikz}
+\usepackage{array}
     \title{\textit{Rapport} \\ La compression}
     \author{Lucas \textsc{Labadens} \and Isabelle \textsc{Marino} }
     \date{Le \today}
@@ -86,14 +87,14 @@ On lit de la façon suivante pour avoir l'arbre ci dessous : \\
 \node (2) at (2,-1) {2};
 \node (3) at (1,-2) {3};
 \node (4) at (-3,-2) {4}; 
-\node (6) at (-1.5,-3) {6};
+\node (6) at (-0.5,-3) {6};
 \node (7) at (-3.5,-3) {7}; 
 \node (5) at (-1,-2) {5};
 
 \draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](0)--(2) node[pos=0.6,left, above]{1};
 \draw [->,>=latex,](2)--(3) node[pos=0.6,left, above]{0};
-\draw [->,>=latex,](5)--(6) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](5)--(6) node[pos=0.6,left, above]{1};
 \draw [->,>=latex,](1)--(4) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](4)--(7) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](1)--(5) node[pos=0.6,left, above]{1};
@@ -102,10 +103,37 @@ On lit de la façon suivante pour avoir l'arbre ci dessous : \\
 
 Il y a alors dans le fichier compressé on a (sans les "." et les "|") :\\ 
 0|0.1|10.0|01.0|001.1|101.1| 100.0|010.0 
+On complète enfin le dernier octet avec 1 et le nombre de 0 nécessaire. 
 
 \subsubsection{Décompression}
+Reprenons cette exemple. 
+Nous avons donc dans notre fichier compressé :
+00110001 00011101 11000010 01000000 \\
+Nous avons une liste composé de nœud avec 2 éléments un entier pour le père et un entier pour le bit représenté sur le flèche de l'arbre de compression. Nous initialisons le nœud 0 avec -1 en valeur pour le père et -1 en valeur pour le bit. 
+Puis on lit, le nombre d'octet en fonction du nombre de nœud dans la liste (toujours selon les puissance de 2).
+Donc au commencement on lit 0 bit car il y a $2^{0}$ nœud dans la liste, alors on ajoute le nœud 1 avec comme père 0 et comme bit le prochain bit lu, ici 0.
+On ajoute alors 0 dans le fichier décompressé. \\
+On continue, on lit alors le bit 0 qui sera le père et 1. On ajoute le nœud 2 {0,1} 
+dans le liste.On ajoute alors 1 dans le fichier décompressé.\\
+On lit les bit 10 qu'on traduit en 2 en nombre décimale on ajoute alors le nœud 3 {2, 0}. On parcours alors la liste on la voir le père 2 on lit son bit et on l'ajoute dans le fichier décompressé jusqu'à arrivé au père 0 . On ajoute 1 dans le fichier décompressé. 
 
+On obtient de cette fonction la liste suivante:\\
 
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+noeud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+père & -1 & 0 & 0 & 2 & 1 & 1 & 5 & 4 & 2\\
+\hline
+bit & -1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+\hline 
+
+\end{tabular}
+
+ 
+Pour écrire à l'étape 7, on regarde le père 4 puis le père 1 puis le père 0. 
+On récupère leur bit respectif et on les écrit en commençant par le nœud  1 à jusqu'à celui du bit du nœud 7. On obtient alors la suite: 000.
+Pour le nœud 8 on obtient la suite: 10. 
 
 
 \part{Analyse des performances}
