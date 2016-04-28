@@ -1,0 +1,41 @@
+Objectif semaine pour le 20/04:
+- rues
+- contours: highway/coastline
+- integrer le zoom
+- check: init/delete, avl, conversElem
+
+Objectif semaine pour le 12/04:
+- rues: rotation, ordre 
+- coastline 
+- s'occuper des conversion*.h 
+- multipolygon, epaisseur
+
+Objectif semaine pour le 4/04:
+- Résolution coastline
+- Largeurs des rues
+- Cours intérieur(Relation) 
+- Free
+- Makefile
+
+Objectif semaine pour le 23/03 :
+-Free(xml, way , node, listWay, listNode, Coordinate, Tag, Avl)
+-Ajouter de la doc
+-Remplissage
+-Affichage rues 
+
+Objectif semaine pour le 16/03 :
+- Free(xml, way , node, listWay, listNode, Coordinate, Tag, Avl)
+- Stockage des tags
+- Fonction avlWay(insert)
+
+Objectif semaine pour le 09/03 :
+- Documentation .h
+- Free (malloc, xml)
+- Finir les fonctions mathematiques
+- Stockage dans la structure Way
+- Affichage du stockage (point, voir en lignes)
+
+Objectif semaine pour le 02/03 :
+- Makefile (Documentation)
+- Revoir les fonctions mathematiques
+- Stockage dans la structure Bounds, Av
