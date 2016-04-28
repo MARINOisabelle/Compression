@@ -77,31 +77,24 @@ class Huffman{
 	    while(c!=2){
 		System.out.println(b);
 		fw.writeBit(b);
-		System.out.println("on est au début "+lettre);
+		
 		try{
-		    System.out.println("la petite recherche");
+		    
 		    if(b==1){
 		        c  = a.right.recherche(lettre);
 			if(c!=-1 && c!=2){
 			    a= (Node)a.right;
-			    b = c;
-			    System.out.println("après");
-			    System.out.println("on est a 0");
+			    b = c;  
 			}
 		    }
 		    else if(b==0){
 			c = a.left.recherche(lettre);
-			System.out.println("avant");
 			if(c!=-1 && c!=2){
 			    a=(Node)a.left;
 			    b = c;
-			    System.out.println("après");
-			    System.out.println("on est a 1");
-			}
 			    
+			}
 		    }
-		    
-		    Thread.sleep(5);
 		}
 		catch(Exception e){}
 	    }
@@ -123,7 +116,6 @@ class Huffman{
 	    if(min2 != null){
 		sup.addPoids(min,min2);
 		principal.racine = sup;
-		System.out.println("to1");
 		while((min=feuilleMin(tab))!=null){
 		    principal.rajouteFeuille(min);
 		}
@@ -140,6 +132,16 @@ class Huffman{
 	    return null;
 	}
 	    
+    }
+
+    public int[] tabDec(LireBit l) throws IOException{
+	int taille  = l.read();
+	int tab[] = new int[taille*3];
+	for(int i=0;i<tab.length;i++){
+	    tab[i]=l.read();
+	    //System.out.println(tab[i]);
+	}    
+	return tab;
     }
     
 	/*  fonction appeler dans les main de compresion et decompression */
@@ -158,18 +160,55 @@ class Huffman{
 	System.out.println("pas gentil");
 	while((l=fl.read())!=-1){
 	    ecrireLettre(fe,a.racine,new Character((char)l));
-	    System.out.println("ecrit");
 	}
 	fe.writeLastBit();
 	fe.close();
 	fl.close();
     }
     
-	public static void decompression(FileInputStream fr, FileOutputStream fw)throws IOException{
+    public  void decompression(LireBit fr, EcrireBit fw,long le)throws IOException{
+	    int [] tab = tabDec(fr);
+	    System.out.println("on est la");
+	    int placement = 0;
+	    for(long i=0;i<le-tab.length-3;i++){
+		int b=0;
+		fr.lire();
+		for(int j=0;j<8;j++){
+		    //System.out.println(tab[placement]);
+		    System.out.println("le placement est :"+placement);
+		    if(tab[placement]==255){
+			System.out.println("l'octet lu est :"+fr.octet[j]);
+			placement=tab[placement+1+fr.octet[j]];
+		    }
+		    else{
+			fw.write(tab[placement]);
+			System.out.println(tab[placement]);
+			j=j-1;
+			placement = 0;
+		    }
+		}
+		//System.out.println(i);
 		
-		System.out.println("Decompression : Huffman");
-			
-	}
-
+	    }
+	    fr.lire();
+	    int d;
+	    for(d=0;d<8;d++){
+		if(fr.octet[7-d]==1)
+		    break;
+	    }
+	    for(int j=0;j<8-d;j++){
+		if(tab[placement]==255)
+		    placement=tab[placement+1+fr.octet[j]];
+		else{
+		    fw.write(tab[placement]);
+		    placement=0;
+		    j=j-1;
+		}
+	    }
+    }
+		
+    
 }
+
+
 

@@ -5,7 +5,7 @@ public class Test{
 	    
 	    try{
 		Huffman huffman = new Huffman();
-		LireBit fl = new LireBit(new FileInputStream(new File("je")));
+		LireBit fl = new LireBit(new FileInputStream(new File("Arbre.java")));
 		//Arbre a = huffman.arbreCompr(fl);
 		//a.racine.affiche();
 		/*int nb  = a.racine.comptePoids();
@@ -17,8 +17,17 @@ public class Test{
 		    
 		    
 		    }*/
-		huffman.compression("je","mycomp");   
+		huffman.compression("Arbre.java","mycomp");   
 		fl.close();
+		File f = new File("mycomp");
+		long lz = f.length();
+		EcrireBit fb = new EcrireBit(new FileOutputStream(new File("decomp")));
+		LireBit fr = new LireBit(new FileInputStream(new File("mycomp")));
+		fr.read();
+		huffman.decompression(fr,fb,lz);
+		fr.close();
+		fb.close();
+	       
 		//huffman.compression("je","mycomp");
 		
 		
