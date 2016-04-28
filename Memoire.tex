@@ -49,12 +49,14 @@ L'algorithme de compression de Lempel-Ziv est un codage algorithmique.  Le codag
 Cette algorithme s'applique uniquement aux fichiers binaires, c'est à dire à tout fichier fichier dont les symboles sont représentés sur des bits, et donc par conséquent à tout type de document. 
 
 \subsubsection{Compression}
-Le codage de la compression s'effectue avec un arbre binaire dont les nœuds sont étiquetés par des entiers. Chaque nœud correspond à un $\omega_{i}$. On début avec une unique racine étiquetée à 0.
-A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque l'on ne peut plus se déplacer on crée un nouveau nœud fils $\omega_{i}$ au noeud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivant du 0 ou 1 que l'on est en train de lire.
+Le codage de la compression s'effectue avec un arbre binaire dont les nœuds sont étiquetés par des entiers. Chaque nœud correspond à un entier $i$. On début avec une unique racine étiquetée à 0.
+A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque l'on ne peut plus se déplacer on crée un nouveau nœud fils au nœud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivant du 0 ou 1 que l'on est en train de lire.
 On retourne la racine et on passe à l'étape i+1.
 
-
- Ce que j'ai coder et les problèmes rencontrés
+Pour compresser, j'ai fais une fonction qui analyse les bits lu, elle permet de descendre à gauche si on lit et 0 et à droite si on lit un 1, comme expliquer précédemment. Ensuite si on ne peut pas descendre on lit l'entier du nœud sur lequel on se trouve. Une fonction le traduit en 0/1 sur le nombre de bit nécessaire. Ce nombre dépends du nombre de nœud présent dans l'arbre, ie $\lceil log_{2}(i) \rceil$ où i est le nombre de nœud dans l'arbre. 
+On écrit alors cette traduction puis le dernier bit lu dans le fichier compressé. On répète cette opération jusqu'à ce qu'on ait plus de bit  à lire dans le fichier source.
+Enfin, comme un fichier à un nombre de bit qui est un multiple de 8, car les fichiers sont lu comme des suites d'octets et non seulement de bits (1 octet = 8 bits),  alors nous devons complété le fichier pour pouvoir écrire e dernier octet.
+Nous avons donc choisit la convention de mettre 1 puis le nombre de 0 nécessaire. 
 
 \subsubsection{Décompression}
 On crée au fur et à mesure de la lecture bit à bit un tableau à 2 dimensions Exemple: t[i]= [nœud][bit] où nœud et bit sont des entiers, nœuds et le nombre lu à la i ème étape et bit le bits lu juste après. 
@@ -137,17 +139,22 @@ Pour le nœud 8 on obtient la suite: 10.
 
 
 \part{Analyse des performances}
-\chapter*{Analyse de la compression}
-blabla
-\chapter*{Analyse du temps d'éxécution }
-blabla
-\chapter*{Comparaison entre les algorithmes}
-blabla
+Nous avons choisit un certain nombre de tests à effectuer identiques sur chaque algorithme.
+
+Tout d'abord un test de compression simple avec un fichier et une seule lettre à l'intérieur, nous avons pris la lettre "a".
+Tout d'abord dans le fichier il a y un unique a, puis nous dupliquons ce a 10 fois, puis 100 fois. Et ainsi de suite pour avoir 8 fichiers de 1 octet , 10 octet, 100 octet, 1 Ko, 10Ko, 100Ko, 1Mo et enfin 10Mo. 
+Ensuite, un test un peu plus complexe, avec des fichiers différents et donc le contenu est non redondant.
+Enfin, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
+
+Nous utiliseront ces différents tests pour analyser les performance en terme de taux de compression, ainsi qu'en temps d’exécution pour la compression et la décompression. 
+\section*{Analyse du taux de compression}
+
+\section*{Analyse du temps d’exécution}
+\subsubsection*{Temps d’exécution pour la compression}
+\subsubsection*{Temps d’exécution pour la décompression}
 
 
-
-
-
+\section*{Différences entre les algorithmes}
 
 
 \end{document}
