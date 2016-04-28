@@ -3,7 +3,8 @@
 \usepackage[T1]{fontenc} 
 \usepackage[francais]{babel}
 \usepackage{amssymb}
-
+\usepackage{pgf, tikz}
+\usepackage{array}
     \title{\textit{Rapport} \\ La compression}
     \author{Lucas \textsc{Labadens} \and Isabelle \textsc{Marino} }
     \date{Le \today}
@@ -46,10 +47,6 @@ blabla
 
 L'algorithme de compression de Lempel-Ziv est un codage algorithmique.  Le codage algorithmique n’a pas besoin de transmettre des informations autres que le résultat du codage. Donc il n'y a pas besoin de transmettre dans le fichier compressé un code pour décompresser celui-ci. Il y a donc un autre avantage à ce style de compression: la lecture unique du fichier source. En effet, comme l'algorithme ne se base pas sur la récurrence de modèle dans le fichier source, nous pouvons lire et écrire le fichier compresser en même temps, ainsi cette algorithme nécessite une unique lecture du fichier source, ce qui est plutôt intéressant lors de la compression de gros fichier en termes de gain de temps. 
 Cette algorithme s'applique uniquement aux fichiers binaires, c'est à dire à tout fichier fichier dont les symboles sont représentés sur des bits, et donc par conséquent à tout type de document. 
-\subsubsection{Principe de l'algorithme}
-
-Le principe de l'algorithme est le suivant, on découpe le fichier à compresser en facteur t=$ \omega_{0}\omega_{1}\omega_{2}$... tel que $\omega_{0}$ est le mot vide, et pour tout i>0 $\omega_{i}$ est différent de tous les $\omega_{j}$ pour j<i et il existe un unique j<i et une lettre a tel que $\omega_{i}=\omega_{j}a$. 
-Ainsi pour tout i>0, $\omega_{i}$ peut être représenté en $\lceil log_{2}(i) \rceil$ + 1 bits ($\lceil log_{2}(i) \rceil$ pour représenter $\omega_{j}$ et un bit a).
 
 \subsubsection{Compression}
 \paragraph*{}
@@ -57,20 +54,88 @@ Le codage de la compression s'effectue avec un arbre binaire dont les nœuds son
 A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque l'on ne peut plus se déplacer on crée un nouveau nœud fils $\omega_{i}$ au noeud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivant du 0 ou 1 que l'on est en train de lire.
 On retourne la racine et on passe à l'étape i+1.
 \paragraph*{}
+
  Ce que j'ai coder et les problèmes rencontrés
 
 \subsubsection{Décompression}
 \paragraph*{}
 On crée au fur et à mesure de la lecture bit à bit un tableau à 2 dimensions Exemple: t[i]= [nœud][bit] où nœud et bit sont des entiers, nœuds et le nombre lu à la i ème étape et bit le bits lu juste après. 
 On commence en initialisant la première case à  bit=-1 et nœud =-1 , pour pouvoir donner un repère lors de l'écriture de la décompression, il représente la racine de l'arbre de compression.  
-A l'étape i, on lit n=$\lceil log_{2}(i) \rceil$ et et le bit suivant. On stock alors le nombre écrit et et bit suivant.On remonte dans le tableau grâce à n, on lit et le bit stocker dans t[n] et on regarde t[n.noeud] jusqu'à arriver à t[0]. On écrit dans le fichier décompresser la suite de bit lu au fur et à mesure.
+A l'étape i, on lit n=$\lceil log_{2}(i) \rceil$ et et le bit suivant. On stock alors le nombre écrit et et bit suivant.On remonte dans le tableau grâce à n, on lit et le bit stocker dans t[n] et on regarde t[n.nœud] jusqu'à arriver à t[0]. On écrit dans le fichier décompresser la suite de bit lu au fur et à mesure.
 
 \paragraph*{}
- Ce que j'ai coder et les problèmes rencontrés
+ Pour décompresser, j'ai crée une fonction qui me permet de lire bit à bit mon fichier. Je lis alors mes bits en fonction de la puissance de 2 souhaité, puis je les met dans un tableau pour pouvoir les traduire en un entier i. 
+ Je trouve ma puissance de 2 en fonction du nombre de nœud déjà lu et stocké précédemment.
+ Une fois l'entier i  trouvé, je recherche dans mon tableau à 2 dimensions à partir de i et je regarde la case du père afin de récupérer tous les 0/1 de la suite. Je les retourne pour les copier dans le fichier décompressé ensuite je lis un dernier bit que je copie aussi dans le fichier décompresser.
+ Je stocke à la fin de mon tableau ce nouveau nœud, composée de son père (l'entier i) et du dernier bit lu. 
+ Je refais cette procédure jusqu'à la fin du fichier. 
 
  
 \section*{Exemple}
-blabla
+Nous allons regarder le fichier composé de 2 caractère "ab".
+
+\subsubsection{Compression}
+En terme d'octet "ab" est représenter par : 
+		01100001 01100010\\
+On lit de la façon suivante pour avoir l'arbre ci dessous : \\
+\underline{0} \underline{1} \underline{10} \underline{00} \underline{101}  \underline{100} \underline{01} \underline{0}
+\\
+	
+\begin{tikzpicture}
+\node (0) at (0,0) {0};
+\node (1) at (-2,-1) {1}; 
+\node (2) at (2,-1) {2};
+\node (3) at (1,-2) {3};
+\node (4) at (-3,-2) {4}; 
+\node (6) at (-0.5,-3) {6};
+\node (7) at (-3.5,-3) {7}; 
+\node (5) at (-1,-2) {5};
+
+\draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](0)--(2) node[pos=0.6,left, above]{1};
+\draw [->,>=latex,](2)--(3) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](5)--(6) node[pos=0.6,left, above]{1};
+\draw [->,>=latex,](1)--(4) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](4)--(7) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](1)--(5) node[pos=0.6,left, above]{1};
+
+\end{tikzpicture}
+
+Il y a alors dans le fichier compressé on a (sans les "." et les "|") :\\ 
+0|0.1|10.0|01.0|001.1|101.1| 100.0|010.0 
+On complète enfin le dernier octet avec 1 et le nombre de 0 nécessaire. 
+
+\subsubsection{Décompression}
+Reprenons cette exemple. 
+Nous avons donc dans notre fichier compressé :
+00110001 00011101 11000010 01000000 \\
+Nous avons une liste composé de nœud avec 2 éléments un entier pour le père et un entier pour le bit représenté sur le flèche de l'arbre de compression. Nous initialisons le nœud 0 avec -1 en valeur pour le père et -1 en valeur pour le bit. 
+Puis on lit, le nombre d'octet en fonction du nombre de nœud dans la liste (toujours selon les puissance de 2).
+Donc au commencement on lit 0 bit car il y a $2^{0}$ nœud dans la liste, alors on ajoute le nœud 1 avec comme père 0 et comme bit le prochain bit lu, ici 0.
+On ajoute alors 0 dans le fichier décompressé. \\
+On continue, on lit alors le bit 0 qui sera le père et 1. On ajoute le nœud 2 {0,1} 
+dans le liste.On ajoute alors 1 dans le fichier décompressé.\\
+On lit les bit 10 qu'on traduit en 2 en nombre décimale on ajoute alors le nœud 3 {2, 0}. On parcours alors la liste on la voir le père 2 on lit son bit et on l'ajoute dans le fichier décompressé jusqu'à arrivé au père 0 . On ajoute 1 dans le fichier décompressé. 
+
+On obtient de cette fonction la liste suivante:\\
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+noeud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+père & -1 & 0 & 0 & 2 & 1 & 1 & 5 & 4 & 2\\
+\hline
+bit & -1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+\hline 
+
+\end{tabular}
+
+ 
+Pour écrire à l'étape 7, on regarde le père 4 puis le père 1 puis le père 0. 
+On récupère leur bit respectif et on les écrit en commençant par le nœud  1 à jusqu'à celui du bit du nœud 7. On obtient alors la suite: 000.
+Pour le nœud 8 on obtient la suite: 10. 
+
+
 \part{Analyse des performances}
 \chapter*{Analyse de la compression}
 blabla
