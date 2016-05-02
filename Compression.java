@@ -30,9 +30,14 @@ class Compression{
 				// fr va lire le fichier
 				// fw va écrire dans le nouveau !
 			if(methode==1){
-				//fw.write(1);
 				
-				//Huffman.compression(in, out);
+			    Huffman huf = new Huffman();
+			    try{
+				huf.compression(in, out);
+			    }
+			    catch(Exception e){
+				e.printStackTrace();
+			    }
 
 			}
 			else if(methode==2){

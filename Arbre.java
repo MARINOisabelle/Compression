@@ -44,4 +44,35 @@ public class Arbre{
     public int taille(){
 	return this.racine.comptePoids();
     }
+   
+    public boolean fusionneArbre(Arbre a){
+	if(a != null){
+	    Node r = new Node(a.racine.poids+this.racine.poids);
+	    if( a.racine.right!=null){
+		if(a.racine.poids>this.racine.poids){
+		    r.right = a.racine;
+		    r.left = this.racine;
+		}
+		else{
+		    r.right=this.racine;
+		    r.left=a.racine;
+		}
+	    }
+	    else {
+		if(a.racine.poids>this.racine.poids){
+		    r.right = a.racine.left;
+		    r.left = this.racine;
+		}
+		else{
+		    r.right=this.racine;
+		    r.left=a.racine.left;
+		}
+	    }
+	    this.racine = r;
+	    return true;
+	}
+	else{
+	    return false;
+	}
+    }
 }

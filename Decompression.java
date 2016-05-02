@@ -29,9 +29,11 @@ class Decompression {
 			fr = new LireBit(new FileInputStream(i));
 			fw = new EcrireBit(new FileOutputStream(new File(out)));
 			int methode = fr.read();
+			System.out.println(methode);
 			if (methode == 1) {
 				System.out.println("Huffman");
-				// Huffman.decompression(fr, fw, tailleIn);
+				Huffman h = new Huffman();
+				h.decompression(fr, fw, tailleIn);
 
 			}
 			if (methode == 2) {

@@ -23,7 +23,12 @@ public class Feuille extends Poids{
     public int comptePoids(){
 	return 1;
     }
-    
+    public void dfs(ArrayList<Integer> a, CodeLettre[] cl){
+	CodeLettre c = new CodeLettre(a);
+	System.out.println(letter);
+	cl[letter]=c;
+	Test.afficheList(cl[letter].code);
+    }
     public int tabArbre(int pl,int pere,int []tab,boolean gauche){
 	tab[pl]=this.letter;
 	tab[pl+1]=-1;
@@ -32,6 +37,6 @@ public class Feuille extends Poids{
 	    tab[pere+1]=pl;
 	else
 	    tab[pere+2]=pl;
-	return 0;
+	return pl;
     }
 }

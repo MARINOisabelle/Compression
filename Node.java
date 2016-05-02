@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.*;
 public class Node extends Poids{
     Poids right;
     Poids left;
@@ -22,6 +23,16 @@ public class Node extends Poids{
 	}
 	else
 	    return 0;
+    }
+    public void dfs(ArrayList<Integer> a,CodeLettre [] cl){
+	ArrayList<Integer> g = copieList(a);
+	ArrayList<Integer> d = copieList(a);
+	g.add(0);
+	this.left.dfs(g,cl);
+	if(this.right!=null){
+	    d.add(1);
+	    this.right.dfs(d,cl);
+	}
     }
     public Node(Feuille droit,Feuille gauche){
 	this.poids = droit.poids+gauche.poids;
@@ -90,11 +101,18 @@ public class Node extends Poids{
 	    else
 		tab[pere+2]=pl;
 	}
-	this.left.tabArbre(pl+3,pl,tab,true);
-	if(this.right != null)
-	    this.right.tabArbre(pl+6,pl,tab,false);
-	
-	return 0;
+	int suite=this.left.tabArbre(pl+3,pl,tab,true);
+	if(this.right != null){
+	    suite=suite+3;
+	   suite =  this.right.tabArbre(suite,pl,tab,false);
+	}
+	return suite;
     }
-    
+    public ArrayList<Integer> copieList(ArrayList<Integer> a){
+	ArrayList<Integer> n = new ArrayList<Integer>();
+	for(int i=0;i<a.size();i++){
+	    n.add(a.get(i));
+	}
+	return n;
+    }
 }
