@@ -44,7 +44,9 @@ class Compression{
 			    	fr =new LireBit( new FileInputStream(new File(in)));
 				fw = new EcrireBit( new FileOutputStream(new File(out)));
 				fw.write(2);
+				long debut = System.currentTimeMillis();
 			 	LempelZiv.compression(fr,fw);
+				System.out.println(System.currentTimeMillis()-debut + " time" ); 
 			}
 			else{
 				System.out.println("Vous n'avez pas choisit de méthode de compression.");

@@ -49,26 +49,25 @@ L'algorithme de compression de Lempel-Ziv est un codage algorithmique.  Le codag
 Cette algorithme s'applique uniquement aux fichiers binaires, c'est à dire à tout fichier fichier dont les symboles sont représentés sur des bits, et donc par conséquent à tout type de document. 
 
 \subsubsection{Compression}
-\paragraph*{}
-Le codage de la compression s'effectue avec un arbre binaire dont les nœuds sont étiquetés par des entiers. Chaque nœud correspond à un $\omega_{i}$. On début avec une unique racine étiquetée à 0.
-A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque l'on ne peut plus se déplacer on crée un nouveau nœud fils $\omega_{i}$ au noeud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivant du 0 ou 1 que l'on est en train de lire.
+Le codage de la compression s'effectue avec un arbre binaire dont les nœuds sont étiquetés par des entiers. Chaque nœud correspond à un entier $i$. On début avec une unique racine étiquetée à 0.
+A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque l'on ne peut plus se déplacer on crée un nouveau nœud fils au nœud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivant du 0 ou 1 que l'on est en train de lire.
 On retourne la racine et on passe à l'étape i+1.
-\paragraph*{}
 
- Ce que j'ai coder et les problèmes rencontrés
+Pour compresser, j'ai fais une fonction qui analyse les bits lu, elle permet de descendre à gauche si on lit et 0 et à droite si on lit un 1, comme expliquer précédemment. Ensuite si on ne peut pas descendre on lit l'entier du nœud sur lequel on se trouve. Une fonction le traduit en 0/1 sur le nombre de bit nécessaire. Ce nombre dépends du nombre de nœud présent dans l'arbre, ie $\lceil log_{2}(i) \rceil$ où i est le nombre de nœud dans l'arbre. 
+On écrit alors cette traduction puis le dernier bit lu dans le fichier compressé. On répète cette opération jusqu'à ce qu'on ait plus de bit  à lire dans le fichier source.
+Enfin, comme un fichier à un nombre de bit qui est un multiple de 8, car les fichiers sont lu comme des suites d'octets et non seulement de bits (1 octet = 8 bits),  alors nous devons complété le fichier pour pouvoir écrire e dernier octet.
+Nous avons donc choisit la convention de mettre 1 puis le nombre de 0 nécessaire. 
 
 \subsubsection{Décompression}
-\paragraph*{}
 On crée au fur et à mesure de la lecture bit à bit un tableau à 2 dimensions Exemple: t[i]= [nœud][bit] où nœud et bit sont des entiers, nœuds et le nombre lu à la i ème étape et bit le bits lu juste après. 
 On commence en initialisant la première case à  bit=-1 et nœud =-1 , pour pouvoir donner un repère lors de l'écriture de la décompression, il représente la racine de l'arbre de compression.  
 A l'étape i, on lit n=$\lceil log_{2}(i) \rceil$ et et le bit suivant. On stock alors le nombre écrit et et bit suivant.On remonte dans le tableau grâce à n, on lit et le bit stocker dans t[n] et on regarde t[n.nœud] jusqu'à arriver à t[0]. On écrit dans le fichier décompresser la suite de bit lu au fur et à mesure.
 
-\paragraph*{}
- Pour décompresser, j'ai crée une fonction qui me permet de lire bit à bit mon fichier. Je lis alors mes bits en fonction de la puissance de 2 souhaité, puis je les met dans un tableau pour pouvoir les traduire en un entier i. 
- Je trouve ma puissance de 2 en fonction du nombre de nœud déjà lu et stocké précédemment.
- Une fois l'entier i  trouvé, je recherche dans mon tableau à 2 dimensions à partir de i et je regarde la case du père afin de récupérer tous les 0/1 de la suite. Je les retourne pour les copier dans le fichier décompressé ensuite je lis un dernier bit que je copie aussi dans le fichier décompresser.
- Je stocke à la fin de mon tableau ce nouveau nœud, composée de son père (l'entier i) et du dernier bit lu. 
- Je refais cette procédure jusqu'à la fin du fichier. 
+Pour décompresser, j'ai crée une fonction qui me permet de lire bit à bit mon fichier. Je lis alors mes bits en fonction de la puissance de 2 souhaité, puis je les met dans un tableau pour pouvoir les traduire en un entier i. 
+Je trouve ma puissance de 2 en fonction du nombre de nœud déjà lu et stocké précédemment.
+Une fois l'entier i  trouvé, je recherche dans mon tableau à 2 dimensions à partir de i et je regarde la case du père afin de récupérer tous les 0/1 de la suite. Je les retourne pour les copier dans le fichier décompressé ensuite je lis un dernier bit que je copie aussi dans le fichier décompresser.
+Je stocke à la fin de mon tableau ce nouveau nœud, composée de son père (l'entier i) et du dernier bit lu. 
+Je refais cette procédure jusqu'à la fin du fichier. 
 
  
 \section*{Exemple}
@@ -77,10 +76,13 @@ Nous allons regarder le fichier composé de 2 caractère "ab".
 \subsubsection{Compression}
 En terme d'octet "ab" est représenter par : 
 		01100001 01100010\\
-On lit de la façon suivante pour avoir l'arbre ci dessous : \\
+On lit de la façon suivante pour avoir l'arbre ci dessous :\begin{center}
+
 \underline{0} \underline{1} \underline{10} \underline{00} \underline{101}  \underline{100} \underline{01} \underline{0}
 \\
-	
+\end{center}
+
+\begin{center}
 \begin{tikzpicture}
 \node (0) at (0,0) {0};
 \node (1) at (-2,-1) {1}; 
@@ -100,6 +102,7 @@ On lit de la façon suivante pour avoir l'arbre ci dessous : \\
 \draw [->,>=latex,](1)--(5) node[pos=0.6,left, above]{1};
 
 \end{tikzpicture}
+\end{center}	
 
 Il y a alors dans le fichier compressé on a (sans les "." et les "|") :\\ 
 0|0.1|10.0|01.0|001.1|101.1| 100.0|010.0 
@@ -117,8 +120,8 @@ On continue, on lit alors le bit 0 qui sera le père et 1. On ajoute le nœud 2 
 dans le liste.On ajoute alors 1 dans le fichier décompressé.\\
 On lit les bit 10 qu'on traduit en 2 en nombre décimale on ajoute alors le nœud 3 {2, 0}. On parcours alors la liste on la voir le père 2 on lit son bit et on l'ajoute dans le fichier décompressé jusqu'à arrivé au père 0 . On ajoute 1 dans le fichier décompressé. 
 
-On obtient de cette fonction la liste suivante:\\
-
+On obtient de cette fonction la liste suivante:
+\begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 \hline
 noeud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
@@ -127,9 +130,8 @@ père & -1 & 0 & 0 & 2 & 1 & 1 & 5 & 4 & 2\\
 \hline
 bit & -1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
 \hline 
-
 \end{tabular}
-
+\end{center}
  
 Pour écrire à l'étape 7, on regarde le père 4 puis le père 1 puis le père 0. 
 On récupère leur bit respectif et on les écrit en commençant par le nœud  1 à jusqu'à celui du bit du nœud 7. On obtient alors la suite: 000.
@@ -137,17 +139,22 @@ Pour le nœud 8 on obtient la suite: 10.
 
 
 \part{Analyse des performances}
-\chapter*{Analyse de la compression}
-blabla
-\chapter*{Analyse du temps d'éxécution }
-blabla
-\chapter*{Comparaison entre les algorithmes}
-blabla
+Nous avons choisit un certain nombre de tests à effectuer identiques sur chaque algorithme.
+
+Tout d'abord un test de compression simple avec un fichier et une seule lettre à l'intérieur, nous avons pris la lettre "a".
+Tout d'abord dans le fichier il a y un unique a, puis nous dupliquons ce a 10 fois, puis 100 fois. Et ainsi de suite pour avoir 8 fichiers de 1 octet , 10 octet, 100 octet, 1 Ko, 10Ko, 100Ko, 1Mo et enfin 10Mo. 
+Ensuite, un test un peu plus complexe, avec des fichiers différents et donc le contenu est non redondant.
+Enfin, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
+
+Nous utiliseront ces différents tests pour analyser les performance en terme de taux de compression, ainsi qu'en temps d’exécution pour la compression et la décompression. 
+\section*{Analyse du taux de compression}
+
+\section*{Analyse du temps d’exécution}
+\subsubsection*{Temps d’exécution pour la compression}
+\subsubsection*{Temps d’exécution pour la décompression}
 
 
-
-
-
+\section*{Différences entre les algorithmes}
 
 
 \end{document}

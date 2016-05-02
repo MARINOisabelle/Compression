@@ -37,7 +37,9 @@ class Decompression {
 
 			}
 			if (methode == 2) {
+				long debut = System.currentTimeMillis();
 				LempelZiv.decompression(fr, fw);
+				System.out.println(System.currentTimeMillis()-debut + " time" ); 
 			} else {
 				System.out.println("Ce fichier n'a pas été compresser");
 
