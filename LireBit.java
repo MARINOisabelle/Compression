@@ -12,7 +12,7 @@ public class LireBit extends FilterInputStream {
 	public boolean lire() throws IOException {
 		int mask = 0x80;
 		int o = this.read();
-		// System.out.println(o);
+		// System.out.println(o+"lire");
 		if (o == -1)
 			return false;
 		for (int i = 0; i < 8; i++) {

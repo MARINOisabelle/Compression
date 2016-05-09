@@ -101,12 +101,30 @@ public class Node extends Poids{
 	    else
 		tab[pere+2]=pl;
 	}
-	int suite=this.left.tabArbre(pl+3,pl,tab,true);
+	pere=pl;
+	pl=pl+3;
+	pl=this.left.tabArbre(pl,pere,tab,true);
 	if(this.right != null){
-	    suite=suite+3;
-	   suite =  this.right.tabArbre(suite,pl,tab,false);
+	    pl=pl+3;
+	   pl =  this.right.tabArbre(pl,pere,tab,false);
 	}
-	return suite;
+	else{
+	    pl=pl+3;
+	}
+	return pl;
+    }
+    public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){
+	int place = l.size();
+	l.add(-1);
+	l.add(0);
+	l.add(0);
+	int gauch= this.left.ListArbre(l,0,true);
+	l.set(place+1,gauch);
+	if(this.right != null){
+	    int droit =this.right.ListArbre(l,0,false);
+	    l.set(place+2,droit);
+	}
+	return place;
     }
     public ArrayList<Integer> copieList(ArrayList<Integer> a){
 	ArrayList<Integer> n = new ArrayList<Integer>();
@@ -115,4 +133,5 @@ public class Node extends Poids{
 	}
 	return n;
     }
+    
 }

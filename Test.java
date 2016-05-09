@@ -31,7 +31,10 @@ public class Test{
     }
     public static void afficheList(ArrayList<Integer> a){
 	for(int i=0;i<a.size();i++){
-	    System.out.print(a.get(i));
+	    if(i%3==0)
+	    System.out.println("("+i+")");
+		
+	    System.out.print(a.get(i)+" ");
 	    
 	}
 	System.out.println("fin de liste");

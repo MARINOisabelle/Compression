@@ -24,10 +24,21 @@ public class Feuille extends Poids{
 	return 1;
     }
     public void dfs(ArrayList<Integer> a, CodeLettre[] cl){
-	CodeLettre c = new CodeLettre(a);
-	System.out.println(letter);
-	cl[letter]=c;
-	Test.afficheList(cl[letter].code);
+	
+	//System.out.print(letter+" ");
+	cl[(int)letter]= new CodeLettre(a);
+	if((int)letter==255)
+	    System.out.println("la");
+	//System.out.println(cl[letter].code.size());
+	//Test.afficheList(cl[letter].code);
+	
+    }
+    public ArrayList<Integer> copieList(ArrayList<Integer> a){
+	ArrayList<Integer> n = new ArrayList<Integer>();
+	for(int i=0;i<a.size();i++){
+	    n.add(a.get(i));
+	}
+	return n;
     }
     public int tabArbre(int pl,int pere,int []tab,boolean gauche){
 	tab[pl]=this.letter;
@@ -38,5 +49,12 @@ public class Feuille extends Poids{
 	else
 	    tab[pere+2]=pl;
 	return pl;
+    }
+    public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){
+	l.add((int)this.letter);
+	l.add(-1);
+	l.add(-1);
+	return l.size()-3;
+	 
     }
 }
