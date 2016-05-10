@@ -144,7 +144,7 @@ Nous avons choisit un certain nombre de tests à effectuer identiques sur chaque
  
 Tout d'abord un test de compression théorique simple avec un fichier et un seul caractère à l'intérieur, nous avons pris le caractère "0".
 Tout d'abord dans le fichier il a y un unique octet de 0, puis nous dupliquons ce a 10 fois, 20 fois ... Et ainsi de suite pour avoir 10 fichiers de 1 octet , 10, 20 ,30 ,...  octet, jusqu'à 10 Mo.
-Puis nous continuons avec des suites plus complexe comme une suite périodique, une suite générer aléatoirement et enfin une suite de Champarnown.  
+Puis nous continuons avec des suites plus complexe comme une suite périodique composé que de suite de 01, une suite générer aléatoirement et enfin une suite de Champarnown.  
 
 Enfin, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
 
@@ -313,9 +313,9 @@ Tout d'abord regardons nos fichiers composés que de 0, nous obtenons le graphiq
 \put(191.0,131.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
 \put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
 \put(191.0,776.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
-\put(30,453){\makebox(0,0){\shortstack{ taux\ de\\ compression         }}}
+\put(30,453){\makebox(0,0){\shortstack{ taux de \\ compression }}}
 \put(815,29){\makebox(0,0){ nombre octet }}
-\put(815,838){\makebox(0,0){ Taux de compression : fichiers avec des octets constants}}
+\put(815,838){\makebox(0,0){ Taux de compression: fichier constant 0 }}
 \put(1279,736){\makebox(0,0)[r]{taux}}
 \put(1299.0,736.0){\rule[-0.200pt]{24.090pt}{0.400pt}}
 \put(191,215){\usebox{\plotpoint}}
@@ -342,6 +342,312 @@ Tout d'abord regardons nos fichiers composés que de 0, nous obtenons le graphiq
 
 On constate que la courbe est significative plus le nombre d'octet est important plus le taux de compression augmente, ainsi le fichier compressé devient réellement de plus en plus petit. 
 On remarque néanmoins que lorsque l'on veux compressé un seul octet le taux de compression est en dessous de 1, c'est-à -dire que le fichier compressé est plus gros que le fichier source, ceci s'explique notamment par le stockage du premier  octet supplémentaire pour connaître le mode de compression, ici Lempel-Ziv. Il s'explique aussi car le début de compression pour Lempel-Ziv remplace un bit par 2 et ainsi de suite. Nous devons donc attendre les 10 octets dans le fichier source pour que la compression ai vraiment lieu. 
+
+\begin{center}
+% GNUPLOT: LaTeX picture
+\setlength{\unitlength}{0.240900pt}
+\ifx\plotpoint\undefined\newsavebox{\plotpoint}\fi
+\begin{picture}(1500,900)(0,0)
+\sbox{\plotpoint}{\rule[-0.200pt]{0.400pt}{0.400pt}}%
+\put(191.0,131.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(171,131){\makebox(0,0)[r]{ 0.1}}
+\put(1419.0,131.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(191.0,180.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,180.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,208.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,208.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,228.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,228.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,244.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,244.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,256.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,256.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,267.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,267.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,277.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,277.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,285.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,285.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,292.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(171,292){\makebox(0,0)[r]{ 1}}
+\put(1419.0,292.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(191.0,341.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,341.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,369.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,369.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,389.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,389.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,405.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,405.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,418.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,418.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,429.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,429.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,438.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,438.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,446.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,446.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,454.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(171,454){\makebox(0,0)[r]{ 10}}
+\put(1419.0,454.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(191.0,502.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,502.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,530.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,530.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,551.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,551.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,566.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,566.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,579.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,579.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,590.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,590.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,599.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,599.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,607.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,607.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,615.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(171,615){\makebox(0,0)[r]{ 100}}
+\put(1419.0,615.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(191.0,663.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,663.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,692.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,692.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,712.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,712.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,727.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,727.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,740.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,740.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,751.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,751.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,760.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,760.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,769.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,769.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(191.0,776.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(171,776){\makebox(0,0)[r]{ 1000}}
+\put(1419.0,776.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(191.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(191,90){\makebox(0,0){ 1}}
+\put(191.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(245.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(245.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(316.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(316.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(352.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(352.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(369.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(369,90){\makebox(0,0){ 10}}
+\put(369.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(423.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(423.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(494.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(494.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(530.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(530.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(548.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(548,90){\makebox(0,0){ 100}}
+\put(548.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(601.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(601.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(672.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(672.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(709.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(709.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(726.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(726,90){\makebox(0,0){ 1000}}
+\put(726.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(780.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(780.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(850.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(850.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(887.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(887.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(904.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(904,90){\makebox(0,0){ 10000}}
+\put(904.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(958.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(958.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1029.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1029.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1065.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1065.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1082.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1082,90){\makebox(0,0){ 100000}}
+\put(1082.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1136.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1136.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1207.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1207.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1243.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1243.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1261.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1261,90){\makebox(0,0){ 1e+06}}
+\put(1261.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1314.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1314.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1385.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1385.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1422.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1422.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1439,90){\makebox(0,0){ 1e+07}}
+\put(1439.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(191.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(191.0,131.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
+\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(191.0,776.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
+\put(30,453){\makebox(0,0){\shortstack{ taux de \\ compression }}}
+\put(815,29){\makebox(0,0){ nombre octet }}
+\put(815,838){\makebox(0,0){ Taux de compression: fichier alterné }}
+\put(1279,736){\makebox(0,0)[r]{taux}}
+\put(1299.0,736.0){\rule[-0.200pt]{24.090pt}{0.400pt}}
+\put(191,215){\usebox{\plotpoint}}
+\multiput(191.00,215.58)(1.158,0.499){151}{\rule{1.025pt}{0.120pt}}
+\multiput(191.00,214.17)(175.873,77.000){2}{\rule{0.512pt}{0.400pt}}
+\multiput(369.00,292.58)(1.522,0.499){115}{\rule{1.314pt}{0.120pt}}
+\multiput(369.00,291.17)(176.274,59.000){2}{\rule{0.657pt}{0.400pt}}
+\multiput(548.00,351.58)(1.373,0.499){127}{\rule{1.195pt}{0.120pt}}
+\multiput(548.00,350.17)(175.519,65.000){2}{\rule{0.598pt}{0.400pt}}
+\multiput(726.00,416.58)(1.312,0.499){133}{\rule{1.147pt}{0.120pt}}
+\multiput(726.00,415.17)(175.619,68.000){2}{\rule{0.574pt}{0.400pt}}
+\multiput(904.00,484.58)(1.332,0.499){131}{\rule{1.163pt}{0.120pt}}
+\multiput(904.00,483.17)(175.587,67.000){2}{\rule{0.581pt}{0.400pt}}
+\multiput(1082.00,551.58)(1.246,0.499){141}{\rule{1.094pt}{0.120pt}}
+\multiput(1082.00,550.17)(176.728,72.000){2}{\rule{0.547pt}{0.400pt}}
+\multiput(1261.00,623.58)(1.239,0.499){141}{\rule{1.089pt}{0.120pt}}
+\multiput(1261.00,622.17)(175.740,72.000){2}{\rule{0.544pt}{0.400pt}}
+\put(191.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(191.0,131.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
+\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(191.0,776.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
+\end{picture}
+\end{center}
+POur la suite alterner....
+
+% GNUPLOT: LaTeX picture
+\setlength{\unitlength}{0.240900pt}
+\ifx\plotpoint\undefined\newsavebox{\plotpoint}\fi
+\begin{picture}(1500,900)(0,0)
+\sbox{\plotpoint}{\rule[-0.200pt]{0.400pt}{0.400pt}}%
+\put(171.0,131.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(151,131){\makebox(0,0)[r]{ 0.1}}
+\put(1419.0,131.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(171.0,325.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,325.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,439.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,439.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,519.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,519.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,582.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,582.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,633.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,633.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,676.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,676.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,713.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,713.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,746.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(1429.0,746.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
+\put(171.0,776.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(151,776){\makebox(0,0)[r]{ 1}}
+\put(1419.0,776.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
+\put(171.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(171,90){\makebox(0,0){ 1}}
+\put(171.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(226.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(226.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(298.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(298.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(335.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(335.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(352.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(352,90){\makebox(0,0){ 10}}
+\put(352.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(407.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(407.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(479.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(479.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(516.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(516.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(533.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(533,90){\makebox(0,0){ 100}}
+\put(533.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(588.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(588.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(660.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(660.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(697.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(697.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(714.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(714,90){\makebox(0,0){ 1000}}
+\put(714.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(769.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(769.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(841.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(841.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(878.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(878.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(896.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(896,90){\makebox(0,0){ 10000}}
+\put(896.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(950.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(950.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1022.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1022.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1059.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1059.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1077.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1077,90){\makebox(0,0){ 100000}}
+\put(1077.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1131.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1131.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1203.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1203.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1240.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1240.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1258.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1258,90){\makebox(0,0){ 1e+06}}
+\put(1258.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1312.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1312.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1384.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1384.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1421.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1421.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
+\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(1439,90){\makebox(0,0){ 1e+07}}
+\put(1439.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
+\put(171.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(171.0,131.0){\rule[-0.200pt]{305.461pt}{0.400pt}}
+\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(171.0,776.0){\rule[-0.200pt]{305.461pt}{0.400pt}}
+\put(30,453){\makebox(0,0){\shortstack{ taux de \\ compression }}}
+\put(805,29){\makebox(0,0){ nombre octet }}
+\put(805,838){\makebox(0,0){ Taux de compression: fichier aléatoire}}
+\put(1279,736){\makebox(0,0)[r]{taux}}
+\put(1299.0,736.0){\rule[-0.200pt]{24.090pt}{0.400pt}}
+\put(171,388){\usebox{\plotpoint}}
+\multiput(171.58,388.00)(0.500,0.707){359}{\rule{0.120pt}{0.666pt}}
+\multiput(170.17,388.00)(181.000,254.618){2}{\rule{0.400pt}{0.333pt}}
+\multiput(352.00,644.58)(1.783,0.498){99}{\rule{1.520pt}{0.120pt}}
+\multiput(352.00,643.17)(177.846,51.000){2}{\rule{0.760pt}{0.400pt}}
+\multiput(533.00,695.58)(3.389,0.497){51}{\rule{2.781pt}{0.120pt}}
+\multiput(533.00,694.17)(175.227,27.000){2}{\rule{1.391pt}{0.400pt}}
+\multiput(714.00,722.58)(7.820,0.492){21}{\rule{6.167pt}{0.119pt}}
+\multiput(714.00,721.17)(169.201,12.000){2}{\rule{3.083pt}{0.400pt}}
+\multiput(896.00,734.59)(10.514,0.489){15}{\rule{8.144pt}{0.118pt}}
+\multiput(896.00,733.17)(164.096,9.000){2}{\rule{4.072pt}{0.400pt}}
+\multiput(1077.00,743.59)(16.312,0.482){9}{\rule{12.167pt}{0.116pt}}
+\multiput(1077.00,742.17)(155.747,6.000){2}{\rule{6.083pt}{0.400pt}}
+\multiput(1258.00,749.60)(26.362,0.468){5}{\rule{18.200pt}{0.113pt}}
+\multiput(1258.00,748.17)(143.225,4.000){2}{\rule{9.100pt}{0.400pt}}
+\put(171.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(171.0,131.0){\rule[-0.200pt]{305.461pt}{0.400pt}}
+\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
+\put(171.0,776.0){\rule[-0.200pt]{305.461pt}{0.400pt}}
+\end{picture}
 
 \section*{Analyse du temps d’exécution}
 \subsubsection*{Temps d’exécution pour la compression}

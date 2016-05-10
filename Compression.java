@@ -10,6 +10,7 @@ class Compression{
 		int methode=0;
 		String in="";
 		String out="";
+  		// mode par défaut
 		if(args[0].equals("-i")){ 
 			System.out.println("Quel est le fichier que vous voulez compresser ?");
 			Scanner sc= new Scanner(System.in);
@@ -17,20 +18,21 @@ class Compression{
 			System.out.println("Vous souhaitez le compresser avec Huffman (1) ou LempelZiv(2)?");
 			methode = sc.nextInt();
 		}
+		// mode défini en commande
 		else{
 			if(args[0].equals("-lz")){ methode =2;}
 			if(args[0].equals("-h")){ methode =1;}
 			in = args[1];
 		}	
 		out=in+".comp";
+		// On instancie nos objets :
+		// fr va lire le fichier
+		// fw va écrire dans le nouveau !
 		LireBit fr = null;
 		EcrireBit fw = null;
 		try {
-				// On instancie nos objets :
-				// fr va lire le fichier
-				// fw va écrire dans le nouveau !
+			// méthode de Huffman
 			if(methode==1){
-				
 			    Huffman huf = new Huffman();
 			    try{
 				huf.compression(in, out);
@@ -40,6 +42,7 @@ class Compression{
 			    }
 
 			}
+			// methode de Lempel Ziv
 			else if(methode==2){
 			    	fr =new LireBit( new FileInputStream(new File(in)));
 				fw = new EcrireBit( new FileOutputStream(new File(out)));
@@ -48,6 +51,7 @@ class Compression{
 			 	LempelZiv.compression(fr,fw);
 				System.out.println(System.currentTimeMillis()-debut + " time" ); 
 			}
+			// erreur dans le choix de la compression
 			else{
 				System.out.println("Vous n'avez pas choisit de méthode de compression.");
 
