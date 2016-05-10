@@ -59,7 +59,6 @@ public class Experience {
 	EcrireBit fe = new EcrireBit(new FileOutputStream(new File("Aleatoire")));
 	for(int i=0;i<8*b;i++){
 	    int alea = (int)(Math.random()*2);
-	    System.out.println(alea);
 	    fe.writeBit(alea);
 	    
 	}

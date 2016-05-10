@@ -3,7 +3,6 @@
 \usepackage[T1]{fontenc} 
 \usepackage[francais]{babel}
 \usepackage{amssymb}
-\usepackage{amsmath}
 \usepackage{pgf, tikz}
 \usepackage{xcolor}
 \usepackage{array}
@@ -36,15 +35,14 @@ Nous allons donc vous présenter différents algorithmes de compression sans per
 Dans la première partie on présentera entre autres le codage de Huffman statique et celui de Lempel-Ziv. 
 
 Pour cela nous avons choisit d'utiliser le langage Java pour nous permettre d'avoir des classes structurées et coder les différents algorithmes tout en gardant une structure et des fonctions communes.
- 
-\part{Les algorithme de compression}
+ \part*{Algorithme de compression}
 \chapter*{Huffman statique}
 \section*{Définition et Exemple }
 \subsubsection*{Défnition}
-L'algorithme d'huffman statique est un algorithme de compression qui repose sur la redondance des caractères.En effet dans un fichier certain caractère sont plus présent que d'autre par exemple dans un fichier texte en français on retrouve souvent beaucoup de 'e' et 'a' mais très peu de 'w'.Un caractère étant codé sur octet l'algorithme d'huffman code un caractère non plus sur un octet mais sur un nombre de bit,plus le caractère est récurent plus le nombre de bit utilisé pour l'encoder sera faible.Cette algorithme neccéssité deux lecutres du fichier pour compresser,une pour compter les caracères l'autre pour écrire la compression,mais il permet à la décompression d'avoir déjà accès au codage propre a chaque lettre.Pour cela on utilise un arbre binaire.On compte le nombre de fois qu'apparait un caractère dans un fichier et ce nombre  sont poids.Une fois l'ensemble des caractères du fichier comptez.L'ensemble des caractères muni de leur poids constitueront les feuilles de  l'arbre de compression.On relie ensuite les deux feuilles les plus faibles avec un node intermédiaire qui aura pour poids  la somme des poids de ces deux feuille, puis l'on répète l'opération avec les feuilles restante en reliant toujours les deux poids les plus faibles.Puis l'on relie les nodes racines entre elle toujours en reliant d'abord les plus faibles jusqu'a ne plus avoir qu'un seul et unique arbre. Ainsi chaque feuille ayant un chemin unique celui servira de code pour le caractère.En partant de la racine si l'on va au fils gauche on ajoute le bit 0 et si l'on va vers le fils droit on ajoute le bit 1. Ainsi les caractère les plus redondants se trouvant en haut de l'arbre ,ils seront codé sur très peu de bit.
-\subsection{Compression}
-Pour cela on utilise un arbre binaire.On compte le nombre de fois qu'apparait un caractère dans un fichier et ce nombre  sont poids.Une fois l'ensemble des caractères du fichier comptez.L'ensemble des caractères muni de leur poids constitueront les feuilles de  l'arbre de compression.On relie ensuite les deux feuilles les plus faibles avec un node intermédiaire qui aura pour poids  la somme des poids de ces deux feuille, puis l'on répète l'opération avec les feuilles restante en reliant toujours les deux poids les plus faibles.Puis l'on crée un nouvel arbre en fusionnant les deux arbres ayant les racines de poids plus faible et à ce nouvel arbre on le fusionne avec l'arbre qui possède la racine de poids la plus faible et réitère l'opération jusqu'a qu'il ne reste aucun autre arbre.L'arbre obtenue suite à cela constituera notre arbre de compression. Ainsi chaque feuille ayant un chemin unique celui servira de code pour le caractère.En partant de la racine si l'on va au fils gauche on ajoute le bit 0 et si l'on va vers le fils droit on ajoute le bit 1. Ainsi les caractère les plus redondants se trouvant en haut de l'arbre ,ils seront codé sur très peu de bit.On écrit ensuite l'arbre de compression au début du fichier de compression.Puis on relis le fichier à comprimer en réécrivant chaque caractère avec leur nouveaux code dans le fichier de comprimé.
-\subsection{Decompression}
+L'algorithme d'huffman statique est un algorithme de compression qui repose sur la redondance des caractères.En effet dans un fichier certain caractère sont plus présent que d'autre par exemple dans un fichier texte en français on retrouve souvent beaucoup de 'e' et 'a' mais très peu de 'w'.Un caractère étant codé sur octet l'algorithme d'huffman code un caractère non plus sur un octet mais sur un nombre de bit,plus le caractère est récurent plus le nombre de bit utilisé pour l'encoder sera faible.Cette algorithme neccéssité deux lecutres du fichier pour compresser,une pour compter les caracères l'autre pour écrire la compression,mais il permet à la décompression d'avoir déjà accès au codage propre a chaque lettre.Pour cela on utilise un arbre binaire.On compte le nombre de fois qu'apparait un caractère dans un fichier et ce nombre sont poids.Une fois l'ensemble des caractères du fichier comptez.L'ensemble des caractères muni de leur poids constitueront les feuilles de l'arbre de compression.On relie ensuite les deux feuilles les plus faibles avec un node intermédiaire qui aura pour poids la somme des poids de ces deux feuille, puis l'on répète l'opération avec les feuilles restante en reliant toujours les deux poids les plus faibles.Puis l'on relie les nodes racines entre elle toujours en reliant d'abord les plus faibles jusqu'a ne plus avoir qu'un seul et unique arbre. Ainsi chaque feuille ayant un chemin unique celui servira de code pour le caractère.En partant de la racine si l'on va au fils gauche on ajoute le bit 0 et si l'on va vers le fils droit on ajoute le bit 1. Ainsi les caractère les plus redondants se trouvant en haut de l'arbre ,ils seront codé sur très peu de bit.
+\subsection*{Compression}
+Pour cela on utilise un arbre binaire.On compte le nombre de fois qu'apparait un caractère dans un fichier et ce nombre sont poids.Une fois l'ensemble des caractères du fichier comptez.L'ensemble des caractères muni de leur poids constitueront les feuilles de l'arbre de compression.On relie ensuite les deux feuilles les plus faibles avec un node intermédiaire qui aura pour poids la somme des poids de ces deux feuille, puis l'on répète l'opération avec les feuilles restante en reliant toujours les deux poids les plus faibles.Puis l'on crée un nouvel arbre en fusionnant les deux arbres ayant les racines de poids plus faible et à ce nouvel arbre on le fusionne avec l'arbre qui possède la racine de poids la plus faible et réitère l'opération jusqu'a qu'il ne reste aucun autre arbre.L'arbre obtenue suite à cela constituera notre arbre de compression. Ainsi chaque feuille ayant un chemin unique celui servira de code pour le caractère.En partant de la racine si l'on va au fils gauche on ajoute le bit 0 et si l'on va vers le fils droit on ajoute le bit 1. Ainsi les caractère les plus redondants se trouvant en haut de l'arbre ,ils seront codé sur très peu de bit.On écrit ensuite l'arbre de compression au début du fichier de compression.Puis on relis le fichier à comprimer en réécrivant chaque caractère avec leur nouveaux code dans le fichier de comprimé.
+\subsection*{Decompression}
 Pour décompresser un fichier comprimer avec l'algorithme d'Huffman statique,il suffit de récupérer l'arbre écrit en début de fichier puis de lire le fichier bit à bit.Si le bit lu est un 0 on se déplace à gauche dans l'arbre et à droite si c'est 1.Lorsqu'on arrive sur une feuille on écrit le caractère correspondant à cette feuille puis l'on retourne à la racine et on recommence l'opération jusqu'à avoir lu entièrement le fichier comprimer.Le chemin menant à une feuille étant unique on retrouve exactement le même fichier qu'au départ.
 \subsection*{Exemple}
 Prenons un fichier où il est écrit "fanfaronner".Les carctères présent sont 'f','a','r','o',et 'e'.Pour l'instant chaque caractère est codé sur un octet donc le mot pèse 11 octet soit 88 bit.
@@ -55,14 +53,13 @@ On crée ensuite une feuille pour chaque caractère que l'on trie par ordre croi
 On relie ensuite les plus faibles entre eux :
 \begin{center}
 \begin{tikzpicture}
-
 \node (0) at (0,0) {2};
-\node (1) at (-1,-1) {(o,1)}; 
+\node (1) at (-1,-1) {(o,1)};
 \node (2) at (1,-1) {(e,1)};
 \node (3) at (4,0) {4};
 \node (4) at (3,-1) {(f,2)};
 \node (5) at (5,-1) {(a,2)};
-\node(6) at (8,0) 	{5};
+\node(6) at (8,0) {5};
 \node(7) at (7,-1) {(r,2)};
 \node(8) at(9,-1) {(n,3)};
 \draw [-,>=latex,](0)--(1) node[pos=0.6,left, above]{};
@@ -71,20 +68,18 @@ On relie ensuite les plus faibles entre eux :
 \draw [-,>=latex,](3)--(5) node[pos=0.6,right, above]{};
 \draw [-,>=latex,](6)--(7) node[pos=0.6,left, above]{};
 \draw [-,>=latex,](6)--(8) node[pos=0.6,right, above]{};
-
 \end{tikzpicture}
 \end{center}
 \begin{center}
 On fusionne les deux arbres les plus faibles:
 \begin{tikzpicture}
-
 \node (0) at (0,0) {2};
-\node (1) at (-1,-1) {(o,1)}; 
+\node (1) at (-1,-1) {(o,1)};
 \node (2) at (1,-1) {(e,1)};
 \node (3) at (4,0) {4};
 \node (4) at (3,-1) {(f,2)};
 \node (5) at (5,-1) {(a,2)};
-\node(6) at (8,0) 	{5};
+\node(6) at (8,0) {5};
 \node(7) at (7,-1) {(r,2)};
 \node(8) at(9,-1) {(n,3)};
 \node(9) at (2,1) {6};
