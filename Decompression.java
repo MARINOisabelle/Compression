@@ -39,8 +39,10 @@ class Decompression {
 			//méthode Huffman
 			if (methode == 1) {
 				System.out.println("Huffman");
+				long debut = System.currentTimeMillis();
 				Huffman h = new Huffman();
 				h.decompression(fr, fw, tailleIn);
+				System.out.println(System.currentTimeMillis()-debut + " time" ); 
 
 			}
 			//méthode LempelZiv

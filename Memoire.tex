@@ -14,27 +14,27 @@
  
 
 \section*{Introduction}
-La compression de données ou codage de source est un processus informatique permettant de transformer un document sous forme binaire en un autre document du même contenant un suite de bit plus courte que le précédent mais pouvant restituer les mêmes informations en utilisant un algorithme de décompression propre à algorithme de compression qui fut utilisé. En d'autre termes, la compression raccourcit la taille des données. La décompression est l'opération inverse de la compression.
+La compression de données ou codage de source est un processus informatique permettant de transformer un document sous forme binaire en un autre document du même contenant une suite de bit plus courte que le précédent mais pouvant restituer les mêmes informations en utilisant un algorithme de décompression propre à algorithme de compression qui fut utilisé. En d'autres termes, la compression raccourcit la taille des données. La décompression est l'opération inverse de la compression.
 
-Il y a notamment 2 grand type de compression:
+Il y a notamment 2 grands types de compression:
 \begin{itemize}
 \item la compression sans perte de données
 \item la compression avec perte de données
 \end{itemize}
 
-Un algorithme de compression sans perte restitue après compression et décompression un document strictement identique à l'originale. Les algorithmes de compression sans perte sont utiles pour les documents, les archives, les fichiers exécutable ou les fichiers texte.
-Pour la compression de données sans pertes, on distingue principalement deux types de codage : le codage entropique et le codage algorithmique.
+Un algorithme de compression sans perte restitue après compression et décompression un document strictement identique à l'original. Les algorithmes de compression sans perte sont utiles pour les documents, les archives, les fichiers exécutables ou les fichiers textes.
+Pour la compression de données sans perte, on distingue principalement deux types de codage : le codage entropique et le codage algorithmique.
 
 Avec un algorithme de compression avec perte, la suite de bits obtenue après les  compression et décompression est différente de l'originale, mais l'information restituée est très proche. Les algorithmes de compression avec perte sont utiles pour les images, le son et la vidéo.
 
-Les formats de données tels que Zip, RAR, gzip, MP3 et JPEG utilisent des algorithmes de compression de données.
-
-La compression est un procédé très utiliser dans la vie courante pour par exemple envoyer certains document par e-mails ou pour le skockage de documents sur disque dur ou cloud center.  
+Les formats de données tels que ZIP, RAR, GZIP, MP3 et JPEG utilisent des algorithmes de compression de données.
+La compression est un procédé très utilisé dans la vie courante pour, par exemple, envoyer certains documents par e-mails ou pour le skockage de documents sur disque dur ou cloud center.
+  
 Le but de notre projet est de compresser des fichiers sans perte de données. 
 Nous allons donc vous présenter différents algorithmes de compression sans perte de données que nous avons coder puis tester.
-Dans la première partie on présentera entre autres le codage de Huffman statique et celui de Lempel-Ziv. 
 
-Pour cela nous avons choisit d'utiliser le langage Java pour nous permettre d'avoir des classes structurées et coder les différents algorithmes tout en gardant une structure et des fonctions communes.
+Dans un premier temps nous vous présenterons, entre autre, le codage de Huffman statique et celui de Lempel-Ziv. 
+Pour cela nous avons choisit d'utiliser le langage Java pour nous permettre d'avoir des classes structurées et codées les différents algorithmes tout en gardant une structure et des fonctions communes.
  \part*{Algorithme de compression}
 \chapter*{Huffman statique}
 \section*{Définition et Exemple }
@@ -98,44 +98,77 @@ On fusionne les deux arbres les plus faibles:
 \chapter*{Lempel-Ziv}
 \section*{Définition }
 
-L'algorithme de compression de Lempel-Ziv est un codage algorithmique.  Le codage algorithmique n’a pas besoin de transmettre des informations autres que le résultat du codage. Donc il n'y a pas besoin de transmettre dans le fichier compressé un code pour décompresser celui-ci. Il y a donc un autre avantage à ce style de compression: la lecture unique du fichier source. En effet, comme l'algorithme ne se base pas sur la récurrence de modèle dans le fichier source, nous pouvons lire et écrire le fichier compresser en même temps, ainsi cette algorithme nécessite une unique lecture du fichier source, ce qui est plutôt intéressant lors de la compression de gros fichier en termes de gain de temps. 
-Cette algorithme s'applique uniquement aux fichiers binaires, c'est à dire à tout fichier fichier dont les symboles sont représentés sur des bits, et donc par conséquent à tout type de document. 
+L'algorithme de compression de Lempel-Ziv est un codage algorithmique.  Le codage algorithmique n’a pas besoin de transmettre des informations autres que le résultat du codage. Donc il n'est pas nécessaire de transmettre dans le fichier compressé un code pour décompresser celui-ci. Il y a ainsi un autre avantage à ce style de compression: la lecture unique du fichier source. En effet, comme l'algorithme ne se base pas sur la récurrence de modèle dans le fichier source, nous pouvons lire et écrire le fichier compressé en même temps, ainsi cette algorithme nécessite une unique lecture du fichier source, ce qui est par ailleurs intéressant lors de la compression de gros fichiers puisque le temps d'exécution est plu rapide. 
+Cette algorithme s'applique uniquement aux fichiers binaires, c'est à dire à tout fichier dont les symboles sont représentés par des bits, et par conséquent à tout types de documents. 
 
 \subsubsection{Compression}
-Le codage de la compression s'effectue avec un arbre binaire dont les nœuds sont étiquetés par des entiers. Chaque nœud correspond à un entier $i$. On début avec une unique racine étiquetée à 0.
-A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque l'on ne peut plus se déplacer on crée un nouveau nœud fils au nœud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivant du 0 ou 1 que l'on est en train de lire.
+Le codage de la compression s'effectue avec un arbre binaire dont les nœuds sont étiquetés par des entiers. Chaque nœud correspond à un entier $i$. 
+
+On débute avec une unique racine étiquetée à 0.
+
+A l'étape i, on part de la racine on lit un bit et on se déplace à gauche ou à droite si cela est possible. On se déplace vers la gauche si on lit un 0 et vers la droite si on lit un 1. Puis on continue de lire bit à bit jusqu'à ne plus pouvoir se déplacer. Lorsque que c'est le cas, on crée un nouveau nœud fils au nœud courant qu'on numérote i et on écrit le numéro du nœud courant sur $\lceil log_{2}(i) \rceil$ suivit du 0 ou 1 que l'on est en train de lire.
 On retourne la racine et on passe à l'étape i+1.
 
-Pour compresser, j'ai fais une fonction qui analyse les bits lu, elle permet de descendre à gauche si on lit et 0 et à droite si on lit un 1, comme expliquer précédemment. Ensuite si on ne peut pas descendre on lit l'entier du nœud sur lequel on se trouve. Une fonction le traduit en 0/1 sur le nombre de bit nécessaire. Ce nombre dépends du nombre de nœud présent dans l'arbre, ie $\lceil log_{2}(i) \rceil$ où i est le nombre de nœud dans l'arbre. 
+Pour compresser, on a fait une fonction qui analyse les bits lus, elle permet de descendre à gauche si on lit un "0" et à droite si on lit un "1", comme expliqué précédemment. Ensuite, si l'on ne peut pas descendre on lit l'entier du nœud courant. Une fonction le traduit en binaire sur le nombre de bit nécessaire. Ce nombre dépend du nombre de nœud présent dans l'arbre, ie $\lceil log_{2}(i) \rceil$ où i est le nombre de nœud dans l'arbre. 
 On écrit alors cette traduction puis le dernier bit lu dans le fichier compressé. On répète cette opération jusqu'à ce qu'on ait plus de bit  à lire dans le fichier source.
-Enfin, comme un fichier à un nombre de bit qui est un multiple de 8, car les fichiers sont lu comme des suites d'octets et non seulement de bits (1 octet = 8 bits),  alors nous devons complété le fichier pour pouvoir écrire e dernier octet.
-Nous avons donc choisit la convention de mettre 1 puis le nombre de 0 nécessaire. 
+Enfin, et sachant qu'un fichier à un nombre de bit qui est multiple de 8 (les fichiers sont lu comme des suites d'octets et non seulement de bits, 1 octet = 8 bits), alors nous devons compléter le fichier pour pouvoir écrire ce dernier octet.
+Nous avons choisit la convention suivante: mettre "1" puis le nombre de "0" nécessaire. 
 
 \subsubsection{Décompression}
-On crée au fur et à mesure de la lecture bit à bit un tableau à 2 dimensions Exemple: t[i]= [nœud][bit] où nœud et bit sont des entiers, nœuds et le nombre lu à la i ème étape et bit le bits lu juste après. 
+On crée au fur et à mesure de la lecture bit à bit un tableau t à 2 dimensions.  t[i]= [nœud][bit], où nœud et bit sont des entiers, nœuds et le nombre lu à la i ème étape et bit le bit lu juste après. 
 On commence en initialisant la première case à  bit=-1 et nœud =-1 , pour pouvoir donner un repère lors de l'écriture de la décompression, il représente la racine de l'arbre de compression.  
-A l'étape i, on lit n=$\lceil log_{2}(i) \rceil$ et et le bit suivant. On stock alors le nombre écrit et et bit suivant.On remonte dans le tableau grâce à n, on lit et le bit stocker dans t[n] et on regarde t[n.nœud] jusqu'à arriver à t[0]. On écrit dans le fichier décompresser la suite de bit lu au fur et à mesure.
+A l'étape i, on lit n=$\lceil log_{2}(i) \rceil$ et le bit suivant. On stock alors le nombre écrit sur n et le bit suivant. On regarde la case n du tableau, on lit le bit stocké dans la case n et on regarde nœud de la même façon jusqu'à arriver à la case 0. On écrit dans le fichier décompressé la suite de bit lu au fur et à mesure.
 
-Pour décompresser, j'ai crée une fonction qui me permet de lire bit à bit mon fichier. Je lis alors mes bits en fonction de la puissance de 2 souhaité, puis je les met dans un tableau pour pouvoir les traduire en un entier i. 
-Je trouve ma puissance de 2 en fonction du nombre de nœud déjà lu et stocké précédemment.
-Une fois l'entier i  trouvé, je recherche dans mon tableau à 2 dimensions à partir de i et je regarde la case du père afin de récupérer tous les 0/1 de la suite. Je les retourne pour les copier dans le fichier décompressé ensuite je lis un dernier bit que je copie aussi dans le fichier décompresser.
-Je stocke à la fin de mon tableau ce nouveau nœud, composée de son père (l'entier i) et du dernier bit lu. 
-Je refais cette procédure jusqu'à la fin du fichier. 
+Pour décompresser, nous avons créé une fonction qui me permet de lire bit à bit notre fichier. Nous lisons alors nos bits en fonction de la puissance de 2 souhaitée, puis nous les mettons dans un tableau pour pouvoir les traduire en un entier i. 
+Nous trouvons notre puissance de 2 en fonction du nombre de nœuds déjà lus et stockés précédemment.
+Une fois l'entier i  trouvé, nous recherchons dans mon tableau à 2 dimensions à partir de i puis regardons la case du père afin de récupérer tous les bits de la suite. Nous les inversons pour les copier dans le fichier décompressé ensuite nous lisons un dernier bit qui sera aussi copié dans le fichier décompressé.
+Nous stockons à la fin du tableau ce nouveau nœud, composée de son père (l'entier i) et du dernier bit lu. 
+Nous réitérons cette procédure jusqu'à la fin du fichier. 
 
  
 \section*{Exemple}
-Nous allons regarder le fichier composé de 2 caractère "ab".
+Nous allons regarder le fichier composé de 2 caractères "ab".
 
 \subsubsection{Compression}
-En terme d'octet "ab" est représenter par : 
+En terme d'octet "ab" est représenté par : 
 		01100001 01100010\\
-On lit de la façon suivante pour avoir l'arbre ci dessous :\begin{center}
+On lit de la façon suivante pour avoir l'arbre ci dessous :
+\begin{center}
+\begin{tabular}{ c | c | c }
+\underline{0}110000101100010 & \underline{0} \underline{1}10000101100010 & \underline{0} \underline{1} \underline{10}000101100010 \\ 
 
-\underline{0} \underline{1} \underline{10} \underline{00} \underline{101}  \underline{100} \underline{01} \underline{0}
-\\
+\begin{tikzpicture}
+\node (0) at (0,0) {0};
+\node (1) at (-2,-1) {1}; 
+\draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
+\end{tikzpicture} 
+&
+\begin{tikzpicture}
+\node (0) at (0,0) {0};
+\node (1) at (-2,-1) {1}; 
+\node (2) at (2,-1) {2};
+\draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](0)--(2) node[pos=0.6,left, above]{1};
+\end{tikzpicture} 
+& 
+\begin{tikzpicture}
+\node (0) at (0,0) {0};
+\node (1) at (-2,-1) {1}; 
+\node (2) at (2,-1) {2};
+\node (3) at (1,-2) {3};
+\draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](0)--(2) node[pos=0.6,left, above]{1};
+\draw [->,>=latex,](2)--(3) node[pos=0.6,left, above]{0};
+\end{tikzpicture}\\
+
+Etape 1 & Etape 2 & Etape 3 \\
+\end{tabular}
 \end{center}
 
+
 \begin{center}
+\underline{0} \underline{1} \underline{10} \underline{00} \underline{01}  \underline{011} \underline{000} \underline{10}
+\\
 \begin{tikzpicture}
 \node (0) at (0,0) {0};
 \node (1) at (-2,-1) {1}; 
@@ -145,7 +178,6 @@ On lit de la façon suivante pour avoir l'arbre ci dessous :\begin{center}
 \node (6) at (-0.5,-3) {6};
 \node (7) at (-3.5,-3) {7}; 
 \node (5) at (-1,-2) {5};
-
 \draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](0)--(2) node[pos=0.6,left, above]{1};
 \draw [->,>=latex,](2)--(3) node[pos=0.6,left, above]{0};
@@ -153,16 +185,16 @@ On lit de la façon suivante pour avoir l'arbre ci dessous :\begin{center}
 \draw [->,>=latex,](1)--(4) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](4)--(7) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](1)--(5) node[pos=0.6,left, above]{1};
-
 \end{tikzpicture}
+Dernière étape
 \end{center}	
 
-Il y a alors dans le fichier compressé on a (sans les "." et les "|") :\\ 
+Il y a alors dans le fichier compressé (sans les "." et les "|") :\\ 
 0|0.1|10.0|01.0|001.1|101.1| 100.0|010.0 
 On complète enfin le dernier octet avec 1 et le nombre de 0 nécessaire. 
 
 \subsubsection{Décompression}
-Reprenons cette exemple. 
+Reprenons cet exemple. 
 Nous avons donc dans notre fichier compressé :
 00110001 00011101 11000010 01000000 \\
 Nous avons une liste composé de nœud avec 2 éléments un entier pour le père et un entier pour le bit représenté sur le flèche de l'arbre de compression. Nous initialisons le nœud 0 avec -1 en valeur pour le père et -1 en valeur pour le bit. 
@@ -191,16 +223,16 @@ On récupère leur bit respectif et on les écrit en commençant par le nœud  1
 Pour le nœud 8 on obtient la suite: 10. 
 
 
-\part{Analyse des performances}
-Nous avons choisit un certain nombre de tests à effectuer identiques sur chaque algorithme. Nous commençons par des tests avec des suites théoriques puis nous ferons des tests avec des fichiers plus réaliste des fichiers textes(roman) son et image.
+\part*{Analyse des performances}
+Nous avons choisit un certain nombre de tests identiques à effectuersur chaque algorithme. Nous commençons par des tests avec des suites théoriques puis nous ferons des tests avec des fichiers plus réalistes des fichiers textes(roman) son et image.
  
 Tout d'abord un test de compression théorique simple avec un fichier et un seul caractère à l'intérieur, nous avons pris le caractère "0".
 Tout d'abord dans le fichier il a y un unique octet de 0, puis nous dupliquons ce a 10 fois, 20 fois ... Et ainsi de suite pour avoir 10 fichiers de 1 octet , 10, 20 ,30 ,...  octet, jusqu'à 10 Mo.
-Puis nous continuons avec des suites plus complexe comme une suite périodique composé que de suite de 01, une suite générer aléatoirement et enfin une suite de Champarnown.  
+Puis nous continuons avec des suites plus complexes comme une suite périodique composées que de suite de 01, une suite générée aléatoirement et enfin une suite de Champarnown.  
 
-Enfin, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
+Pour finir, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
 
-Nous utiliseront ces différents tests pour analyser les performance en terme de taux de compression, ainsi qu'en temps d’exécution pour la compression et la décompression. 
+Nous utiliserons ces différents tests pour analyser les performances en terme de taux de compression, ainsi qu'en temps d’exécution pour la compression et la décompression. 
 \section*{Analyse du taux de compression}
 \subsubsection{ Analyse de l'agorithme de Huffman}
 
@@ -392,8 +424,8 @@ Tout d'abord regardons nos fichiers composés que de 0, nous obtenons le graphiq
 \end{picture}
 \end{center}
 
-On constate que la courbe est significative plus le nombre d'octet est important plus le taux de compression augmente, ainsi le fichier compressé devient réellement de plus en plus petit. 
-On remarque néanmoins que lorsque l'on veux compressé un seul octet le taux de compression est en dessous de 1, c'est-à -dire que le fichier compressé est plus gros que le fichier source, ceci s'explique notamment par le stockage du premier  octet supplémentaire pour connaître le mode de compression, ici Lempel-Ziv. Il s'explique aussi car le début de compression pour Lempel-Ziv remplace un bit par 2 et ainsi de suite. Nous devons donc attendre les 10 octets dans le fichier source pour que la compression ai vraiment lieu. 
+On constate que la courbe est logarithmique, plus le nombre d'octet est important plus le taux de compression augmente, ainsi le fichier compressé devient réellement de plus en plus petit. 
+On remarque néanmoins que lorsque l'on veut compresser un seul octet le taux de compression est en dessous de 1, c'est-à-dire que le fichier compressé est plus gros que le fichier source. Ceci s'explique notamment par le stockage du premier  octet supplémentaire pour connaître le mode de compression, ici Lempel-Ziv. Il s'explique aussi car le début de compression pour Lempel-Ziv remplace un bit par 2 et ainsi de suite. Nous devons donc attendre les 10 octets dans le fichier source pour que la compression ai vraiment lieu. 
 
 \begin{center}
 % GNUPLOT: LaTeX picture
@@ -576,6 +608,8 @@ On remarque néanmoins que lorsque l'on veux compressé un seul octet le taux de
 \put(191.0,776.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
 \end{picture}
 \end{center}
+
+
 POur la suite alterner....
 
 % GNUPLOT: LaTeX picture

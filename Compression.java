@@ -35,7 +35,9 @@ class Compression{
 			if(methode==1){
 			    Huffman huf = new Huffman();
 			    try{
+				long debut = System.currentTimeMillis();
 				huf.compression(in, out);
+				System.out.println(System.currentTimeMillis()-debut + " time" ); 
 			    }
 			    catch(Exception e){
 				e.printStackTrace();

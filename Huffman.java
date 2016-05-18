@@ -31,7 +31,7 @@ class Huffman{
 		    System.out.println(i+"c'est celui la");
 		}
 	    }
-	    System.out.println(tab[255]);
+	  //  System.out.println(tab[255]);
 	  
 	}
 	catch(Exception e){
@@ -220,7 +220,7 @@ class Huffman{
 	    // ecrireLettre2(fe,a.racine,new Character((char)l));
 	    }
 		
-		System.out.println("c'est la fin");
+		//System.out.println("c'est la fin");
 	    fe.writeLastBit();
 	fe.close();
 	fl.close();
