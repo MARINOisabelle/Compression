@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} 
 \usepackage[francais]{babel}
+\usepackage{colortbl}
 \usepackage{amssymb}
 \usepackage{pgf, tikz}
 \usepackage{xcolor}
@@ -741,6 +742,37 @@ POur la suite alterner....
 
 
 \section*{Différences entre les algorithmes}
+Dans cette dernière section, nous allons vous présenter un tableau avec plusieurs mode de compression et plusieurs type de fichiers. 
+Nous expliquerons par la suite les différents taux de compression obtenues. 
+
+
+\begin{center}
+{\renewcommand{\arraystretch}{2}
+\begin{tabular}{|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
+\hline
+ & La bible (en anglais) &  Dracula (en anglais) & Les Fleurs du Mal  & Au bonheurs des Dames & musique  & image (vectorielle) & image (matricielle)   \\
+\hline
+taille réélle (en octet) & 4 587 478 & 883 158 & 180 199 & 952 753 & & & \\\hline
+zip & 3.44 & 2.62 & 2.51 & 2.57 & & & \\
+\hline
+Gzip & & & & & & & \\
+\hline
+tar & & & & & & & \\
+\hline
+mp3 & & & & & & & \\
+\hline
+JPEG & & & & & & & \\
+\hline
+Huffman & & & & & & & \\
+\hline
+Lempel-Ziv & & & & & & & \\
+\hline
+
+\end{tabular}
+}
+\end{center}
+
+
 
 
 \end{document}
