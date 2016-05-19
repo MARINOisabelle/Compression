@@ -8,22 +8,7 @@ public class Node extends Poids{
 	this.right= null;
 	this.left = null;
     }
-    public int recherche(char l){
-	if(this.right !=null){
-	    int i1 = this.right.recherche(l);
-	    int i2 = this.left.recherche(l);
-	    if((i1==1 || i1==0)&& i2 == -1)
-		return 1;
-	    if(((i2==1) || i2==0) && i1==-1)
-		return 0;
-	    if(i1==2)
-		return 1;
-	    else
-		return 0;
-	}
-	else
-	    return 0;
-    }
+    
     public void dfs(ArrayList<Integer> a,CodeLettre [] cl){
 	ArrayList<Integer> g = copieList(a);
 	ArrayList<Integer> d = copieList(a);
@@ -34,7 +19,8 @@ public class Node extends Poids{
 	    this.right.dfs(d,cl);
 	}
     }
-    public Node(Feuille droit,Feuille gauche){
+   
+    public Node(Poids droit,Poids gauche){
 	this.poids = droit.poids+gauche.poids;
 	this.right=droit;
 	this.left=gauche;
@@ -44,12 +30,7 @@ public class Node extends Poids{
 	this.left =l;
 	this.right = r;
     }
-    public int getPoids(){
-	return this.poids;
-    }
-    public void setPoids(int a){
-	this.poids = a;
-    }
+   
     
     public void addNode(int number,int poids){
 	if(number==0 && this.left==null){
@@ -62,17 +43,7 @@ public class Node extends Poids{
 	    System.out.println("Exception: Number est ni 1 ni 0");
 	}
     }
-    public void addPoids(Poids a,Poids b){
-	this.poids = a.poids+b.poids;
-	if(a.poids>=b.poids){
-	    this.left = b;
-	    this.right = a;
-	}
-	else{
-	    this.left=a;
-	    this.right = b;
-	}
-    }
+   
     
     public void affiche(){
 	System.out.println(super.poids);
@@ -113,6 +84,7 @@ public class Node extends Poids{
 	}
 	return pl;
     }
+    
     public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){
 	int place = l.size();
 	l.add(-1);
@@ -133,5 +105,29 @@ public class Node extends Poids{
 	}
 	return n;
     }
-    
+    public boolean isAddNode(ArrayList<Integer> a,int l){
+	
+	if(this.left.poids ==0){
+	    this.poids++;
+	    Node nul = new Node(0);
+	    Feuille f = new Feuille(1,l);
+	    this.left = new Node(f,nul);
+	    return true;
+	}
+	else{
+	    boolean b = this.right.isAddNode(a,l);
+	    if(b==true){
+		this.poids++;
+		a.add(1);
+		return true;
+	    }
+	    b= this.left.isAddNode(a,l);
+	    if(b==true){
+		this.poids++;
+		a.add(0);
+		return true;
+	    }
+	    return false;
+	}
+    }
 }

@@ -63,6 +63,14 @@ public class Experience {
 	//fe.close();
     }
 
+<<<<<<< HEAD
+    public static void aleatoire(int b) throws IOException{
+	EcrireBit fe = new EcrireBit(new FileOutputStream(new File("Aleatoire")));
+	for(int i=0;i<8*b;i++){
+	    int alea = (int)(Math.random()*2);
+	    
+	    fe.writeBit(alea);
+=======
     public static void aleatoire(EcrireBit fe, int b) throws IOException{
 	fe = new EcrireBit(new FileOutputStream(new File("Aleatoire")));
 	for(int i=0;i<b;i++){
@@ -70,6 +78,7 @@ public class Experience {
 	    	int alea = (int)(Math.random()*2);
 	    	fe.writeBit(alea);
 		}
+>>>>>>> 4e62e93192692c162292e2d81a5e3deebc2d7d1b
 	    
 	}
 	//fe.close();
