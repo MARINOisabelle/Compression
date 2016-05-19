@@ -9,37 +9,49 @@ class Decompression {
 	public static void main(String[] args) throws IOException {
 		String in = "";
 		String out = "";
+		// méthode par défaut 
 		if (args.length == 0) {
-			System.out
-					.println("Quel est le fichier que vous voulez décompresser ?");
+			System.out.println("Quel est le fichier que vous voulez décompresser ?");
 			Scanner sc = new Scanner(System.in);
 			in = sc.nextLine();
 
-		} else {
+		}
+		// nom du fichier dans la commande
+		else {
 			in = args[0];
 		}
-
+		// On instancie nos objets :
+		// fr va lire le fichier
+		// fw va écrire dans le nouveau !
 		out = in + ".decomp";
 		LireBit fr = null;
 		EcrireBit fw = null;
 		try {
+			//ouverture du fichier compressé
 			File i = new File(in);
+			//stockage de son nombre d'octet
 			long tailleIn = i.length() - 1;
 			fr = new LireBit(new FileInputStream(i));
 			fw = new EcrireBit(new FileOutputStream(new File(out)));
+			//lecture du premier octet contenant le code de la méthode de compression
 			int methode = fr.read();
-			System.out.println(methode);
+			
+			//méthode Huffman
 			if (methode == 1) {
 				System.out.println("Huffman");
+				long debut = System.currentTimeMillis();
 				Huffman h = new Huffman();
 				h.decompression(fr, fw, tailleIn);
+				System.out.println(System.currentTimeMillis()-debut + " time" ); 
 
 			}
+			//méthode LempelZiv
 			else if (methode == 2) {
 				long debut = System.currentTimeMillis();
 				LempelZiv.decompression(fr, fw);
 				System.out.println(System.currentTimeMillis()-debut + " time" ); 
 			}
+			//fichier non compressé
 			else if (methode !=2 && methode !=1) {
 				System.out.println("Ce fichier n'a pas été compresser");
 

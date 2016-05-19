@@ -24,8 +24,11 @@ public class EcrireBit extends FilterOutputStream{
 	}
     }
 	
+	//écriture de l'octet de fin de compression
 	public void writeLastBit()throws IOException{
+		//écriture de 1 
 		writeBit(1);
+		// on remplit le reste de l'octet par des 0
 		if(nbBit<8 && nbBit!=0){
 			int i=0;
 			for(i=nbBit; i<8;i++){
