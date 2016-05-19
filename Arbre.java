@@ -3,18 +3,18 @@ import java.util.*;
 public class Arbre{
     Node racine;
 
-    public Arbre(Node racine){
+    public Arbre(Node racine){ 
 	this.racine = racine;
     }
     
-    public Arbre(Feuille gauche,Feuille droite){
-	Node racine  = new Node(gauche.poids+droite.poids,(Poids)gauche,(Poids)droite);
+    public Arbre(Poids gauche,Poids droit){
+	Node racine  = new Node(gauche.poids+droit.poids,(Poids)gauche,(Poids)droit);
 	this.racine = racine;
     }
-    public void fusionne(Arbre a){
+    public void fusionne(Arbre a){ //permet de fusionner this avec a
 	if(this.racine != null){
-	    Node racine = new Node(a.racine.poids+this.racine.poids);
-	    if(a.racine.poids >= this.racine.poids){
+	    Node racine = new Node(a.racine.poids+this.racine.poids);//crée la racine du nouvel arbre 
+	    if(a.racine.poids >= this.racine.poids){//compare le poids des racines pour mettre la plus lourde à droite et l'autre à gauche
 		racine.right = a.racine;
 		racine.left = this.racine;
 	    }
@@ -44,7 +44,12 @@ public class Arbre{
     public int taille(){
 	return this.racine.comptePoids();
     }
-   
+    public CodeLettre newLettre(int l){
+	ArrayList<Integer> a = new ArrayList<Integer>();
+	CodeLettre c=new CodeLettre(renverse(a));
+	return c;
+	
+    }
     public boolean fusionneArbre(Arbre a){
 	if(a != null){
 	    Node r = new Node(a.racine.poids+this.racine.poids);
@@ -74,5 +79,12 @@ public class Arbre{
 	else{
 	    return false;
 	}
+    }
+     public  ArrayList<Integer> renverse(ArrayList<Integer> a){
+	ArrayList<Integer> b=new ArrayList<Integer>();
+	for(int i = a.size()-1;i>=0;i++){
+	    b.add(a.get(i));
+	}
+	return b;
     }
 }

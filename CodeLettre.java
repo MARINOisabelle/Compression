@@ -5,5 +5,10 @@ public class CodeLettre{
 	code=c;
 	//Test.afficheList(code);
     }
-	
+    public void afficheCode(){
+	for(int i=0;i<code.size();i++){
+	    System.out.print(code.get(i));
+	}
+	System.out.println(" ");
+    }
 }

@@ -11,7 +11,10 @@ public class Test{
 		CodeLettre[] c = new CodeLettre[256];
 		ArrayList<Integer> ar = new ArrayList<Integer>();
 		a.racine.dfs(ar,c);
-		afficheList(c[97].code);
+		System.out.println(c[69].code.size());
+		afficheList(c[69].code);
+		System.out.println("l'autre");
+		afficheList(c[127].code);
 		fl.close();
 	    }
 	    catch(IOException e){

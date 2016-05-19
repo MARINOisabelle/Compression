@@ -25,7 +25,6 @@ class Decompression {
 		try {
 			File i = new File(in);
 			long tailleIn = i.length() - 1;
-			System.out.println(tailleIn);
 			fr = new LireBit(new FileInputStream(i));
 			fw = new EcrireBit(new FileOutputStream(new File(out)));
 			int methode = fr.read();
