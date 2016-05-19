@@ -41,7 +41,7 @@ Pour cela nous avons choisit d'utiliser le langage Java pour nous permettre d'av
 \chapter*{Huffman statique}
 \section*{Définition et Exemple }
 \subsubsection*{Défnition}
-L'algorithme d'huffman statique est un algorithme de compression qui repose sur la redondance des caractères.En effet dans un fichier certain caractère sont plus présent que d'autre par exemple dans un fichier texte en français on retrouve souvent beaucoup de 'e' et 'a' mais très peu de 'w'.Un caractère étant codé sur octet l'algorithme d'huffman code un caractère non plus sur un octet mais sur un nombre de bit,plus le caractère est récurent plus le nombre de bit utilisé pour l'encoder sera faible.Cette algorithme neccéssité deux lecutres du fichier pour compresser,une pour compter les caracères l'autre pour écrire la compression,mais il permet à la décompression d'avoir déjà accès au codage propre a chaque lettre.Pour cela on utilise un arbre binaire.On compte le nombre de fois qu'apparait un caractère dans un fichier et ce nombre  sont poids.Une fois l'ensemble des caractères du fichier comptez.L'ensemble des caractères muni de leur poids constitueront les feuilles de  l'arbre de compression.On relie ensuite les deux feuilles les plus faibles avec un node intermédiaire qui aura pour poids  la somme des poids de ces deux feuille, puis l'on répète l'opération avec les feuilles restante en reliant toujours les deux poids les plus faibles.Puis l'on relie les nodes racines entre elle toujours en reliant d'abord les plus faibles jusqu'a ne plus avoir qu'un seul et unique arbre. Ainsi chaque feuille ayant un chemin unique celui servira de code pour le caractère.En partant de la racine si l'on va au fils gauche on ajoute le bit 0 et si l'on va vers le fils droit on ajoute le bit 1. Ainsi les caractère les plus redondants se trouvant en haut de l'arbre ,ils seront codé sur très peu de bit.
+L'algorithme de Huffman statique est un algorithme de compression qui repose sur la redondance des caractères.En effet dans un fichier certain caractère sont plus présent que d'autre par exemple dans un fichier texte en français on retrouve souvent beaucoup de 'e' et 'a' mais très peu de 'w'.Un caractère étant codé sur octet l'algorithme de Huffman code un caractère non plus sur un octet mais sur un nombre de bit,plus le caractère est récurent plus le nombre de bit utilisé pour l'encoder sera faible.Cette algorithme nécessite deux lectures du fichier pour compresser,une pour compter les caractères l'autre pour écrire la compression,mais il permet à la décompression d'avoir déjà accès au codage propre a chaque lettre.Pour cela on utilise un arbre binaire.On compte le nombre de fois qu'apparait un caractère dans un fichier et ce nombre  sont poids.Une fois l'ensemble des caractères du fichier comptez.L'ensemble des caractères muni de leur poids constitueront les feuilles de  l'arbre de compression.On relie ensuite les deux feuilles les plus faibles avec un node intermédiaire qui aura pour poids  la somme des poids de ces deux feuille, puis l'on répète l'opération avec les feuilles restante en reliant toujours les deux poids les plus faibles.Puis l'on relie les nodes racines entre elle toujours en reliant d'abord les plus faibles jusqu'a ne plus avoir qu'un seul et unique arbre. Ainsi chaque feuille ayant un chemin unique celui servira de code pour le caractère.En partant de la racine si l'on va au fils gauche on ajoute le bit 0 et si l'on va vers le fils droit on ajoute le bit 1. Ainsi les caractère les plus redondants se trouvant en haut de l'arbre ,ils seront codé sur très peu de bit.
 \subsection{Compression}
 Pour cela on utilise un arbre binaire.On compte le nombre de fois qu'apparait un caractère dans un fichier et ce nombre  sont poids.Une fois l'ensemble des caractères du fichier comptez.L'ensemble des caractères muni de leur poids constitueront les feuilles de  l'arbre de compression.On relie ensuite les deux feuilles les plus faibles avec un node intermédiaire qui aura pour poids  la somme des poids de ces deux feuille, puis l'on répète l'opération avec les feuilles restante en reliant toujours les deux poids les plus faibles.Puis l'on crée un nouvel arbre en fusionnant les deux arbres ayant les racines de poids plus faible et à ce nouvel arbre on le fusionne avec l'arbre qui possède la racine de poids la plus faible et réitère l'opération jusqu'a qu'il ne reste aucun autre arbre.L'arbre obtenue suite à cela constituera notre arbre de compression. Ainsi chaque feuille ayant un chemin unique celui servira de code pour le caractère.En partant de la racine si l'on va au fils gauche on ajoute le bit 0 et si l'on va vers le fils droit on ajoute le bit 1. Ainsi les caractère les plus redondants se trouvant en haut de l'arbre ,ils seront codé sur très peu de bit.On écrit ensuite l'arbre de compression au début du fichier de compression.Puis on relis le fichier à comprimer en réécrivant chaque caractère avec leur nouveaux code dans le fichier de comprimé.
 \subsection{Decompression}
@@ -197,208 +197,36 @@ Pour le nœud 8 on obtient la suite: 10.
 
 
 \part{Analyse des performances}
-Nous avons choisit un certain nombre de tests à effectuer identiques sur chaque algorithme. Nous commençons par des tests avec des suites théoriques puis nous ferons des tests avec des fichiers plus réaliste des fichiers textes(roman) son et image.
- 
-Tout d'abord un test de compression théorique simple avec un fichier et un seul caractère à l'intérieur, nous avons pris le caractère "0".
-Tout d'abord dans le fichier il a y un unique octet de 0, puis nous dupliquons ce a 10 fois, 20 fois ... Et ainsi de suite pour avoir 10 fichiers de 1 octet , 10, 20 ,30 ,...  octet, jusqu'à 10 Mo.
-Puis nous continuons avec des suites plus complexe comme une suite périodique, une suite générer aléatoirement et enfin une suite de Champarnown.  
+Nous avons choisit un certain nombre de tests à effectuer identiques sur chaque algorithme.
 
+Tout d'abord un test de compression simple avec un fichier et une seule lettre à l'intérieur, nous avons pris la lettre "a".
+Tout d'abord dans le fichier il a y un unique a, puis nous dupliquons ce a 10 fois, 20 fois ... Et ainsi de suite pour avoir 10 fichiers de 1 octet , 10, 20 ,30 ,...  octet, jusqu'à 100 octet.
+Ensuite, un test un peu plus complexe, avec des fichiers différents et donc le contenu est non redondant.
 Enfin, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
 
 Nous utiliseront ces différents tests pour analyser les performance en terme de taux de compression, ainsi qu'en temps d’exécution pour la compression et la décompression. 
 \section*{Analyse du taux de compression}
 \subsubsection{ Analyse de l'agorithme de Huffman}
-
-
-
 \subsubsection{ Analyse de l'agorithme de Lemple Ziv}
 
-
-Tout d'abord regardons nos fichiers composés que de 0, nous obtenons le graphique ci-dessus.
-\begin{center}
- % GNUPLOT: LaTeX picture
-\setlength{\unitlength}{0.240900pt}
-\ifx\plotpoint\undefined\newsavebox{\plotpoint}\fi
-\begin{picture}(1500,900)(0,0)
-\sbox{\plotpoint}{\rule[-0.200pt]{0.400pt}{0.400pt}}%
-\put(191.0,131.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(171,131){\makebox(0,0)[r]{ 0.1}}
-\put(1419.0,131.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(191.0,180.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,180.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,208.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,208.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,228.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,228.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,244.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,244.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,256.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,256.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,267.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,267.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,277.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,277.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,285.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,285.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,292.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(171,292){\makebox(0,0)[r]{ 1}}
-\put(1419.0,292.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(191.0,341.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,341.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,369.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,369.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,389.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,389.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,405.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,405.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,418.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,418.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,429.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,429.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,438.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,438.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,446.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,446.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,454.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(171,454){\makebox(0,0)[r]{ 10}}
-\put(1419.0,454.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(191.0,502.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,502.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,530.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,530.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,551.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,551.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,566.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,566.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,579.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,579.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,590.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,590.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,599.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,599.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,607.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,607.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,615.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(171,615){\makebox(0,0)[r]{ 100}}
-\put(1419.0,615.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(191.0,663.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,663.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,692.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,692.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,712.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,712.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,727.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,727.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,740.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,740.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,751.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,751.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,760.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,760.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,769.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(1429.0,769.0){\rule[-0.200pt]{2.409pt}{0.400pt}}
-\put(191.0,776.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(171,776){\makebox(0,0)[r]{ 1000}}
-\put(1419.0,776.0){\rule[-0.200pt]{4.818pt}{0.400pt}}
-\put(191.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(191,90){\makebox(0,0){ 1}}
-\put(191.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(245.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(245.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(316.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(316.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(352.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(352.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(369.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(369,90){\makebox(0,0){ 10}}
-\put(369.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(423.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(423.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(494.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(494.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(530.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(530.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(548.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(548,90){\makebox(0,0){ 100}}
-\put(548.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(601.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(601.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(672.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(672.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(709.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(709.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(726.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(726,90){\makebox(0,0){ 1000}}
-\put(726.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(780.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(780.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(850.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(850.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(887.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(887.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(904.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(904,90){\makebox(0,0){ 10000}}
-\put(904.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(958.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(958.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1029.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1029.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1065.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1065.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1082.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(1082,90){\makebox(0,0){ 100000}}
-\put(1082.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(1136.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1136.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1207.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1207.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1243.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1243.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1261.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(1261,90){\makebox(0,0){ 1e+06}}
-\put(1261.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(1314.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1314.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1385.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1385.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1422.0,131.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1422.0,766.0){\rule[-0.200pt]{0.400pt}{2.409pt}}
-\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(1439,90){\makebox(0,0){ 1e+07}}
-\put(1439.0,756.0){\rule[-0.200pt]{0.400pt}{4.818pt}}
-\put(191.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
-\put(191.0,131.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
-\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
-\put(191.0,776.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
-\put(30,453){\makebox(0,0){\shortstack{ taux\ de\\ compression         }}}
-\put(815,29){\makebox(0,0){ nombre octet }}
-\put(815,838){\makebox(0,0){ Taux de compression : fichiers avec des octets constants}}
-\put(1279,736){\makebox(0,0)[r]{taux}}
-\put(1299.0,736.0){\rule[-0.200pt]{24.090pt}{0.400pt}}
-\put(191,215){\usebox{\plotpoint}}
-\multiput(191.00,215.58)(0.958,0.499){183}{\rule{0.866pt}{0.120pt}}
-\multiput(191.00,214.17)(176.203,93.000){2}{\rule{0.433pt}{0.400pt}}
-\multiput(369.00,308.58)(1.264,0.499){139}{\rule{1.108pt}{0.120pt}}
-\multiput(369.00,307.17)(176.699,71.000){2}{\rule{0.554pt}{0.400pt}}
-\multiput(548.00,379.58)(1.332,0.499){131}{\rule{1.163pt}{0.120pt}}
-\multiput(548.00,378.17)(175.587,67.000){2}{\rule{0.581pt}{0.400pt}}
-\multiput(726.00,446.58)(1.373,0.499){127}{\rule{1.195pt}{0.120pt}}
-\multiput(726.00,445.17)(175.519,65.000){2}{\rule{0.598pt}{0.400pt}}
-\multiput(904.00,511.58)(1.293,0.499){135}{\rule{1.132pt}{0.120pt}}
-\multiput(904.00,510.17)(175.651,69.000){2}{\rule{0.566pt}{0.400pt}}
-\multiput(1082.00,580.58)(1.264,0.499){139}{\rule{1.108pt}{0.120pt}}
-\multiput(1082.00,579.17)(176.699,71.000){2}{\rule{0.554pt}{0.400pt}}
-\multiput(1261.00,651.58)(1.257,0.499){139}{\rule{1.103pt}{0.120pt}}
-\multiput(1261.00,650.17)(175.711,71.000){2}{\rule{0.551pt}{0.400pt}}
-\put(191.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
-\put(191.0,131.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
-\put(1439.0,131.0){\rule[-0.200pt]{0.400pt}{155.380pt}}
-\put(191.0,776.0){\rule[-0.200pt]{300.643pt}{0.400pt}}
-\end{picture}
-\end{center}
-
-On constate que la courbe est significative plus le nombre d'octet est important plus le taux de compression augmente, ainsi le fichier compressé devient réellement de plus en plus petit. 
-On remarque néanmoins que lorsque l'on veux compressé un seul octet le taux de compression est en dessous de 1, c'est-à -dire que le fichier compressé est plus gros que le fichier source, ceci s'explique notamment par le stockage du premier  octet supplémentaire pour connaître le mode de compression, ici Lempel-Ziv. Il s'explique aussi car le début de compression pour Lempel-Ziv remplace un bit par 2 et ainsi de suite. Nous devons donc attendre les 10 octets dans le fichier source pour que la compression ai vraiment lieu. 
+\begin{flushleft}
+\begin{tikzpicture}[x=1mm, y=1mm, scale =1]
+\draw[step=10mm, gray, very thin, dashed](0,0)grid(100,90);
+\draw[->,>=latex](0,0)--(105,0);
+\draw[->,>=latex](0,0)--(0,95);
+\node[right=1cm] at (65,85) {\textbf{x=y}};
+\draw (105,0) node[right] {\textit{fichier source en octet}};
+\draw (0,95) node[above] {\textit{fichier compressé en octet}};
+\foreach \x in{0,10,20,30,40,50,60,70,80,90,100}
+	\draw(\x,1pt)--(\x,-1pt) node[below]{$\x$};
+\foreach \y in{ ,10,20,30,40,50,60,70,80,90}
+	\draw(1pt,\y)--(-1pt, \y) node[anchor=east]{$\y$};
+\draw plot[smooth, very thin,xscale=1, yscale=1] coordinates{(0,4)(10,16)(20,27)(30,37)(40, 44) (50, 53) (60, 61) (70,67) (80,74) (90, 80) (100,86)}; 
+%\tikzstyle{courbe} = [bleu,very thick, domain=100:100,samples=100];
+	\draw [red,very thick, domain =0:90] plot(\x, {\x});
+\end{tikzpicture}
+\end{flushleft}
+Tout d'abord regardons nos fichiers composés que de a, nous obtenons le graphique ci-dessus. 
 
 \section*{Analyse du temps d’exécution}
 \subsubsection*{Temps d’exécution pour la compression}
