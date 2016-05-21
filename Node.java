@@ -48,12 +48,12 @@ public class Node extends Poids{
     public void affiche(){
 	System.out.println(super.poids);
 	if(this.left !=null){
-	    System.out.print("left");
+	    System.out.print("left node ");
 	    this.left.affiche();
 	    
 	}
 	if(this.right !=null){
-	    System.out.print("right");
+	    System.out.print("right node ");
 	    this.right.affiche();
 	}
     }

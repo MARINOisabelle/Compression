@@ -10,7 +10,7 @@ public class Feuille extends Poids{
 	return this.poids;
     }
     public void affiche(){
-	System.out.println(this.letter+" "+this.poids);
+	System.out.println("Feuille" +this.letter+" "+this.poids);
     }
     public int recherche(int l){
 	if(this.letter == l){

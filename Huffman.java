@@ -32,73 +32,41 @@ class Huffman{
 	
 	return tab;
     }
-    
-     public Arbre arbreMin(int tab[]){
-	int min1=-1;
-	int min2=-1;
-	int i1=-1;
-	int i2=-1;
-	for(int i=0;i<256;i++){
-	    if(tab[i]!=0){
-		if(min1!=-1){
-		    if(tab[i]<min1){
-			min1=tab[i];
-			i1=i;
-		    }
-		    else{
-			if(min2!=-1){
-			    if(tab[i]<min2){
-				min2=tab[i];
-				i2=i;
-			    }
-			}
-			else{
-			    min2=tab[i];
-			    i2=i;
-			}
-		    }
+    public void addTri(ArrayList<Poids> a,Poids p){
+	if(a.size()!=0){
+	    if(a.get(a.size()-1).poids<=p.poids)
+		a.add(p);
+	    else{
+		Poids p2 = a.remove(a.size()-1);
+		ArrayList<Poids> a2 = new ArrayList<Poids>();
+		while(p2.poids>p.poids && a.size()!=0){
+		    a2.add(p2);
+		    p2=a.remove(a.size()-1);
+		}
+		if(p2.poids<=p.poids){
+		    a.add(p2);
+		    a.add(p);
 		}
 		else{
-		    min1=tab[i];
-		    i1=i;
+		    a.add(p);
+		    a.add(p2);
+		}
+		while(a2.size()>0){
+		    a.add(a2.remove(a2.size()-1));		    
 		}
 	    }
 	}
-	
-	if(i1!=-1 && i2!=-1){
-	    Arbre a = new Arbre(new Node(0));
-	    Feuille f1 = new Feuille(min1,i1);
-	    Feuille f2 = new Feuille(min2,i2);
-	    a.racine.poids=f1.poids+f2.poids;
-	    a.racine.left=f1;
-	    a.racine.right=f2;
-	    tab[i1]=0;
-	    tab[i2]=0;
-	    return a;
-	}
-	else if(i1!=-1){
-	    Arbre a = new Arbre(new Node(min1));
-	    a.racine.left = new Feuille(min1,i1);
-	    tab[i1]=0;
-	    return a;
-	}
-	else{
-	    return null;
-	}
+	else
+	    a.add(p);
     }
      
-    public void ecrireArbre(Arbre a,EcrireBit fw,int taille)throws IOException{
-	int tab[]=new int[taille];
-	a.racine.tabArbre(0,0,tab,false);
-	for(int i=0;i<tab.length;i++){
-	    fw.write(tab[i]);
-	}
-    }
-    public void ecrireArbre2(Arbre a,EcrireBit fw)throws IOException{
+  public void ecrireArbre(Arbre a,EcrireBit fw)throws IOException{
         ArrayList<Integer> list = new ArrayList<Integer>();
 	a.racine.ListArbre(list,0,false);
 	for(int i=0;i<list.size();i++){
+	    fw.write(list.get(i)/256);
 	    fw.write(list.get(i));
+	    
 	}
     }
     public void ecrireLettre(CodeLettre[] cl,EcrireBit fw,int lettre){
@@ -113,16 +81,58 @@ class Huffman{
 	}
 	    
     }
-  
-    public Arbre arbreCompr(LireBit fr){
+    public ArrayList<Poids> listeFeuille(LireBit fr){
 	int tab[]=compteIter(fr);
-	Arbre princ = arbreMin(tab);
-	Arbre fus = arbreMin(tab);
-	while(princ.fusionneArbre(fus)){
-	    fus = arbreMin(tab);
+	ArrayList<Poids> a = new ArrayList<Poids>();
+	for(int i=0;i<tab.length;i++){
+	    if(tab[i]!=0){
+		addTri(a,new Feuille(tab[i],i));
+	    }
 	}
-	return princ;
+	return a;
     }
+    public Arbre arbreCompr(LireBit fr){
+	ArrayList<Poids> a = listeFeuille(fr);
+	int taille = a.size();
+	Arbre arbre = new Arbre(new Node(0)) ;
+	while(taille>0){
+	     Poids p1 = a.remove(0);
+	    if(taille==1){
+		Node racine = new Node(p1.poids);
+		racine.left=p1;
+		arbre.racine =racine;
+		break;
+	    }
+	    
+	    else{
+		taille--;
+		Poids p2=a.remove(0);
+		taille--;
+		Node racine = new Node(p1.poids+p2.poids);
+		if(p1.poids>p2.poids){
+		    racine.right =p2;
+		    racine.left = p1;
+		}
+		else{
+		    racine.right =p1;
+		    racine.left = p2;
+		}
+		if(taille==0){
+		    arbre.racine=racine;
+		    break;
+		}
+		else{   
+		    addTri(a,racine);
+		    taille++;
+		}
+	    }
+	}
+	return arbre;
+	
+    }
+	
+	
+
 
     /*fonction qui récupère l'arbre de compression*/
     public ArrayList<Integer> listDec(LireBit l) throws IOException{
@@ -132,23 +142,11 @@ class Huffman{
 	}
 	ArrayList<Integer> list = new ArrayList<Integer>();
 	int tab[]=new int[3];
-	for(int i=0;i<taille*3;i=i+3){
-	    for(int j=0;j<3;j++){
-		tab[j] =l.read();
-	    }
-	    list.add(tab[0]);
-	    if(tab[1]!=tab[2] && tab[0]==255){
-		while(tab[1]<i+1){
-		    tab[1]=tab[1]+256;
-		}
-		
-		while(tab[2]<i+2){
-		    tab[2]=tab[2]+256;
-		}
-		
-	    }
-	    list.add(tab[1]);
-	    list.add(tab[2]);
+	for(int i=0;i<taille*3;i++){
+	    int mult = l.read();
+	   int j =l.read()+256*mult;
+	   list.add(j);
+	   
 	}
 	return list;
     }
@@ -156,24 +154,22 @@ class Huffman{
 	/*  fonction appeler dans les main de compresion et decompression */
     public  void compression(String fr, String fw)throws Exception{
 	LireBit fl = new LireBit(new FileInputStream(new File(fr)));
-	Arbre a = arbreCompr(fl);
+	Arbre a = arbreCompr(fl);//premiere lecture du fichier pour construire l'arbre de compression
 	fl.close();
 	fl =  new LireBit(new FileInputStream(new File(fr)));
-	int l ;
 	EcrireBit fe = new EcrireBit(new FileOutputStream(new File(fw)));
-	fe.write(1);
-	int taille=a.taille();
-	while(taille>=255){
+	fe.write(1);//permet de préciser que le fichier est compresser avec Huffman
+	int taille=a.taille();//recupere la taille de l'arbre
+	while(taille>=255){//écrit la taille de l'arbre dans le fichier
 	    fe.write(255);
 	    taille=taille-255;
 	}
 	fe.write(taille);
-	ecrireArbre2(a,fe);
+	ecrireArbre(a,fe);//écrit l'arbre dans le fichier
 	CodeLettre[] c = new CodeLettre[256];
 	ArrayList<Integer> ar = new ArrayList<Integer>();
-	a.racine.dfs(ar,c);
-	int cont=0;
-	int c2=0;
+	a.racine.dfs(ar,c);//récupèration des codes bit à bit de chaque lettre
+	int l;
 	while((l=fl.read())!=-1 ){
 	    ecrireLettre(c,fe,l);
 	    }
@@ -186,7 +182,7 @@ class Huffman{
 	ArrayList<Integer> list = listDec(fr);
 	int placement = 0;
 	int taille =  list.size()/(255*3);
-	for(long i=0;i<le-list.size()-2-taille;i++){
+	for(long i=0;i<le-list.size()*2-2-taille;i++){
 	    int b=0;
 	    fr.lire();
 	    for(int j=0;j<8;j++){
