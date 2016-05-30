@@ -16,7 +16,7 @@ public class Experience {
 	    String suite = sc.nextLine();
 	    System.out.println("longueur de la suite :");
 	    int longueur = Integer.parseInt(sc.nextLine());
-	EcrireBit fe = new EcrireBit(new FileOutputStream(new File("constante")));
+	EcrireBit fe = new EcrireBit(new FileOutputStream(new File(suite)));
 	    switch(suite){
 	    case "constante":
 		//EcrireBit fe = new EcrireBit(new FileOutputStream(new File("constante")));
@@ -30,6 +30,10 @@ public class Experience {
 		break;
 	    case "aleatoire":
 		aleatoire(fe,longueur);
+		break;
+	    case "champ":
+		champ(fe,longueur);
+		fe.close();
 		break;
 	    default :
 		System.out.println("cette suite n'existe pas");
@@ -76,6 +80,37 @@ public class Experience {
 	}
 	//fe.close();
     }
-
+    public static void champ(EcrireBit fe,int b) throws IOException{
+	ArrayList<Integer> a = new ArrayList<Integer>();
+	a.add(0);
+	a.add(1);
+	ArrayList <Integer>a2 = new ArrayList<Integer>();
+	int compte =0;
+	int alt=0;
+	fe.writeBit(0);
+	fe.writeBit(1);
+	for(int i=1;i<8*b;i++){
+	    int taille = a.size();
+	    for(int j=0;j<taille;j++){
+		if(compte<i){
+		    a.add(a.remove(0));
+		    System.out.println(" sa ecrit fils");
+		    fe.writeBit(a.get(a.size()-1));
+		    compte++;	
+		
+		}
+		else{
+		    
+		    System.out.println(alt+"alt valeur");
+		    fe.writeBit(alt);
+		    alt=(alt+1)%2;
+		    a2.add(alt);
+		    compte=0;
+		    j--;
+		}
+	    }
+	}
+	fe.writeLastBit();
+    }
 	
 }
