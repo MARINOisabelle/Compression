@@ -94,7 +94,7 @@ public class Experience {
 	    for(int j=0;j<taille;j++){
 		if(compte<i){
 		    a.add(a.remove(0));
-		    System.out.println(" sa ecrit fils");
+		   // System.out.println(" sa ecrit fils");
 		    fe.writeBit(a.get(a.size()-1));
 		    compte++;	
 		

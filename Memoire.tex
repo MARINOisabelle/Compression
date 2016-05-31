@@ -236,12 +236,19 @@ Pour finir, une dernière comparaison entre les différents algorithmes avec com
 Nous utiliserons ces différents tests pour analyser les performances en terme de taux de compression, ainsi qu'en temps d’exécution pour la compression et la décompression. 
 \section*{Analyse du taux de compression}
 \subsubsection{ Analyse de l'agorithme de Huffman}
+
 \begin{center}
-
 \includegraphics[width=11cm]{HConstant.png}
-
 \end{center}
 
+
+\begin{center}
+\includegraphics[width=11cm]{alternerH.png}
+\end{center}
+
+\begin{center}
+\includegraphics[width=11cm]{aleaH.png}
+\end{center}
 
 
 \subsubsection{ Analyse de l'agorithme de Lemple Ziv}
@@ -271,9 +278,41 @@ POur la suite alterner....
 
 
 \section*{Analyse du temps d’exécution}
-\subsubsection*{Temps d’exécution pour la compression}
-\subsubsection*{Temps d’exécution pour la décompression}
+\subsubsection*{Temps d’exécution pour Huffman}
+\subsubsection*{Compression}
 
+\begin{center}
+\includegraphics[width=11cm]{tempsChC.png}
+\end{center}
+\begin{center}
+\includegraphics[width=11cm]{tempsChA.png}
+\end{center}
+
+\subsubsection*{Décompression}
+ 
+\begin{center}
+\includegraphics[width=11cm]{tempsDhC.png}
+\end{center}
+\begin{center}
+\includegraphics[width=11cm]{tempsDhA.png}
+\end{center}
+
+\subsubsection*{Temps d’exécution pour Lempel-Ziv}
+\subsubsection*{Compression}
+\begin{center}
+\includegraphics[width=11cm]{tempsClzC.png}
+\end{center}
+\begin{center}
+\includegraphics[width=11cm]{tempsClzA.png}
+\end{center}
+\subsubsection*{Décompression}
+
+\begin{center}
+\includegraphics[width=11cm]{tempsDlzC.png}
+\end{center}
+\begin{center}
+\includegraphics[width=11cm]{tempsDlzA.png}
+\end{center}
 
 \section*{Différences entre les algorithmes}
 Dans cette dernière section, nous allons vous présenter un tableau avec plusieurs mode de compression et plusieurs type de fichiers. 
@@ -287,15 +326,15 @@ Nous expliquerons par la suite les différents taux de compression obtenues.
  & La bible (en anglais)  & Les Fleurs du Mal  & Au bonheurs des Dames & fichier PDF & musique  MP3 & image JPEG  \\
 \hline
 taille réélle (en octet)  & 883 158 & 180 199 & 952 753 &  & & \\\hline
-zip & 3.44  & 2.51 & 2.57 & & & \\
+zip & 3,44  & 2,51 & 2,57 & & & \\
 \hline
 Gzip & & & & & & \\
 \hline
 tar & & & & & & \\
 \hline
-Huffman & & & & & & \\
+Huffman & 1,725 & 1,688 & 1,747 & & & \\
 \hline
-Lempel-Ziv & & & & & & \\
+Lempel-Ziv & 1,796 & 1,310 & 1,482 & & & \\
 \hline
 
 \end{tabular}
