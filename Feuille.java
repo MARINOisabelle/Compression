@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 public class Feuille extends Poids{
     int letter;
-    public Feuille(int p,int l){
+    public Feuille(int p,int l){//une feuille possède un poids et une lettre
 	this.poids = p;
 	this.letter = l;
     }
@@ -23,8 +23,8 @@ public class Feuille extends Poids{
     public int comptePoids(){
 	return 1;
     }
-    public void dfs(ArrayList<Integer> a, CodeLettre[] cl){
-	cl[(int)letter]= new CodeLettre(a);
+    public void dfs(ArrayList<Integer> a, CodeLettre[] cl){//retourne le code d'une feuille
+	cl[(int)letter]= new CodeLettre(a);//a est l'arrayList correspondant au chemin de la feuille dans l'arbre
     }
     public ArrayList<Integer> copieList(ArrayList<Integer> a){
 	ArrayList<Integer> n = new ArrayList<Integer>();
@@ -33,24 +33,13 @@ public class Feuille extends Poids{
 	}
 	return n;
     }
-    public int tabArbre(int pl,int pere,int []tab,boolean gauche){
-	tab[pl]=this.letter;
-	tab[pl+1]=-1;
-	tab[pl+2]=-1;
-	if(gauche)
-	    tab[pere+1]=pl;
-	else
-	    tab[pere+2]=pl;
-	return pl;
-    }
+    
     public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){
-	l.add((int)this.letter);
+	l.add((int)this.letter);//ajoute la lettre dans la liste correspondant à l'abre de compression
+	l.add(-1);//écrit -1 pour signaler qu'il s'agit d'une feuille donc pas fils
 	l.add(-1);
-	l.add(-1);
-	return l.size()-3;
+	return l.size()-3;//retourne l'emplacement de la feuille dans la liste
 	 
     }
-    public boolean isAddNode(ArrayList<Integer> a,int l){
-	return false;
-    }
+   
 }
