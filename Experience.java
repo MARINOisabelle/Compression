@@ -9,6 +9,24 @@ import java.nio.channels.*;
 import java.io.IOException;
 
 public class Experience {
+
+	public static int[] int2tab(int o) { // sur 32 byte
+		if (o == -1)
+			return null;
+		long mask = (1073741824) * 2L;
+		int oct[] = new int[32];
+
+		for (int i = 0; i < 32; i++) {
+			if ((o & mask) == 0) {
+				oct[i] = 0;
+				mask = mask >> 1;
+			} else {
+				oct[i] = 1;
+				mask = mask >> 1;
+			}
+		}
+		return oct;
+	}
     public static void main(String[]args){
 	try{
 	    Scanner sc = new Scanner(System.in);
@@ -30,6 +48,7 @@ public class Experience {
 		break;
 	    case "aleatoire":
 		aleatoire(fe,longueur);
+		fe.close();
 		break;
 	    case "champ":
 		champ(fe,longueur);
@@ -81,7 +100,7 @@ public class Experience {
 	//fe.close();
     }
     public static void champ(EcrireBit fe,int b) throws IOException{
-	ArrayList<Integer> a = new ArrayList<Integer>();
+	/*ArrayList<Integer> a = new ArrayList<Integer>();
 	a.add(0);
 	a.add(1);
 	ArrayList <Integer>a2 = new ArrayList<Integer>();
@@ -111,6 +130,31 @@ public class Experience {
 	    }
 	}
 	fe.writeLastBit();
+	*/
+	
+	int j=1;
+	int k=1;
+	int bit=1;
+	int puissance =0;
+	int []octet=null;
+	while(k<b*8){
+		if (j >=bit) {
+			puissance++;
+			bit = bit * 2;
+			j=0;
+		}
+		octet = int2tab( j);	
+		if (32 - puissance >= 0) {
+			for (int i = 32 - puissance; i < 32; i++) {
+				if(k<b*8){
+					fe.writeBit(octet[i]);
+					k++;
+				}
+			}
+		}
+		j++;
+	}
+
     }
 	
 }
