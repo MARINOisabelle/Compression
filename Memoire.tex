@@ -320,7 +320,7 @@ Nous avons choisit un certain nombre de tests identiques à effectuersur chaque 
 Tout d'abord un test de compression théorique simple avec un fichier et un seul caractère à l'intérieur, nous avons pris le caractère "0".
 Tout d'abord dans le fichier il a y un unique octet de 0, puis nous dupliquons ce a 10 fois, 20 fois ... Et ainsi de suite pour avoir 10 fichiers de 1 octet , 10, 20 ,30 ,...  octet, jusqu'à 10 Mo.
 Puis nous continuons avec des suites plus complexes comme une suite périodique composées que de suite de 01, une suite générée aléatoirement et enfin une suite de Champernowne.
-La suite de Champernowne consiste en une suite d'entier naturel de 0,1,2,3,4... en base 10. Cela revient à 0,1,00,01,10,11,000 ... en base 2.   
+La suite de Champernowne consiste en une suite d'entier naturel de 0,1,2,3,4... en base 10. Cela revient à 0,1,00,01,10,11,000... en base 2.   
 
 Pour finir, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
 
@@ -417,7 +417,9 @@ En comparaison, les 2 algorithmes présentent des courbes pour le temps d'exécu
 \includegraphics[width=7cm]{tempsDhA.png}
 \end{tabular}
 \subparagraph*{}
+Le temps d'exécution pour la décompression de Huffman est linéaire. Ceci est notamment du à la lecture du fichier compressée, plus il est grand plus le nombre de caractère à traduire est important. 
 
+Ce temps est très différent lorsqu’il s'agit d'une suite constante ou d'une suite aléatoire. Comme pour la compression il y a 2 explications à cela. La première est du à la lecture et au stockage en mémoire de l'arbre de compression, qui est nécessaire plus grand pour la suite aléatoire. La seconde raison est elle aussi liée à la lecture du fichier compressé. Comme il y a plus de caractère dans la suite aléatoire le code pour chaque lettre est donc plus grand, ainsi lors de la décompression il y a plus de caractère à lire dans le fichier compressé. Par conséquent, le temps de lecture de fichier est plus long.  
 
 \paragraph*{}
 \textbf{Temps d’exécution pour Lempel-Ziv}
@@ -427,6 +429,9 @@ En comparaison, les 2 algorithmes présentent des courbes pour le temps d'exécu
 \includegraphics[width=7cm]{tempsDlzA.png}
 \end{tabular}
 \subparagraph*{}
+
+Le temps d'exécution pour la décompression de Lempel-Ziv est lui aussi linéaire, pour les même raisons que celle évoquées précédemment.
+
 
 
 \paragraph*{}
