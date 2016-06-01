@@ -137,7 +137,7 @@ public class Experience {
 	int bit=1;
 	int puissance =0;
 	int []octet=null;
-	while(k<b*8){
+	while(k<b*8){	
 		if (j >=bit) {
 			puissance++;
 			bit = bit * 2;
@@ -146,8 +146,9 @@ public class Experience {
 		octet = int2tab( j);	
 		if (32 - puissance >= 0) {
 			for (int i = 32 - puissance; i < 32; i++) {
-				if(k<b*8){
+				if(k<=b*8){
 					fe.writeBit(octet[i]);
+
 					k++;
 				}
 			}

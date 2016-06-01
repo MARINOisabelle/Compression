@@ -313,12 +313,14 @@ On récupère leur bit respectif et on les écrit en commençant par le nœud  1
 Pour le nœud 8 on obtient la suite: 10. 
 
 
+
 \part*{Analyse des performances}
 Nous avons choisit un certain nombre de tests identiques à effectuersur chaque algorithme. Nous commençons par des tests avec des suites théoriques puis nous ferons des tests avec des fichiers plus réalistes des fichiers textes(roman) son et image.
  
 Tout d'abord un test de compression théorique simple avec un fichier et un seul caractère à l'intérieur, nous avons pris le caractère "0".
 Tout d'abord dans le fichier il a y un unique octet de 0, puis nous dupliquons ce a 10 fois, 20 fois ... Et ainsi de suite pour avoir 10 fichiers de 1 octet , 10, 20 ,30 ,...  octet, jusqu'à 10 Mo.
-Puis nous continuons avec des suites plus complexes comme une suite périodique composées que de suite de 01, une suite générée aléatoirement et enfin une suite de Champarnown.  
+Puis nous continuons avec des suites plus complexes comme une suite périodique composées que de suite de 01, une suite générée aléatoirement et enfin une suite de Champernowne.
+La suite de Champernowne consiste en une suite d'entier naturel de 0,1,2,3,4... en base 10. Cela revient à 0,1,00,01,10,11,000 ... en base 2.   
 
 Pour finir, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
 
@@ -327,111 +329,139 @@ Nous utiliserons ces différents tests pour analyser les performances en terme d
 \subsubsection{ Analyse de l'agorithme de Huffman}
 
 \begin{center}
-\includegraphics[width=11cm]{HConstant.png}
+\includegraphics[width=10cm]{HConstant.png}
 \end{center}
 
 
 \begin{center}
-\includegraphics[width=11cm]{alternerH.png}
+\includegraphics[width=10cm]{alternerH.png}
 \end{center}
 
 \begin{center}
-\includegraphics[width=11cm]{aleaH.png}
+\includegraphics[width=10cm]{aleaH.png}
 \end{center}
 
+\begin{center}
+\includegraphics[width=10cm]{champH.png}
+\end{center}
 
 \subsubsection{ Analyse de l'agorithme de Lemple Ziv}
 
 Tout d'abord regardons nos fichiers composés que de 0, nous obtenons le graphique ci-dessus.
 \begin{center}
 
-\includegraphics[width=11cm]{LZConstant.png}
+\includegraphics[width=10cm]{LZConstant.png}
 
 \end{center}
 
 On constate que la courbe est logarithmique, plus le nombre d'octet est important plus le taux de compression augmente, ainsi le fichier compressé devient réellement de plus en plus petit. 
 On remarque néanmoins que lorsque l'on veut compresser un seul octet le taux de compression est en dessous de 1, c'est-à-dire que le fichier compressé est plus gros que le fichier source. Ceci s'explique notamment par le stockage du premier  octet supplémentaire pour connaître le mode de compression, ici Lempel-Ziv. Il s'explique aussi car le début de compression pour Lempel-Ziv remplace un bit par 2 et ainsi de suite. Nous devons donc attendre les 10 octets dans le fichier source pour que la compression ai vraiment lieu. 
+Lors de la compression d'un suite constante comme celle-ci, nous pouvons remarquer que l'arbre de compression est linéaire. En effet, il y a un seule branche composée de 0 les uns à la suite des autres. Le fait qu'il n'y ai qu'une seule branche explique en grande partie la performance de compression pour cette suite. 
 
 \begin{center}
-
-\includegraphics[width=11cm]{LZAlterner.png}
-
+\includegraphics[width=10cm]{LZAlterner.png}
 \end{center}
 
-POur la suite alterner....
+De même que sur le précédent graphique, la suite alternée a une compression dont le taux croît selon la taille de la suite. On constate que sur ce cas, l'arbre de compression quant à lui 2 branches au lieu d'une unique pour le cas constant. Ainsi on observe que la courbe du aux de compression augmente mais qu'elle n'est pas aussi efficace que pour le cas constant, même si l'écart est plutôt faible.
+De la même façon que sur la courbe précédente, il faut attendre 10 octets pour qu la compression débute, pour des raisons identiques à celle que nous avons déjà évoquées.  
+
 \begin{center}
-
-\includegraphics[width=11cm]{LZAleatoire.png}
-
+\includegraphics[width=10cm]{LZAleatoire.png}
 \end{center}
 
+On observe un changement avec les courbes précédentes, pour une suite aléatoire notre algorithme de compression n'a pas de bon résultat. En effet, le fichier obtenu à un nombre d'octet plus grand que le fichier source peu importe sa taille. Autrement dit, nous algorithme de compression ne compresse pas au contraire. 
+On remarque néanmoins que plus le fichier source est grand, plus le taux de compression tend vers 1. Ceci s'explique notamment pas la taille de l'arbre de compression.Plus le fichier source est important, plus il y a de redondance dans les suites d'octets, ainsi on repasse obligatoirement par des chemins déjà existants, qui deviennent au fur et à mesure de plus en plus grand. 
+C'est pour cela qu'on observe une courbe qui tend vers 1. 
+
+
+\begin{center}
+\includegraphics[width=10cm]{champLZ.png}
+\end{center}
+La suite de Champernowne est une suite très particulière pour notre algorithme. A chaque lecture nous allons créer dans notre arbre de compression un nouveau nœud dont la profondeur sera égal à la hauteur de l'arbre. Lorsque nous avancerons dans le processus, nous créerons tous les nœuds possible dans l'arbre ainsi comme la hauteur de l'arbre ne croîtra pas de façon logarithmique, nous n'aurons pas la possibilité d'avoir une compression satisfaisante. 
 
 \section*{Analyse du temps d’exécution}
-\subsubsection*{Temps d’exécution pour Huffman}
+
 \subsubsection*{Compression}
+\paragraph*{}
+\textbf{Temps d’exécution pour Huffman}
+\subparagraph*{}
+\hspace{-2cm}\begin{tabular}{l | l}
+\includegraphics[width=7cm]{tempsChC.png} & 
+\includegraphics[width=7cm]{tempsChA.png}
+\end{tabular}
 
-\begin{center}
-\includegraphics[width=11cm]{tempsChC.png}
-\end{center}
-\begin{center}
-\includegraphics[width=11cm]{tempsChA.png}
-\end{center}
+\subparagraph*{}
+Le temps d'exécution pour l’algorithme de Huffman est linéaire, plus le fichier source est important plus le temps d'exécution le devient. Cela est du à la lecture double du fichier source ainsi qu'à la construction de l'arbre. Lorsque le fichier source devient plus grand il faux alors lire beaucoup plus de caractère.    
+On constate aussi, que la suite constante nécessite moins de temps pour être compressée que la suite aléatoire. Il y a 2 explications à cela. La première est que le nombre de caractère à comparer est totalement différent par rapport à la suite aléatoire.Il suffit de compter le nombre 0 alors que pour la suite aléatoire il faut compter tous les caractères mais aussi tous les comparer ce qui nécessite plus de temps. La seconde explication découle de la première, en effet pour la suite constante l'arbre de compression ne possède que 2 poids et donc on le copie en un temps plus court qu'un arbre pour complexe comme celui de la suite aléatoire, qui est nécessairement plus grand, voire de taille maximale pour un arbre de Huffman.  
 
+\paragraph*{}
+\textbf{Temps d’exécution pour Lempel-Ziv}
+\subparagraph*{}
+\hspace{-2cm}\begin{tabular}{l | l}
+\includegraphics[width=7cm]{tempsClzC.png} & 
+\includegraphics[width=7cm]{tempsClzA.png}
+\end{tabular}
+
+\subparagraph*{}
+Le temps d'exécution pour l'algorithme de Lempel-Ziv est lui aussi linéaire. De la même façon le temps d'exécution croît en fonction du nombre d'octet présent dans le fichier source. Néanmoins, on remarque que pour la suite constante le temps d'exécution est plus rapide que pour la suite aléatoire. Ceci s'explique notamment par le parcours en profondeur de l'arbre. Dans le cas constant, plus le processus avance et plus le nombre d'octet lu est important avant la création d'un nœud dans l'arbre, le nombre d'octet lu avant la création d'un nœud est logarithmique. Contrairement au cas constant, le cas aléatoire crée des nœuds dans l'arbre de façon plus fréquent, il y a tout simplement moins de redondance dans le fichier source. Ainsi la création de ces multiples nœuds prend plus de temps, c'est donc une conséquence de la différence du temps d'exécution.
+
+\paragraph*{}
+En comparaison, les 2 algorithmes présentent des courbes pour le temps d'exécution linéaire. Néanmoins, l'algorithme de Lempel-Ziv a un temps d'exécution pour la compression plus rapide que pour celui de l'algorithme de Huffman. On l'observe de façon très significative dans la cas de la suite constante. Cette différence de rapidité est du à la lecture unique du fichier pour l'algorithme de Lempel-Ziv, contrairement à la lecture double du fichier pour l'algorithme de Huffman.	
+
+\paragraph*{}
 \subsubsection*{Décompression}
- 
-\begin{center}
-\includegraphics[width=11cm]{tempsDhC.png}
-\end{center}
-\begin{center}
-\includegraphics[width=11cm]{tempsDhA.png}
-\end{center}
+\textbf{Temps d’exécution pour Huffman}
+\subparagraph*{}
+\hspace{-2cm}\begin{tabular}{l | l}
+\includegraphics[width=7cm]{tempsDhC.png} & 
+\includegraphics[width=7cm]{tempsDhA.png}
+\end{tabular}
+\subparagraph*{}
 
-\subsubsection*{Temps d’exécution pour Lempel-Ziv}
-\subsubsection*{Compression}
-\begin{center}
-\includegraphics[width=11cm]{tempsClzC.png}
-\end{center}
-\begin{center}
-\includegraphics[width=11cm]{tempsClzA.png}
-\end{center}
-\subsubsection*{Décompression}
 
-\begin{center}
-\includegraphics[width=11cm]{tempsDlzC.png}
-\end{center}
-\begin{center}
-\includegraphics[width=11cm]{tempsDlzA.png}
-\end{center}
+\paragraph*{}
+\textbf{Temps d’exécution pour Lempel-Ziv}
+\subparagraph*{}
+\hspace{-2cm}\begin{tabular}{l | l}
+\includegraphics[width=7cm]{tempsDlzC.png} & 
+\includegraphics[width=7cm]{tempsDlzA.png}
+\end{tabular}
+\subparagraph*{}
+
+
+\paragraph*{}
+H vs LZ
 
 \section*{Différences entre les algorithmes}
 Dans cette dernière section, nous allons vous présenter un tableau avec plusieurs mode de compression et plusieurs type de fichiers. 
 Nous expliquerons par la suite les différents taux de compression obtenues. 
 
 
-\begin{center}
+\begin{flushleft}
 {\renewcommand{\arraystretch}{2}
 \begin{tabular}{|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
 \hline
- & La bible (en anglais)  & Les Fleurs du Mal  & Au bonheurs des Dames & fichier PDF & musique  MP3 & image \\
+ & La bible (en anglais)  & Les Fleurs du Mal  & Au bonheurs des Dames & fichier PDF & musique  MP3 & image & vidéo\\
 \hline
-taille réélle (en octet)  & 883 158 & 180 199 & 952 753 &  & & \\\hline
-zip & 3,44  & 2,51 & 2,57 & & & \\
+taille réélle (en octet)  & 883 158 & 180 199 & 952 753 & 198 931 & & & \\\hline
+zip & 3,44 & 2,51 & 2,57 & 1,246 & & & \\
 \hline
-Gzip & & & & & & \\
+Gzip & 3,44 & 2,51 & 2,644 & 1,247 & & & \\
 \hline
-Bzip2 & & & & & & \\
+Bzip2 & 4,89 & 3,045 & 3,719 & 1,212 & & & \\
 \hline
-XZ & & & & & & \\
+XZ & 4,649 & 2,826 & 3,323 & 1,261 & & & \\
 \hline
-Huffman & 1,725 & 1,688 & 1,747 & & & \\
+Huffman & 1,725 & 1,688 & 1,747 & 0,998 & & & \\
 \hline
-Lempel-Ziv & 1,796 & 1,310 & 1,482 & & & \\
+Lempel-Ziv & 1,796 & 1,310 & 1,482 & 0,933 & & & \\
 \hline
 
 \end{tabular}
 }
-\end{center}
+\end{flushleft}
 
+\section*{Conclusion}
 
 
 
