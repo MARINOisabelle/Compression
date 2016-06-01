@@ -315,16 +315,17 @@ Pour le nœud 8 on obtient la suite: 10.
 
 
 \part*{Analyse des performances}
-Nous avons choisit un certain nombre de tests identiques à effectuersur chaque algorithme. Nous commençons par des tests avec des suites théoriques puis nous ferons des tests avec des fichiers plus réalistes des fichiers textes(roman) son et image.
+Nous avons choisit un certain nombre de tests identiques à effectuer sur chaque algorithme. Nous commençons par des tests avec des suites théoriques puis nous ferons des tests avec des fichiers plus réalistes des fichiers textes(roman) son et image.
  
 Tout d'abord un test de compression théorique simple avec un fichier et un seul caractère à l'intérieur, nous avons pris le caractère "0".
 Tout d'abord dans le fichier il a y un unique octet de 0, puis nous dupliquons ce a 10 fois, 20 fois ... Et ainsi de suite pour avoir 10 fichiers de 1 octet , 10, 20 ,30 ,...  octet, jusqu'à 10 Mo.
 Puis nous continuons avec des suites plus complexes comme une suite périodique composées que de suite de 01, une suite générée aléatoirement et enfin une suite de Champernowne.
 La suite de Champernowne consiste en une suite d'entier naturel de 0,1,2,3,4... en base 10. Cela revient à 0,1,00,01,10,11,000... en base 2.   
 
-Pour finir, une dernière comparaison entre les différents algorithmes avec comme fichier la bible, pour pouvoir comparer les performances entre les algorithmes.
+Pour finir, une dernière comparaison entre les différents algorithmes avec des fichiers comme la bible, pour pouvoir comparer les performances entre les algorithmes.
 
 Nous utiliserons ces différents tests pour analyser les performances en terme de taux de compression, ainsi qu'en temps d’exécution pour la compression et la décompression. 
+Ce que nous appellerons taux est le rapport du nombre d'octet du fichier source sur le nombre d'octet du fichier compressé. Ainsi il sera plus simple de constater par combien le fichier source à été divisé. 
 \section*{Analyse du taux de compression}
 \subsubsection{ Analyse de l'agorithme de Huffman}
 
@@ -429,11 +430,10 @@ Ce temps est très différent lorsqu’il s'agit d'une suite constante ou d'une 
 
 Le temps d'exécution pour la décompression de Lempel-Ziv est lui aussi linéaire, pour les même raisons que celle évoquées précédemment.
 
-
-
+Comme précédemment, le temps pour décompresser une suite constante est plus faible que pour une suite aléatoire. De la même façon, cela s'explique par la taille du fichier compressé. En effet, le fichier compressé pour une suite constante a un poids très faible par rapport à un fichier compressé pour une suite aléatoire ayant le même nombre d'octet. Par conséquent, il est plus rapide de décompressée un fichier avec beaucoup de redondance.
 
 \paragraph*{}
-H vs LZ
+Le temps de décompression entre Huffman et Lempel-Ziv est très différent. Comme observé, Huffman est plus rapide que Lempel-Ziv. Cela est du à la création de l'arbre pour Lempel-Ziv qui a lieu en même temps que la lecture du fichier, ainsi il y a plus d'étape pour décompressé le fichier avec a méthode de Lempel-Ziv que celle de Huffman. PAr conséquen Huffman est plus rapide à la décompression.
 
 \section*{Différences entre les algorithmes}
 Dans cette dernière section, nous allons vous présenter un tableau avec plusieurs mode de compression et plusieurs type de fichiers. 
