@@ -64,26 +64,7 @@ public class Node extends Poids{
 	    return 1+this.left.comptePoids();
 	
     }
-    public int  tabArbre(int pl,int pere,int []tab,boolean gauche){
-	tab[pl]=-1;
-	if(pl!=0){
-	    if(gauche)
-		tab[pere+1]=pl;
-	    else
-		tab[pere+2]=pl;
-	}
-	pere=pl;
-	pl=pl+3;
-	pl=this.left.tabArbre(pl,pere,tab,true);
-	if(this.right != null){
-	    pl=pl+3;
-	   pl =  this.right.tabArbre(pl,pere,tab,false);
-	}
-	else{
-	    pl=pl+3;
-	}
-	return pl;
-    }
+    
     
     public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){
 	int place = l.size();
@@ -105,29 +86,5 @@ public class Node extends Poids{
 	}
 	return n;
     }
-    public boolean isAddNode(ArrayList<Integer> a,int l){
-	
-	if(this.left.poids ==0){
-	    this.poids++;
-	    Node nul = new Node(0);
-	    Feuille f = new Feuille(1,l);
-	    this.left = new Node(f,nul);
-	    return true;
-	}
-	else{
-	    boolean b = this.right.isAddNode(a,l);
-	    if(b==true){
-		this.poids++;
-		a.add(1);
-		return true;
-	    }
-	    b= this.left.isAddNode(a,l);
-	    if(b==true){
-		this.poids++;
-		a.add(0);
-		return true;
-	    }
-	    return false;
-	}
-    }
+
 }
