@@ -334,13 +334,14 @@ Nous utiliserons ces différents tests pour analyser les performances en terme d
 \includegraphics[width=7cm]{alternerH.png}
 \end{tabular}
 
-
+On peut voir ici que les  résultats de compression obtenue pour la suite constante et pour la suite alternée sont similaire.En effet dans les deux cas il n'y a qu'un seul caractère dans le fichier soit le caractère codé par 00000000 soit le caractère codé par 10101010.Il y a donc un arbre à seulement 2 poids, la racine et la feuille et donc le caractère est codé sur un seul bit.On observe donc le taux de compression tend rapidement vers 8, du fait qu'on remplace un octet par un bit.Ce n'est pas le cas sur des fichiers de plus faible poids car il faut compter le poids de l'arbre présent dans le fichier compresser.La taille de l'arbre  pour un arbre à une feuille étant de 15 octets.
 \subparagraph*{}
 \hspace{-2cm}\begin{tabular}{l | l}
 \includegraphics[width=7cm]{aleaH.png} & 
 \includegraphics[width=7cm]{champH.png}
 \end{tabular}
-
+Pour la suite aléatoire et la suite de champernowne le fichier ne compresse pas il augmente même.Cela est du au fait que les deux suites donnent beaucoup de caractères différent à une fréquence à peu près équivalente on ne peut donc pas gagnez en poids en réduisant le poids des caractères les plus redondants étant donné qu'il n'y en a pas.On remarque que lorsque le fichier est de petite taille il va avoir tendance à fortement augmenté lors de la compression,cela est dù au fais qu'il faut stocker l'arbre comme dans le fichier et que celui-ci est beaucoup plus gros étant donné qu'il n'y pas un caractère mais une multitude contrairement aux suites constante et alterné mais sur des fichiers aléatoire son poids n'est pas assez significatif pour le faire réellement augmentez.
+Il y a cependant une différence entre la compression de la suite aléatoire et la suite de champernowne, en effet si la suite aléatoire  n'atteint jamais vraiment son poids initial du fait qu'il n'y a aucun caractère qui a plus de chance d'apparaitre plus qu'un autre ,le fichier compresser de la suite de champernowne lui va revenir a son poids d'origine car il fini par y avoir une répétition de motif du au caractéristique de la suite.
 
 \subsubsection{ Analyse de l'agorithme de Lemple Ziv}
 
