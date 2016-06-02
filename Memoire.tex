@@ -46,16 +46,16 @@ La compression est décomposé en plusieurs parties:
 \begin{itemize}
 \item[-] Une première partie, qui consiste à lire une première fois le fichier que l'on veut compresser et à compter le nombre d'apparition de chaque caractère. On considère ensuite que chaque caractère à un poids qui correspond à son nombre d'apparition. On va ensuite procéder à la construction d'un arbre binaire de compression. Un arbre de compression est composé de poids, qui se divise en deux types : les feuilles composées d'un caractère et d'un poids et les  nœuds composés d'un fils gauche et droit et d'un poids. Pour créer notre arbre, on trie les feuilles, obtenues lors de la première lecture, par ordre croissant de poids. Puis on relie les deux feuilles de poids plus faibles par un nœud de poids égal à la somme du poids des deux feuilles reliées.  Ensuite, on enlève les deux feuilles reliées de la liste, on ajoute le nouveau le  nœud à  la liste et on la trie à nouveau. On répète l'opération jusqu'à qu'il ne reste plus qu'un seul poids, ce sera la racine de notre arbre binaire.
 
-Si le fichier n'est composé que d'un unique caractère, on définit l'unique feuille comme fils gauche de la racine.
+Si le fichier n'est composé que d'un unique caractère, on définit l'unique feuille comme fils gauche de la racine.\\
 
-\item[-]Une fois l'arbre crée, il faut récupérer les codes de chaque caractère, en parcourant l'arbre à partir de la racine. Lorsque l'on va à gauche dans l'arbre(c'est à dire qu'on se rends sur le fils gauche du nœud sur lequel on se trouve) on ajoute le bit 0 et sinon le bit 1. Lorsqu'on arrive sur une feuille, le chemin parcouru depuis la racine(c'est à dire la suite de 0 et de 1) correspond au nouveau code du caractère liée à cette feuille.
+\item[-]Une fois l'arbre crée, il faut récupérer les codes de chaque caractère, en parcourant l'arbre à partir de la racine. Lorsque l'on va à gauche dans l'arbre(c'est à dire qu'on se rends sur le fils gauche du nœud sur lequel on se trouve) on ajoute le bit 0 et sinon le bit 1. Lorsqu'on arrive sur une feuille, le chemin parcouru depuis la racine(c'est à dire la suite de 0 et de 1) correspond au nouveau code du caractère liée à cette feuille.\\
 
-\item Il faut ensuite écrire l'arbre dans le fichier, pour que celui-ci puisse être récupérer à la décompression.Il existe différente façon d'écrire l'arbre dans un fichier compressé. Pour notre part nous avons recopier l'arbre à l'aide d'un tableau. On écrit un Poids avec sa valeur et on précise on se trouve son fils droit et son fils gauche dans le tableau. Si c'est un  nœud  sa valeur sera -1 et sinon c'est une feuille qui aura pour fils droit et fils gauche -1.
+\item[-]Il faut ensuite écrire l'arbre dans le fichier, pour que celui-ci puisse être récupérer à la décompression.Il existe différente façon d'écrire l'arbre dans un fichier compressé. Pour notre part nous avons recopier l'arbre à l'aide d'un tableau. On écrit un Poids avec sa valeur et on précise on se trouve son fils droit et son fils gauche dans le tableau. Si c'est un  nœud  sa valeur sera -1 et sinon c'est une feuille qui aura pour fils droit et fils gauche -1.
 Nous aurions pu construire d'arbre de manière canonique ce qui optimise le poids de l'arbre dans le fichier compresser. Un arbre canonique se construit de la façon suivante :
-on organise les feuilles de même hauteur par ordre lexicographique. Lors de l'écriture de l'arbre il suffira de préciser le nombre de bit pour chaque caractère.
+on organise les feuilles de même hauteur par ordre lexicographique. Lors de l'écriture de l'arbre il suffira de préciser le nombre de bit pour chaque caractère.\\
 
-\item Enfin, on relit le fichier à compresser et réécrire chaque caractère avec les nouveaux codes obtenues précédemment. Pour finir, sachant qu'un fichier à un nombre de bit qui est multiple de 8 (les fichiers sont lu comme des suites d'octets et non seulement de bits, 1 octet = 8 bits), nous devons compléter le fichier pour pouvoir écrire ce dernier octet.
-Nous avons choisit la convention suivante: mettre "1" puis le nombre de "0" nécessaire. 
+\item[-] Enfin, on relit le fichier à compresser et réécrire chaque caractère avec les nouveaux codes obtenues précédemment. Pour finir, sachant qu'un fichier à un nombre de bit qui est multiple de 8 (les fichiers sont lu comme des suites d'octets et non seulement de bits, 1 octet = 8 bits), nous devons compléter le fichier pour pouvoir écrire ce dernier octet.
+Nous avons choisit la convention suivante: mettre "1" puis le nombre de "0" nécessaire. \\
 
 \end{itemize}
 \subsection*{Décompression}
@@ -66,7 +66,10 @@ On crée ensuite une feuille pour chaque caractère que l'on trie par ordre croi
 \begin{center}
 (o,1) (e,1) (f,2) (a,2) (r,2) (n,3)
 \end{center}
+\begin{flushleft}
+\end{flushleft}
 On relie ensuite les plus deux feuilles les plus faibles entre elles par un nœud :
+
 \begin{center}
 \begin{tikzpicture}
 \node (0) at (0,0) {2};
@@ -81,9 +84,9 @@ On relie ensuite les plus deux feuilles les plus faibles entre elles par un nœu
 \end{tikzpicture}
 \end{center}
 \paragraph*{}
-Puis l'on réitère l'opération, en considérant les nouveaux poids créer jusqu'à n'avoir plus qu'un seul arbre:
+Puis l'on réitère l'opération, en considérant les nouveaux poids créer jusqu'à n'avoir plus qu'un seul arbre: \\
 
-Etape 2:
+Etape 2 :\\ 
 
 \begin{tikzpicture}
 
@@ -104,7 +107,7 @@ Etape 2:
 
 \paragraph*{}
 
-Etape 3 : 
+Etape 3 :\\ 
 
 
 \begin{tikzpicture}
@@ -127,7 +130,7 @@ Etape 3 :
 \end{tikzpicture}
 \paragraph*{}
 
-Etape 4 : 
+Etape 4 : \\
 
 
 \begin{tikzpicture}
@@ -151,9 +154,10 @@ Etape 4 :
 \draw [-,>=latex,](10)--(8) node[pos=0.6,left, above]{0};
 \draw [-,>=latex,](10)--(1) node[pos=0.6,right, above]{1};
 \end{tikzpicture}
+\newpage
 
 
-Etape 5: 
+Etape 5: \\
 
 
 \begin{tikzpicture}
@@ -257,11 +261,12 @@ On lit de la façon suivante pour avoir l'arbre ci dessous :
 Etape 1 & Etape 2 & Etape 3 \\
 \end{tabular}
 \end{center}
-
-
+\newpage
 \begin{center}
-\underline{0} \underline{1} \underline{10} \underline{00} \underline{01}  \underline{011} \underline{000} \underline{10}
-\\
+\underline{0} \underline{1} \underline{10} \underline{00} \underline{01}  \underline{011} \underline{000} \underline{10} \\ 
+\begin{flushleft}
+
+\end{flushleft}
 \begin{tikzpicture}
 \node (0) at (0,0) {0};
 \node (1) at (-2,-1) {1}; 
@@ -329,24 +334,28 @@ Pour finir, une dernière comparaison entre les différents algorithmes avec des
 
 Nous utiliserons ces différents tests pour analyser les performances en terme de taux de compression, ainsi qu'en temps d'exécution pour la compression et la décompression. 
 Ce que nous appellerons taux est le rapport du nombre d'octet du fichier source sur le nombre d'octet du fichier compressé. Ainsi il sera plus simple de constater par combien le fichier source a été divisé. 
+
 \section*{Analyse du taux de compression}
 \subsubsection{ Analyse de l'agorithme de Huffman}
 
 \subparagraph*{}
 \hspace{-2cm}\begin{tabular}{l | l}
 \includegraphics[width=7cm]{HConstant.png} & 
-\includegraphics[width=7cm]{alternerH.png}
+\includegraphics[width=7cm]{alternerH.png} 
 \end{tabular}
 
+\paragraph*{}
 On peut voir ici que les  résultats de compression obtenue pour la suite constante et pour la suite alternée sont similaires, on observe des courbes constantes. En effet dans les deux cas, il n'y a qu'un seul caractère dans le fichier, soit le caractère codé par 00000000, soit le caractère codé par 10101010. Il y a donc un arbre à seulement 2 poids, la racine et la feuille et donc le caractère est codé sur un seul bit. On observe alors que le taux de compression tend rapidement vers 8 , car l'on remplace un octet par un bit. Ce n'est pas le cas sur des fichiers de plus faible taille car il faut compter le poids de l'arbre présent dans le fichier compresser.Ce poids, pour un arbre à une feuille étant de 15 octets.
 \subparagraph*{}
 \hspace{-2cm}\begin{tabular}{l | l}
 \includegraphics[width=7cm]{aleaH.png} & 
 \includegraphics[width=7cm]{champH.png}
 \end{tabular}
+\paragraph*{}
 Pour la suite aléatoire et la suite de Champernowne, le fichier ne compresse pas, au contraire il augmente. Cela viens du fait que les fréquences des multiples caractère sont à peu près équivalente. On ne peut donc pas réduire la taille des caractères. On remarque, que plus le fichier est petit, plus le taux de compression est faible (proche de 0). En cause le stockage l'arbre dans le fichier, qui est nécessairement plus grand que pour les suites constante ou alternée, étant donné qu'il n'y pas un caractère mais une multitude. Néanmoins, sur des fichiers de grande taille, le poids de l'arbre n'est pas significatif. 
-Il y a cependant une différence entre la compression de la suite aléatoire et la suite de Champernowne. En effet, si la suite aléatoire n'atteint jamais vraiment son poids initial, du fait que chaque caractère à la même probabilité d'apparaître, le fichier compressé de la suite de Champernowne lui va revenir à son poids d'origine, car il fini par y avoir une répétition de certain motif du au caractéristique de la suite.
+Il y a cependant une différence entre la compression de la suite aléatoire et la suite de Champernowne. En effet, si la suite aléatoire n'atteint jamais vraiment son poids initial, du fait que chaque caractère à la même probabilité d'apparaître, le fichier compressé de la suite de Champernowne lui va revenir à son poids d'origine, car il fini par y avoir une répétition de certain motif du au caractéristique de la suite. \\ 
 
+\newpage
 \subsubsection{ Analyse de l'agorithme de Lemple Ziv}
 
 Tout d'abord regardons nos fichiers composés que de 0, nous obtenons le graphique ci-dessous.
@@ -380,7 +389,7 @@ C'est pour cela qu'on observe une courbe qui tend vers 1.
 \includegraphics[width=10cm]{champLZ.png}
 \end{center}
 La suite de Champernowne est une suite très particulière pour notre algorithme. A chaque lecture nous allons créer dans notre arbre de compression un nouveau nœud dont la profondeur sera égal à la hauteur de l'arbre. Lorsque nous avancerons dans le processus, nous créerons tous les nœuds possible dans l'arbre ainsi comme la hauteur de l'arbre ne croîtra pas de façon logarithmique, nous n'aurons pas la possibilité d'avoir une compression satisfaisante. 
-
+\newpage
 \section*{Analyse du temps d’exécution}
 
 \subsubsection*{Compression}
@@ -396,6 +405,7 @@ La suite de Champernowne est une suite très particulière pour notre algorithme
 Le temps d'exécution pour l'algorithme de Huffman est linéaire, plus le fichier source est important plus le temps d'exécution le devient. Cela est du à la lecture double du fichier source ainsi qu'à la construction de l'arbre. Lorsque le fichier source devient plus grand il faut lire beaucoup plus de caractère.    
 On constate aussi, que la suite constante nécessite moins de temps pour être compressée que la suite aléatoire. Il y a 2 explications à cela. La première est le nombre de caractère à comparer. Pour la suite constante il n'y aucun caractère à comparer, contrairement à la suite aléatoire où nous devons comparer une multitude de caractères pour pouvoir les trier. La seconde explication découle de la première, en effet pour la suite constante l'arbre de compression ne possède que 2 poids et donc on le copie en un temps plus court qu'un arbre plus complexe comme celui de la suite aléatoire, qui est nécessairement plus grand.  
 
+\newpage
 \paragraph*{}
 \textbf{Temps d’exécution pour Lempel-Ziv}
 \subparagraph*{}
@@ -409,7 +419,7 @@ Le temps d'exécution pour l'algorithme de Lempel-Ziv est lui aussi linéaire. D
 
 \paragraph*{}
 En comparaison, les 2 algorithmes présentent des courbes pour le temps d'exécution linéaire. Néanmoins, l'algorithme de Lempel-Ziv a un temps d'exécution pour la compression plus rapide que pour celui de l'algorithme de Huffman. On l'observe de façon très significative dans la cas de la suite constante. Cette différence de rapidité est du à la lecture unique du fichier pour l'algorithme de Lempel-Ziv, contrairement à la lecture double du fichier pour l'algorithme de Huffman.	
-
+\newpage
 \paragraph*{}
 \subsubsection*{Décompression}
 \textbf{Temps d’exécution pour Huffman}
@@ -423,6 +433,7 @@ Le temps d'exécution pour la décompression de Huffman est linéaire. Ceci est 
 
 Ce temps est très différent lorsqu’il s'agit d'une suite constante ou d'une suite aléatoire. Comme pour la compression il y a 2 explications à cela. La première est du à la lecture et au stockage en mémoire de l'arbre de compression, qui est plus grand pour la suite aléatoire. La seconde raison est, elle aussi liée à la lecture du fichier compressé. Comme il y a plus de caractère dans la suite aléatoire le code pour chaque lettre est donc plus grand, ainsi lors de la décompression il y a plus de caractère à lire dans le fichier compressé. Par conséquent, le temps de lecture de fichier est plus long.  
 
+\newpage
 \paragraph*{}
 \textbf{Temps d’exécution pour Lempel-Ziv}
 \subparagraph*{}
@@ -439,6 +450,7 @@ De même, le temps pour décompresser une suite constante est plus faible que po
 \paragraph*{}
 Le temps de décompression entre Huffman et Lempel-Ziv est très différent. Comme observé, Huffman est plus rapide que Lempel-Ziv. Cela est du à la création de l'arbre pour Lempel-Ziv qui a lieu en même temps que la lecture du fichier, ainsi il y a plus d'étape pour décompressé le fichier avec la méthode de Lempel-Ziv que celle de Huffman. Par conséquent Huffman est plus rapide à la décompression.
 
+\newpage
 \section*{Différences entre les algorithmes}
 Dans cette dernière section, nous allons vous présenter un tableau avec plusieurs mode de compression et plusieurs type de fichiers. 
 Nous expliquerons par la suite les différents taux de compression obtenus. 
