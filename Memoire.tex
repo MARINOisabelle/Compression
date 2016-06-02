@@ -201,8 +201,7 @@ On retourne la racine et on passe à l'étape i+1.
 
 Pour compresser, on a fait une fonction qui analyse les bits lus, elle permet de descendre à gauche si on lit un "0" et à droite si on lit un "1", comme expliqué précédemment. Ensuite, si l'on ne peut pas descendre on lit l'entier du nœud courant. Une fonction le traduit en binaire sur le nombre de bit nécessaire. Ce nombre dépend du nombre de nœud présent dans l'arbre, ie $\lceil log_{2}(i) \rceil$ où i est le nombre de nœud dans l'arbre. 
 On écrit alors cette traduction puis le dernier bit lu dans le fichier compressé. On répète cette opération jusqu'à ce qu'on ait plus de bit  à lire dans le fichier source.
-Enfin, et sachant qu'un fichier à un nombre de bit qui est multiple de 8 (les fichiers sont lu comme des suites d'octets et non seulement de bits, 1 octet = 8 bits), alors nous devons compléter le fichier pour pouvoir écrire ce dernier octet.
-Nous avons choisit la convention suivante: mettre "1" puis le nombre de "0" nécessaire. 
+Enfin, comme expliquer dans l'algorithme de Huffman nous ajoutons le dernier octet suivant la convention un "1" et le nombre de "0" nécessaire.  
 
 \subsubsection{Décompression}
 On crée au fur et à mesure de la lecture bit à bit un tableau t à 2 dimensions.  t[i]= [nœud][bit], où nœud et bit sont des entiers, nœuds et le nombre lu à la i ème étape et bit le bit lu juste après. 
@@ -444,25 +443,39 @@ Nous expliquerons par la suite les différents taux de compression obtenues.
 {\renewcommand{\arraystretch}{2}
 \begin{tabular}{|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
 \hline
- & La bible (en anglais)  & Les Fleurs du Mal  & Au bonheurs des Dames & fichier PDF & musique  MP3 & image & vidéo MOV\\
+ & La bible (en anglais)  & Les Fleurs du Mal  & Au bonheurs des Dames & fichier PDF & musique  MP3 & image JPG & vidéo MOV\\
 \hline
-taille réélle (en octet)  & 883 158 & 180 199 & 952 753 & 198 931 & & & \\\hline
-zip & 3,44 & 2,51 & 2,57 & 1,246 & & & \\
+taille réélle (en octet)  & 883 158 & 180 199 & 952 753 & 198 931 & 8 843 546 & 3 988 442 & 54301053 \\\hline
+zip & 3,44 & 2,51 & 2,57 & 1,246 & 1,065 & 1,002 & 1,0003 \\
 \hline
-Gzip & 3,44 & 2,51 & 2,644 & 1,247 & & & \\
+Gzip & 3,44 & 2,51 & 2,644 & 1,247 & 1,065 & 1,002 & 1,0001 \\
 \hline
-Bzip2 & 4,89 & 3,045 & 3,719 & 1,212 & & & \\
+Bzip2 & 4,89 & 3,045 & 3,719 & 1,212 & 1,063 & 1,005 & 0,9961\\
 \hline
-XZ & 4,649 & 2,826 & 3,323 & 1,261 & & & \\
+XZ & 4,649 & 2,826 & 3,323 & 1,261 & 1,066 & 1,002 & 1,0004\\
 \hline
-Huffman & 1,725 & 1,688 & 1,747 & 0,998 & & & \\
+Huffman & 1,725 & 1,688 & 1,747 & 0,998 & 1,021 & 0,999 & 0,9999 \\
 \hline
-Lempel-Ziv & 1,796 & 1,310 & 1,482 & 0,933 & & & \\
+Lempel-Ziv & 1,796 & 1,310 & 1,482 & 0,933 & 0,979 & 0,929 & 0,9269\\
 \hline
 
 \end{tabular}
 }
 \end{flushleft}
+
+Tout d'abord, nous observons que les différents compresseurs sur le marché fonctionnent de façon bien plus efficace que nos compresseurs. C'est le cas, car ces processus allient plusieurs algorithmes qu'il applique les uns après les autres. Zip et Gzip utilisent un algorithme de Deflate qui couple le codage d'un algorithme de Lempel-Ziv plus complexe (LZ77) et le codage de Huffman. Bzip2 , utilise  la transformée de Burrows-Wheeler(méthode de réorganisation des données) avec le codage de Huffman. Enfin XZ utilise l'algorithme de LZMA , c'est à dire Lempel-Ziv-Markov-chain Algorithm, c'est un algorithme qui associe Lemepel-Ziv et les chaînes de Markov.
+
+Nous avons choisit ces 4 modèles de comparaison car ce sont tous des algorithmes de compression sans perte. 
+
+Regardons les résultats des romans. Comme on peut le constater, nous avons décider de faire des tests sur la Bible qui est en anglais mais aussi sur un fichiers de même taille en français "Aux bonheurs des Dames" et sur un plus petit livre en français "Les Fleurs du Mal". Tout d'abord commençons par les 2 livres en français. On constate que tous les compresseurs obtiennent un meilleur taux avec "Aux bonheurs des Dames" car il est tous simplement plus gros donc avec forcément plus de redondance. De plus Huffman à un meilleur taux que Lempel-Ziv ce qui est du à la grand redondance de la langue française. 
+On le constate très bien car pour la Bible c'est Lempel-Ziv qui à un meilleur taux que Huffman, car l'anglais à moins de redondance de caractère précis comme le "e" en français. Par contre l'anglais utilise beaucoup de redondance de mots entier que Lempel-Ziv peut gérer contrairement à Huffman.
+Voilà pourquoi aussi tous les compresseurs ont un meilleurs avec la Bible qu'avec "Aux bonheurs des Dames" , ils utilisent un modèle qui ne repose par que sur les lettres. 
+
+Regardons maintenant les 4 dernières colonnes. Elles ont toutes les 4 un point commun : lors extension de fichier sont déjà des mode de compression. En effet, MP3 est un mode de compression avec perte, MOV est un mode de compression de vidéo développer par Appel , PDF est un format favorisant la portabilité des documents par la compression de celui -ci, et JPG ou JPEG est une compression d'image matricielle. Ainsi comme nous le constatons aucun des compresseurs n'a de bon taux. Pour les compresseurs sur le marché, il garde à peu près le même nombre d'octet que le fichier source. Pour nos compresseurs, le taux et plus faible et dans la plupart des cas il n'y a pas lieu de compression. 
+
+Nous pouvons donc remarquer que les compresseurs sur le marché ont un bien meilleur rendement.
+De plus, des nouveaux compresseurs arrivent encore, comme la découverte de Olivier Thomine qui a crée un compresseur qui permet de compresser des données environs 10 000 fois plus rapidement d'un algorithme de Lempel-Ziv-Welch. \footnote{http://www.futura-sciences.com/magazines/high-tech/infos/actu}
+
 
 \section*{Conclusion}
 
