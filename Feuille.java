@@ -9,7 +9,7 @@ public class Feuille extends Poids{
     public int getPoids(){
 	return this.poids;
     }
-    public void affiche(){
+    public void affiche(){//affiche les caractèristique de la feuille
 	System.out.println("Feuille" +this.letter+" "+this.poids);
     }
     public int recherche(int l){
@@ -20,19 +20,13 @@ public class Feuille extends Poids{
 	    return -1;
 	}
     }
-    public int comptePoids(){
+    public int comptePoids(){//une feuille n'ayant pas de fils elle renvoie un
 	return 1;
     }
     public void dfs(ArrayList<Integer> a, CodeLettre[] cl){//retourne le code d'une feuille
 	cl[(int)letter]= new CodeLettre(a);//a est l'arrayList correspondant au chemin de la feuille dans l'arbre
     }
-    public ArrayList<Integer> copieList(ArrayList<Integer> a){
-	ArrayList<Integer> n = new ArrayList<Integer>();
-	for(int i=0;i<a.size();i++){
-	    n.add(a.get(i));
-	}
-	return n;
-    }
+   
     
     public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){
 	l.add((int)this.letter);//ajoute la lettre dans la liste correspondant à l'abre de compression

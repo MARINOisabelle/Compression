@@ -9,29 +9,23 @@ public class Node extends Poids{
 	this.left = null;
     }
     
-    public void dfs(ArrayList<Integer> a,CodeLettre [] cl){
-	ArrayList<Integer> g = copieList(a);
-	ArrayList<Integer> d = copieList(a);
-	g.add(0);
-	this.left.dfs(g,cl);
-	if(this.right!=null){
-	    d.add(1);
-	    this.right.dfs(d,cl);
+    public void dfs(ArrayList<Integer> a,CodeLettre [] cl){//recherche en profondeur qui permet de récuper le code d'une lettre
+	ArrayList<Integer> g = copieList(a);//récupère le chemin parcouru jusqu'au noeud pour la recherche du fils gauche
+	ArrayList<Integer> d = copieList(a);//de même pour la recherche du fils droit
+	g.add(0);//on ajoute 0 pour indiquer que l'on va à gauche à l'arraylist g
+	this.left.dfs(g,cl);//on rapelle la fonction sur le fils gauche avec la nouvelle arraylist g
+	if(this.right!=null){//on verifie que le fils droit n'est pas nul pour le cas ou le fichier n'à qu'un seul caractère
+	    d.add(1);//on ajoute 1 pour indiquer que l'on va à droite à l'arraylist d
+	    this.right.dfs(d,cl);////on rapelle la fonction sur le fils droit avec la nouvelle arraylist d
 	}
     }
    
-    public Node(Poids droit,Poids gauche){
-	this.poids = droit.poids+gauche.poids;
+    public Node(Poids droit,Poids gauche){//constructeur de Node qui lui attribut un fils droit et gauche passé en argument
+	this.poids = droit.poids+gauche.poids;//le poids du node est égal à la somme du poids de son fils droit et de son fils gauche
 	this.right=droit;
 	this.left=gauche;
     }
-    public Node(int a,Poids l,Poids r){
-	this.poids = a;
-	this.left =l;
-	this.right = r;
-    }
    
-    
     public void addNode(int number,int poids){
 	if(number==0 && this.left==null){
 	    this.left=new Node(poids);
@@ -45,7 +39,7 @@ public class Node extends Poids{
     }
    
     
-    public void affiche(){
+    public void affiche(){//affiche les caractèristique du node et renvoie la fonction sur ses fils gauche et droit
 	System.out.println(super.poids);
 	if(this.left !=null){
 	    System.out.print("left node ");
@@ -57,7 +51,7 @@ public class Node extends Poids{
 	    this.right.affiche();
 	}
     }
-    public int comptePoids(){
+    public int comptePoids(){//renvoie le nombre de poids à partir de ce node
 	if(this.right != null )
 	    return 1+this.right.comptePoids()+this.left.comptePoids();
 	else
@@ -66,20 +60,20 @@ public class Node extends Poids{
     }
     
     
-    public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){
+    public int ListArbre(ArrayList<Integer> l,int pere,boolean gauche){//ajoute le noeud à la liste correspondant à l'arbre avec son fils gauche et son  fils droit
 	int place = l.size();
-	l.add(-1);
+	l.add(-1);//on ajoute -1 ce qui correspond à un node
+	l.add(0);//on ajoute la place du fils gauche et droit
 	l.add(0);
-	l.add(0);
-	int gauch= this.left.ListArbre(l,0,true);
-	l.set(place+1,gauch);
+	int gauch= this.left.ListArbre(l,0,true);//on récupère la position du fils gauche dans la liste
+	l.set(place+1,gauch);//on ajoute la position du fils gauche juste après le node
 	if(this.right != null){
-	    int droit =this.right.ListArbre(l,0,false);
-	    l.set(place+2,droit);
+	    int droit =this.right.ListArbre(l,0,false);////on récupère la position du fils droit dans la liste
+	    l.set(place+2,droit);////on ajoute la position du fils droit juste après la postion du fils gauche
 	}
-	return place;
+	return place;//on renvoie la position du node dans la liste
     }
-    public ArrayList<Integer> copieList(ArrayList<Integer> a){
+    public ArrayList<Integer> copieList(ArrayList<Integer> a){//renvoie une arraylist d'entier de même contenue
 	ArrayList<Integer> n = new ArrayList<Integer>();
 	for(int i=0;i<a.size();i++){
 	    n.add(a.get(i));

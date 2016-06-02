@@ -1,5 +1,5 @@
 import java.util.*;
-public class CodeLettre{
+public class CodeLettre{//structure qui à pour attribut une arraylist correspondant au code ici de l'arbre de compression d'un caractère
     ArrayList<Integer> code;
     public CodeLettre(ArrayList<Integer> c){
 	code=c;
