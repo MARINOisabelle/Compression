@@ -345,7 +345,7 @@ Ce que nous appellerons taux est le rapport du nombre d'octet du fichier source 
 \end{tabular}
 
 \paragraph*{}
-On peut voir ici que les  résultats de compression obtenue pour la suite constante et pour la suite alternée sont similaires, on observe des courbes constantes. En effet dans les deux cas, il n'y a qu'un seul caractère dans le fichier, soit le caractère codé par 00000000, soit le caractère codé par 10101010. Il y a donc un arbre à seulement 2 poids, la racine et la feuille et donc le caractère est codé sur un seul bit. On observe alors que le taux de compression tend rapidement vers 8 , car l'on remplace un octet par un bit. Ce n'est pas le cas sur des fichiers de plus faible taille car il faut compter le poids de l'arbre présent dans le fichier compresser.Ce poids, pour un arbre à une feuille étant de 15 octets.
+On peut voir ici que les  résultats de compression obtenue pour la suite constante et pour la suite alternée sont similaires, on observe des courbes constantes. En effet dans les deux cas, il n'y a qu'un seul caractère dans le fichier, soit le caractère codé par 00000000, soit le caractère codé par 10101010. Il y a donc un arbre à seulement 2 poids, la racine et la feuille et donc le caractère est codé sur un seul bit. On observe alors que le taux de compression tend rapidement vers 8 , car l'on remplace un octet par un bit. Ce n'est pas le cas sur des fichiers de plus faible taille car il faut compter le poids de l'arbre présent dans le fichier compresser.Ce poids, pour un arbre à une feuille étant de 13 octets.
 \subparagraph*{}
 \hspace{-2cm}\begin{tabular}{l | l}
 \includegraphics[width=7cm]{aleaH.png} & 
