@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 public class Feuille extends Poids{
     int letter;
     public Feuille(int p,int l){//une feuille possède un poids et une lettre
@@ -9,19 +10,13 @@ public class Feuille extends Poids{
     public int getPoids(){
 	return this.poids;
     }
-    public void affiche(){//affiche les caractèristique de la feuille
+    
+    public void affiche(){
 	System.out.println("Feuille" +this.letter+" "+this.poids);
     }
-    public int recherche(int l){
-	if(this.letter == l){
-	    return 2;
-	}
-	else{
-	    return -1;
-	}
-    }
-    public int comptePoids(){//une feuille n'ayant pas de fils elle renvoie un
-	return 1;
+    
+    public int comptePoids(){
+	return 1;//une feuille n'ayant pas de fils elle renvoie un
     }
     public void dfs(ArrayList<Integer> a, CodeLettre[] cl){//retourne le code d'une feuille
 	cl[(int)letter]= new CodeLettre(a);//a est l'arrayList correspondant au chemin de la feuille dans l'arbre

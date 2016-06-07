@@ -8,19 +8,20 @@ import java.io.BufferedInputStream;
 import java.nio.channels.*;
 import java.io.IOException;
 
-
+/*classe contenant toute les fonctions nécessaire à la compression et décompression d'Huffman*/
 class Huffman{
     
     public Huffman(){
 	
     }
-    public  int[] compteIter(LireBit fr) {//retourne un tableau correspondant au caractère ascii avec leur nombre d'apparition
-	int tab[]=new int[256];//on crée un tableau de 256 les caractères ascii allant de 0 à 255;
+    public  int[] compteIter(LireBit fr) { //retourne un tableau correspondant au caractère ascii avec leur nombre d'apparition dans le fichier fr
+
+	int tab[]=new int[256];//on crée un tableau d'entier de taille 256,les caractères ascii allant de 0 à 255
 	int oct;
 	try{
 	    oct = fr.read();
 	    while(oct>=0){//on lit tout le fichier octet par octet
-		tab[oct]++;//on augmente de 1 le nombre du tableau correspondant à l'octet lu
+		tab[oct]++;//on augmente de 1 le nombre se trouvrant dans le tableau à la position de l'octet lu
 		oct = fr.read();
 	    }
 	}
@@ -32,7 +33,7 @@ class Huffman{
 	
 	return tab;
     }
-    public void addTri(ArrayList<Poids> a,Poids p){//ajoute un poids tout en gardant la liste trier
+    public void addTri(ArrayList<Poids> a,Poids p){//fonction qui ajoute le poids p dans l'arraylist de poids a tout en la gardant triée par ordre croissant
 	if(a.size()!=0){
 	    if(a.get(a.size()-1).poids<=p.poids) // si le dernier élement de la liste est plus petit ou égal on ajoute le poids
 		a.add(p);
@@ -59,8 +60,8 @@ class Huffman{
 	else
 	    a.add(p);
     }
-     
-    public void ecrireArbre(Arbre a,EcrireBit fw)throws IOException{//écrit l'arbre de compression dans un fichier
+    
+    public void ecrireArbre(Arbre a,EcrireBit fw)throws IOException{ //fonction qui écrit l'arbre a dans le fichier fw
         ArrayList<Integer> list = new ArrayList<Integer>();
 	a.racine.ListArbre(list,0,false);//récupère une liste correspondant à l'arbre
 	for(int i=0;i<list.size();i++){
@@ -69,7 +70,8 @@ class Huffman{
 	    
 	}
     }
-    public void ecrireLettre(CodeLettre[] cl,EcrireBit fw,int lettre){
+    
+    public void ecrireLettre(CodeLettre[] cl,EcrireBit fw,int lettre){//fonction qui écrit le caractère lettre dans le fichier fw avec son nouveau code de compression
 	try{
 	    for(int i=0;i<cl[lettre].code.size();i++){
 		fw.writeBit(cl[lettre].code.get(i));//écrit le code de compression correspondant au caractère lettre
@@ -79,9 +81,10 @@ class Huffman{
 	    e.printStackTrace();
 	    System.out.println("can't write");
 	}
-	    
+
     }
-    public ArrayList<Poids> listeFeuille(LireBit fr){//récupère une liste trier de poids des feuilles correspondant au caractère du fichier
+    
+    public ArrayList<Poids> listeFeuille(LireBit fr){//renvoie une liste trier de poids des feuilles correspondant au caractère du fichier
 	int tab[]=compteIter(fr);
 	ArrayList<Poids> a = new ArrayList<Poids>();
 	for(int i=0;i<tab.length;i++){
@@ -91,7 +94,7 @@ class Huffman{
 	}
 	return a;
     }
-    public Arbre arbreCompr(LireBit fr){//revoie l'arbre de compression
+    public Arbre arbreCompr(LireBit fr){//fonction qui renvoie l'arbre de compression
 	ArrayList<Poids> a = listeFeuille(fr);
 	int taille = a.size();
 	Arbre arbre = new Arbre(new Node(0)) ;//crée un arbre de racine avec un noeud unique de poids 0
@@ -134,9 +137,9 @@ class Huffman{
 	
 
 
-    /*fonction qui récupère l'arbre de compression*/
-    public ArrayList<Integer> listDec(LireBit l) throws IOException{//récupère l'arbre de décompression dans une liste
-	int taille =l.read();//on lit la taille
+    
+    public ArrayList<Integer> listDec(LireBit l) throws IOException{//fonction qui revoie une liste contenant l'arbre de compression
+	int taille =l.read();//on lit la taille du fichier
 	while(taille%255==0){//celle ci peut être codé sur 3 octets
 	    taille=taille+l.read();
 	}
@@ -151,7 +154,7 @@ class Huffman{
 	return list;
     }
     
-	/*  fonction appeler dans les main de compresion et decompression */
+	/*  fonction pour compresser avec l'algorithme d'Huffman */
     public  void compression(String fr, String fw)throws Exception{
 	LireBit fl = new LireBit(new FileInputStream(new File(fr)));
 	Arbre a = arbreCompr(fl);//premiere lecture du fichier pour construire l'arbre de compression
@@ -175,7 +178,7 @@ class Huffman{
 	fe.close();
 	fl.close();
     }
-    
+    /*fonction pour décompresser un fichier compressé avec l'algorithme d'Huffman*/
     public  void decompression(LireBit fr, EcrireBit fw,long le)throws IOException{
 	ArrayList<Integer> list = listDec(fr);
 	int placement = 0;
