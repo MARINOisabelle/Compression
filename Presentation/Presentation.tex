@@ -156,14 +156,23 @@
 \begin{frame}{Exemple}
 \begin{center}
 
-\textbf{Ecriture compresser}\\
+\textbf{Écriture compresser}\\
 les nouveaux codes sont a='0' b='11' c='101' e='100'
 \end{center}
 \end{frame}
+
+\begin{frame}{Exemple: Démonstration}
+	\begin{center}
+	\textbf{Démonstration}
+	\end{center}
+\end{frame}
+
 \begin{frame}{Performances}
 	\begin{center}
-	exemple d'inclusion de graphe 
-	%\includegraphics[width=6cm]{structures.png}
+	\begin{tabular}{l | l}
+	\includegraphics[width=5cm]{HConstant.png} & 
+	\includegraphics[width=5cm]{aleaH.png}
+	\end{tabular}
 	\end{center}
 \end{frame}
 
@@ -242,6 +251,9 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 	\draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
 	\end{tikzpicture} 
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 0
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Exemple : Compression}
@@ -256,6 +268,9 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \draw [->,>=latex,](0)--(2) node[pos=0.6,left, above]{1};
 	\end{tikzpicture} 
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 01
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Exemple : Compression}
@@ -272,6 +287,9 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \draw [->,>=latex,](2)--(3) node[pos=0.6,left, above]{1};
 	\end{tikzpicture} 
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 101
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Exemple : Compression}
@@ -290,6 +308,9 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \draw [->,>=latex,](1)--(4) node[pos=0.6,left, above]{0};
 	\end{tikzpicture} 
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 011
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Exemple : Compression}
@@ -310,6 +331,9 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \draw [->,>=latex,](1)--(5) node[pos=0.6,left, above]{0};
 	\end{tikzpicture} 
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 0010
+	\end{flushleft}
 \end{frame} 
 
 \begin{frame}{Exemple : Compression}
@@ -332,6 +356,9 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \draw [->,>=latex,](4)--(6) node[pos=0.6,left, above]{1};
 	\end{tikzpicture} 
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 1001
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Exemple : Compression}
@@ -356,6 +383,9 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \draw [->,>=latex,](5)--(7) node[pos=0.6,left, above]{1};
 	\end{tikzpicture} 
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 1011
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Exemple : Compression}
@@ -378,22 +408,43 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \draw [->,>=latex,](1)--(5) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](4)--(6) node[pos=0.6,left, above]{1};
 \draw [->,>=latex,](5)--(7) node[pos=0.6,left, above]{1};
-	\end{tikzpicture} 
+	\end{tikzpicture}  
 	\end{center}
+	\begin{flushleft}
+	Écriture dans le fichier : 1001 et 1000000
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Exemple: Décompression}
+\begin{center}
+00110101 10010100 11011100 11000000
+\end{center}
+
 	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	nœud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	\hline
+	père & -1 & 0 & 0 & 2 & 1 & 1 & 4 & 5 & 4 \\
+	\hline
+	bit & -1 & 0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+	\hline 
+	\end{tabular}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Exemple: Démonstration}
+	\begin{center}
+	\textbf{Démonstration}
 	\end{center}
 \end{frame}
 
 \begin{frame}{Performances}
 	\begin{center}
-	\textbf{Plusieurs suites de compression} :
-	\begin{itemize}
-	\item[]<2>  	blb%\includegraphics[width=6cm]{structures.png}
-	\item[]<3>  	nn%\includegraphics[width=6cm]{structures.png}
-	\end{itemize}
+	\begin{tabular}{l | l}
+	\includegraphics[width=5cm]{LZConstant.png} & 
+	\includegraphics[width=5cm]{LZAleatoire.png}
+	\end{tabular}
 	\end{center}
 \end{frame}
 
@@ -407,24 +458,95 @@ les nouveaux codes sont a='0' b='11' c='101' e='100'
 \end{frame}
 \begin{frame}{Temps d'exécution à la compression} 
 	\begin{center}
-	%\includegraphics[width=7.9cm]{dependances.png}
+	\begin{tabular}{l | l}
+	\includegraphics[width=5cm]{tempsChC.png} & 
+	\includegraphics[width=5cm]{tempsClzC.png}
+	\end{tabular}
+		\end{center}
+\end{frame}
+	
+\begin{frame}{Temps d'exécution à la compression} 
+	\begin{center}
+	\begin{tabular}{l | l}
+	\includegraphics[width=5cm]{tempsChA.png} & 
+	\includegraphics[width=5cm]{tempsClzA.png}
+	\end{tabular}	
 	\end{center}
 \end{frame}
+
 \begin{frame}{Temps d'exécution à la décompression}
 	\begin{center}
-	%\includegraphics[width=7.9cm]{dependances.png}
+	\begin{tabular}{l | l}
+	\includegraphics[width=5cm]{tempsChA.png} & 
+	\includegraphics[width=5cm]{tempsClzA.png}
+	\end{tabular}
 	\end{center}
 \end{frame}
+
+\begin{frame}{Temps d'exécution à la décompression}
+	\begin{center}
+	
+\begin{tabular}{l | l}
+	\includegraphics[width=5cm]{tempsDhA.png} & 
+	\includegraphics[width=5cm]{tempsDlzA.png}
+	\end{tabular}	
+	\end{center}
+\end{frame}
+
 
 \section{Différences avec les principaux compresseurs}
 \begin{frame}{Principales différences}
-	\begin{center}
-	%\includegraphics[width=10cm]{fonctions.png}
-	\end{center}
+	\begin{flushleft}
+\begin{tabular}{|l|l|l|l|}
+\hline
+ & La bible & Les Fleurs du Mal  & Au bonheurs \\
+ & en anglais & & des Dames \\ 
+\hline
+taille réelle & 883 158 & 180 199 & 952 753  \\\hline
+zip & 3,44 & 2,51 & 2,57  \\
+\hline
+Gzip & 3,44 & 2,51 & 2,644 \\
+\hline
+Bzip2 & 4,89 & 3,045 & 3,719 \\
+\hline
+XZ & 4,649 & 2,826 & 3,323 \\
+\hline
+Huffman & 1,725 & 1,688 & 1,747  \\
+\hline
+Lempel-Ziv & 1,796 & 1,310 & 1,482 \\
+\hline
+
+\end{tabular}
+\end{flushleft}
+\end{frame}
+
+\begin{frame}{Principales différences}
+	\begin{flushleft}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ & fichier & musique & image & vidéo\\
+ &  PDF & MP3 & JPG & MOV \\ 
+\hline
+taille réelle &  198 931 & 8 843 546 & 3 988 442 & 54301053 \\\hline
+zip  & 1,246 & 1,065 & 1,002 & 1,0003 \\
+\hline
+Gzip & 1,247 & 1,065 & 1,002 & 1,0001 \\
+\hline
+Bzip2 & 1,212 & 1,063 & 1,005 & 0,9961\\
+\hline
+XZ & 1,261 & 1,066 & 1,002 & 1,0004\\
+\hline
+Huffman & 0,998 & 1,021 & 0,999 & 0,9999 \\
+\hline
+Lempel-Ziv & 0,933 & 0,979 & 0,929 & 0,9269\\
+\hline
+
+\end{tabular}
+\end{flushleft}
 \end{frame}
 
 \section{Conclusion}
-\begin{frame}{Principales différences}
+\begin{frame}{Conclusion}
 	\begin{center}
 	\end{center}
 \end{frame}
