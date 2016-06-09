@@ -103,19 +103,21 @@
 \begin{frame}{Exemple}
 	\begin{center}
 	\textbf{Étape 1} \\
-	Soit un texte ou il est écrit :  aaaabcbbce \\
-	(a,4) (b,3) (c,2) (e,1)
+	Soit un texte ou il est écrit :  aaaabbbcefg \\
+	(a,4) (b,3) (c,1) (e,1) (f,1) (g,1)
 	\end{center}
 \end{frame}
 \begin{frame}{Exemple}
 	\begin{center}
 	\textbf{Étape 2} \\
 	\begin{tikzpicture}
-	\node (0) at (0,0) {3};
+	\node (0) at (0,0) {2};
 	\node (1) at (-1,-1) {(e,1)};
-	\node (2) at (1,-1) {(c,2)};
-	\node (3) at (3,-1/2) {(b,3)};
-	\node (4) at (5,-1/2) {(a,4)};
+	\node (2) at (1,-1) {(c,1)};
+	\node(5) at (3,-1/2){(f,1)};
+	\node(6) at (4,-1/2){(g,1)};
+	\node (3) at (5,-1/2) {(b,3)};
+	\node (4) at (6,-1/2) {(a,4)};
 	\draw [-,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
 	\draw [-,>=latex,](0)--(2) node[pos=0.6,right, above]{1};
 	\end{tikzpicture}	
@@ -127,16 +129,18 @@
 	\textbf{Etape 3} \\
 
 	\begin{tikzpicture}
-	\node (0) at (0,0) {3};
+	\node (0) at (0,0) {2};
 	\node (1) at (-1,-1) {(e,1)};
-	\node (2) at (1,-1) {(c,2)};
-	\node (3) at (2,0) {(b,3)};
-	\node (4) at (5,-1/2) {(a,4)};
-	\node(5) at 	(1,1){6};
+	\node (2) at (1,-1) {(c,1)};
+	\node(5) at (3,-1){(f,1)};
+	\node(6) at (5,-1){(g,1)};
+	\node (3) at (7,-1/2) {(b,3)};
+	\node (4) at (8,-1/2) {(a,4)};
+	\node(7) at (4,0) {2};
 	\draw [-,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
 	\draw [-,>=latex,](0)--(2) node[pos=0.6,right, above]{1};
-	\draw [-,>=latex,](5)--(0) node[pos=0.6,left, above]{0};
-	\draw [-,>=latex,](5)--(3) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](7)--(5) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](7)--(6) node[pos=0.6,right, above]{1};
 	\end{tikzpicture}	
 	\end{center}
 \end{frame}
@@ -145,19 +149,76 @@
 	\textbf{Etape 4} \\
 
 	\begin{tikzpicture}
-	\node (0) at (0,0) {3};
+	\node (0) at (0,0) {2};
 	\node (1) at (-1,-1) {(e,1)};
-	\node (2) at (1,-1) {(c,2)};
-	\node (3) at (2,0) {(b,3)};
-	\node (4) at (-1,1) {(a,4)};
-	\node(5) at 	(1,1){6};
-	\node(6) at (0,2){10};
+	\node (2) at (1,-1) {(c,1)};
+	\node(5) at (3,-1){(f,1)};
+	\node(6) at (5,-1){(g,1)};
+	\node (3) at (7,-1/2) {(b,3)};
+	\node (4) at (8,-1/2) {(a,4)};
+	\node(7) at (4,0) {2};
+	\node(8) at (2,1){4};
 	\draw [-,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
 	\draw [-,>=latex,](0)--(2) node[pos=0.6,right, above]{1};
-	\draw [-,>=latex,](5)--(0) node[pos=0.6,left, above]{0};
-	\draw [-,>=latex,](5)--(3) node[pos=0.6,right, above]{1};
-	\draw [-,>=latex,](6)--(4) node[pos=0.6,left, above]{0};
-	\draw [-,>=latex,](6)--(5) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](7)--(5) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](7)--(6) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](8)--(0) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](8)--(7) node[pos=0.6,right, above]{1};
+	\end{tikzpicture}	
+	\end{center}
+\end{frame}
+\begin{frame}{Exemple}
+	\begin{center}
+	\textbf{Etape 5} \\
+
+	\begin{tikzpicture}
+	\node (0) at (0,0) {2};
+	\node (1) at (-1,-1) {(e,1)};
+	\node (2) at (1,-1) {(c,1)};
+	\node(5) at (3,-1){(f,1)};
+	\node(6) at (5,-1){(g,1)};
+	\node (3) at (-1,1) {(b,3)};
+	\node (4) at (8,-1/2) {(a,4)};
+	\node(7) at (4,0) {2};
+	\node(8) at (2,1){4};
+	\node(9) at (1/2,2){7};
+	\draw [-,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](0)--(2) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](7)--(5) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](7)--(6) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](8)--(0) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](8)--(7) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](9)--(3) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](9)--(8) node[pos=0.6,right, above]{1};
+	\end{tikzpicture}	
+	\end{center}
+\end{frame}
+\begin{frame}{Exemple}
+	\begin{center}
+	\textbf{Etape 6} \\
+
+	\begin{tikzpicture}
+	\node (0) at (3,0) {2};
+	\node (1) at (2,-1) {(e,1)};
+	\node (2) at (4,-1) {(c,1)};
+	\node(5) at (6,-1){(f,1)};
+	\node(6) at (8,-1){(g,1)};
+	\node (3) at (2,1) {(b,3)};
+	\node (4) at (1/2,2) {(a,4)};
+	\node(7) at (7,0) {2};
+	\node(8) at (5,1){4};
+	\node(9) at (7/2,2){7};
+	\node(10) at (2,3){11};
+	\draw [-,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](0)--(2) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](7)--(5) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](7)--(6) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](8)--(0) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](8)--(7) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](9)--(3) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](9)--(8) node[pos=0.6,right, above]{1};
+	\draw [-,>=latex,](10)--(4) node[pos=0.6,left, above]{0};
+	\draw [-,>=latex,](10)--(9) node[pos=0.6,right, above]{1};
 	\end{tikzpicture}	
 	\end{center}
 \end{frame}
@@ -165,12 +226,30 @@
 \begin{center}
 
 \textbf{Ecriture compresser}\\
-les nouveaux codes sont a='0' b='11' c='101' e='100'\\
-Le fichier compresser est donc 0 0 0 0 11 101 11 101 100
+les nouveaux codes sont a='0' b='10' c='1101' e='1100'\\
+g='1111' f='1110'\\
+Le fichier compresser est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
 
 \end{center}
 \end{frame}
-
+\begin{frame}{Exemple: décompression}
+	\begin{tabular}{|c|c|c|}
+	\hline
+	poids & fils gauche & fils droit \\
+	\hline -1 & 2 & 3 \\
+	\hline a & -1 & -1\\
+	\hline -1 & 4 & 5 \\
+	\hline b & -1 & -1 \\
+	\hline -1 & 6 & 9 \\
+	\hline -1 & 7 & 8 \\
+	\hline e & -1 & -1 \\
+	\hline c & -1 & -1 \\
+	\hline -1 & 10 & 11 \\
+	\hline f & -1 & -1\\
+	\hline g & -1 & -1\\
+	\hline
+	\end{tabular}
+\end{frame}
 \begin{frame}{Exemple: Démonstration}
 	\begin{center}
 	\textbf{Démonstration}
