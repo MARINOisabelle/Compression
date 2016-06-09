@@ -7,6 +7,8 @@
 \usepackage{tikz}
 \usepackage{graphicx}
 \usetikzlibrary{arrows}
+\usepackage{caption} 
+\captionsetup{position=below}
 
 \usetheme{PaloAlto}
 
@@ -313,7 +315,7 @@ Le fichier compresser est donc 0 0 0 0 11 101 11 101 100
 \draw [->,>=latex,](0)--(1) node[pos=0.6,left, above]{0};
 \draw [->,>=latex,](0)--(2) node[pos=0.6,left, above]{1};
 \draw [->,>=latex,](2)--(3) node[pos=0.6,left, above]{1};
-\draw [->,>=latex,](1)--(4) node[pos=0.6,left, above]{0};
+\draw [->,>=latex,](1)--(4) node[pos=0.6,left, above]{1};
 	\end{tikzpicture} 
 	\end{center}
 	\begin{flushleft}
@@ -423,23 +425,177 @@ Le fichier compresser est donc 0 0 0 0 11 101 11 101 100
 	\end{flushleft}
 \end{frame}
 
+
+\begin{frame}{Exemple: Décompression}
+
+\begin{center}
+\underline{0} 0110101100101001101110011000000
+\end{center}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|}
+	\hline
+	nœud & 0 & 1 \\
+	\hline
+	père & -1 & 0 \\
+	\hline
+	bit & -1 & 0 \\
+	\hline 
+	\end{tabular}
+	\begin{center}
+	Écriture dans le fichier : 0
+	\end{center}
+	\end{center}
+\end{frame}
+
 \begin{frame}{Exemple: Décompression}
 \begin{center}
-00110101 10010100 11011100 11000000
+\underline{0} \underline{01} 10101100101001101110011000000
+\end{center}
+
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	nœud & 0 & 1 & 2 \\
+	\hline
+	père & -1 & 0 & 0 \\
+	\hline
+	bit & -1 & 0 & 1 \\
+	\hline 
+	\end{tabular}
+ \begin{center}
+	Écriture dans le fichier : 1
+	\end{center}
+
+	\end{center}
+\end{frame}
+
+\begin{frame}{Exemple: Décompression}
+\begin{center}
+\underline{0} \underline{01} \underline{101} 01100101001101110011000000
 \end{center}
 
 	\begin{center}
 	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 	\hline
-	nœud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	nœud & 0 & 1 & 2 & 3 \\
 	\hline
-	père & -1 & 0 & 0 & 2 & 1 & 1 & 4 & 5 & 4 \\
+	père & -1 & 0 & 0 & 2\\
 	\hline
-	bit & -1 & 0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+	bit & -1 & 0 & 1 & 1 \\
 	\hline 
 	\end{tabular}
 	\end{center}
+	\begin{center}
+	Écriture dans le fichier :1 1
+	\end{center}
 \end{frame}
+
+\begin{frame}{Exemple: Décompression}
+\begin{center}
+\underline{0} \underline{01} \underline{101} \underline{011} 00101001101110011000000
+\end{center}
+
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	nœud & 0 & 1 & 2 & 3 & 4 \\
+	\hline
+	père & -1 & 0 & 0 & 2 & 1 \\
+	\hline
+	bit & -1 & 0 & 1 & 1 & 1 \\
+	\hline 
+	\end{tabular}
+	\end{center}
+	\begin{center}
+	Écriture dans le fichier : 0 1
+	\end{center}
+\end{frame}
+
+\begin{frame}{Exemple: Décompression}
+\begin{center}
+\underline{0} \underline{01} \underline{101} \underline{011} \underline{0010} 1001101110011000000
+\end{center}
+
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	nœud & 0 & 1 & 2 & 3 & 4 & 5 \\
+	\hline
+	père & -1 & 0 & 0 & 2 & 1 & 1  \\
+	\hline
+	bit & -1 & 0 & 1 & 1 & 1 & 0 \\
+	\hline 
+	\end{tabular}
+	\end{center}
+	\begin{center}
+	Écriture dans le fichier : 0 0
+	\end{center}
+\end{frame}
+
+\begin{frame}{Exemple: Décompression}
+\begin{center}
+\underline{0} \underline{01} \underline{101} \underline{011} \underline{0010} \underline{1001} 101110011000000
+\end{center}
+
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	nœud & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+	\hline
+	père & -1 & 0 & 0 & 2 & 1 & 1 & 4  \\
+	\hline
+	bit & -1 & 0 & 1 & 1 & 1 & 0 & 1 \\
+	\hline 
+	\end{tabular}
+	\end{center}
+	\begin{center}
+	Écriture dans le fichier : 01 1
+	\end{center}
+\end{frame}
+
+\begin{frame}{Exemple: Décompression}
+\begin{center}
+\underline{0} \underline{01} \underline{101} \underline{011} \underline{0010} \underline{1001} \underline{1011} 10011000000
+\end{center}
+
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	nœud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+	\hline
+	père & -1 & 0 & 0 & 2 & 1 & 1 & 4 & 5  \\
+	\hline
+	bit & -1 & 0 & 1 & 1 & 1 & 0 & 1 & 1 \\
+	\hline 
+	\end{tabular}
+	\end{center}
+	\begin{center}
+	Écriture dans le fichier :00  1
+	\end{center}
+\end{frame}
+
+\begin{frame}{Exemple: Décompression}
+\begin{center}
+\underline{0} \underline{01} \underline{101} \underline{011} \underline{0010} \underline{1001} \underline{1011} \underline{1001} 1000000
+\end{center}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	nœud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	\hline
+	père & -1 & 0 & 0 & 2 & 1 & 1 & \textbf{4} & 5 & \textbf{4} \\
+	\hline
+	bit & -1 & 0 & 1 & 1 & 1 & 0 & \textbf{1} & 1 & \textbf{1} \\
+	\hline 
+	\end{tabular}
+	\end{center}
+	\begin{center}
+	Écriture dans le fichier : 01
+	\end{center}
+\end{frame}
+
 
 \begin{frame}{Exemple: Démonstration}
 	\begin{center}
@@ -459,34 +615,34 @@ Le fichier compresser est donc 0 0 0 0 11 101 11 101 100
 
 
 \section{Différences entre les algorithmes}
-\begin{frame}{Différences de structures}
-	\begin{center}
-	%\includegraphics[width=7.9cm]{dependances.png}
-	\end{center}
-\end{frame}
 \begin{frame}{Temps d'exécution à la compression} 
 	\begin{center}
-	\begin{tabular}{l | l}
+	\begin{tabular}{c | c}
 	\includegraphics[width=5cm]{tempsChC.png} & 
-	\includegraphics[width=5cm]{tempsClzC.png}
+	\includegraphics[width=5cm]{tempsClzC.png} \\  &  \\ 
+	Huffman & Lempel-Ziv
 	\end{tabular}
 		\end{center}
 \end{frame}
 	
 \begin{frame}{Temps d'exécution à la compression} 
 	\begin{center}
-	\begin{tabular}{l | l}
+	\begin{tabular}{c | c}
 	\includegraphics[width=5cm]{tempsChA.png} & 
 	\includegraphics[width=5cm]{tempsClzA.png}
+	\\  &  \\ 
+	Huffman & Lempel-Ziv
 	\end{tabular}	
 	\end{center}
 \end{frame}
 
 \begin{frame}{Temps d'exécution à la décompression}
 	\begin{center}
-	\begin{tabular}{l | l}
-	\includegraphics[width=5cm]{tempsChA.png} & 
-	\includegraphics[width=5cm]{tempsClzA.png}
+	\begin{tabular}{c | c}
+	\includegraphics[width=5cm]{tempsDhC.png} & 
+	\includegraphics[width=5cm]{tempsDlzC.png}
+	\\  &  \\ 
+	Huffman & Lempel-Ziv
 	\end{tabular}
 	\end{center}
 \end{frame}
@@ -494,13 +650,26 @@ Le fichier compresser est donc 0 0 0 0 11 101 11 101 100
 \begin{frame}{Temps d'exécution à la décompression}
 	\begin{center}
 	
-\begin{tabular}{l | l}
+\begin{tabular}{c| c}
 	\includegraphics[width=5cm]{tempsDhA.png} & 
-	\includegraphics[width=5cm]{tempsDlzA.png}
+	\includegraphics[width=5cm]{tempsDlzA.png}\\  &  \\ 
+	Huffman & Lempel-Ziv
 	\end{tabular}	
 	\end{center}
 \end{frame}
 
+\begin{frame}{Différences de structures}
+	\begin{center}
+	 \begin{itemize}
+		\item stockage d'information de compression
+		\item nombre de lecture à la compression
+		\item base de compression 
+		\item limite de taux de compression	
+		\item temps d’exécution  
+	 
+	 \end{itemize}
+	\end{center}
+\end{frame}
 
 \section{Différences avec les principaux compresseurs}
 \begin{frame}{Principales différences}
