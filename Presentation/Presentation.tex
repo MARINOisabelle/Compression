@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usetikzlibrary{arrows}
 \usepackage{caption} 
+\usepackage{xcolor}
 \captionsetup{position=below}
 
 \usetheme{PaloAlto}
@@ -71,9 +72,7 @@
 \end{frame}
 
 \begin{frame}{Compression}
-
 	\textbf{Étape} :\\
-	
 \begin{itemize}
 	\item<2-6> Compte des redondances de caractères
 	\item<3-6> Création de l'arbre de compression en fonction des poids des caractères 
@@ -82,8 +81,8 @@
 	\item<5-6> Relecture du fichier pour écrire chaque caractère dans le fichier compresser avec son nouveau code
 	\item<6> On complète le dernière octet par la convention un 1 puis le nombre de 0 nécessaire
 	\end{itemize}
-
 \end{frame}
+
 \begin{frame}{Compression}
 	\textbf{Création de l'arbre}	\\
 	\begin{itemize}
@@ -92,6 +91,7 @@
 			\item<3> On relie les poids les deux poids les plus faibles par un nouveau  jusqu'à ne plus avoir qu'un seul nœud
 		\end{itemize}
 \end{frame}
+
 \begin{frame}{Décompression}
 \textbf{Étape} :\\
 \begin{itemize}
@@ -105,14 +105,15 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Exemple}
+\begin{frame}{Exemple : Compression}
 	\begin{center}
 	\textbf{Étape 1} \\
 	Soit un texte ou il est écrit :  aaaabbbcefg \\
 	(a,4) (b,3) (c,1) (e,1) (f,1) (g,1)
 	\end{center}
 \end{frame}
-\begin{frame}{Exemple}
+
+\begin{frame}{Exemple : Compression}
 	\begin{center}
 	\textbf{Étape 2} \\
 	\begin{tikzpicture}
@@ -128,7 +129,8 @@
 	\end{tikzpicture}	
 	\end{center}
 \end{frame}
-\begin{frame}{Exemple}
+
+\begin{frame}{Exemple : Compression}
 	\begin{center}
 
 	\textbf{Étape 3} \\
@@ -149,7 +151,8 @@
 	\end{tikzpicture}	
 	\end{center}
 \end{frame}
-\begin{frame}{Exemple}
+
+\begin{frame}{Exemple : Compression}
 	\begin{center}
 	\textbf{Étape 4} \\
 
@@ -172,7 +175,8 @@
 	\end{tikzpicture}	
 	\end{center}
 \end{frame}
-\begin{frame}{Exemple}
+
+\begin{frame}{Exemple : Compression}
 	\begin{center}
 	\textbf{Étape 5} \\
 
@@ -198,7 +202,8 @@
 	\end{tikzpicture}	
 	\end{center}
 \end{frame}
-\begin{frame}{Exemple}
+
+\begin{frame}{Exemple : Compression}
 	\begin{center}
 	\textbf{Étape 6} \\
 
@@ -227,35 +232,119 @@
 	\end{tikzpicture}	
 	\end{center}
 \end{frame}
-\begin{frame}{Exemple}
-\begin{center}
 
+\begin{frame}{Exemple : Compression}
+\begin{center}
 \textbf{Écriture compressée}\\
 les nouveaux codes sont a='0' b='10' c='1101' e='1100'\\
 g='1111' f='1110'\\
-Le fichier compressé est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
+Le texte compressé est : 0 0 0 0 10 10 10 1101 1100 1110 1111
 
 \end{center}
 \end{frame}
-\begin{frame}{Exemple: décompression}
-		
-	\begin{tabular}{|c|c|c|c|}
-	\hline
-	 & poids & fils gauche & fils droit \\
-	\hline 0 & -1 & 1 & 2 \\
-	\hline 1 & a & -1 & -1\\
-	\hline  2 & -1 & 3 & 4 \\
-	\hline 3& b & -1 & -1 \\
-	\hline 4&-1 & 5 & 8 \\
-	\hline 5&-1 & 6 & 7 \\
-	\hline 6&e & -1 & -1 \\
-	\hline 7&c & -1 & -1 \\
-	\hline 8& -1 & 9 & 10 \\
-	\hline 9&f & -1 & -1\\
-	\hline 10&g & -1 & -1\\
-	\hline
-	\end{tabular}
+
+\begin{frame}{Exemple : Décompression}
+	\begin{center}	
+		\begin{tabular}{|c|c|c|c|}
+		\hline
+		 & poids & fils gauche & fils droit \\
+		\hline 0 & -1 & 1 & 2 \\
+		\hline 1 & a & -1 & -1\\
+		\hline  2 & -1 & 3 & 4 \\
+		\hline 3& b & -1 & -1 \\
+		\hline 4&-1 & 5 & 8 \\
+		\hline 5&-1 & 6 & 7 \\
+		\hline 6&e & -1 & -1 \\
+		\hline 7&c & -1 & -1 \\
+		\hline 8& -1 & 9 & 10 \\
+		\hline 9&f & -1 & -1\\
+		\hline 10&g & -1 & -1\\
+		\hline
+		\end{tabular}
+	\end{center}
+	\begin{center}
+	00001010101101110011101111\\
+	\end{center}
+	
 \end{frame}
+
+\begin{frame}{Exemple: Décompression}
+	\begin{center}
+	\underline{0} 0 0 0 10 10 10 1101 1100 1110 1111\\
+	\end{center}
+		\begin{center}	
+		\begin{tabular}{|c|c|c|c|}
+		\hline
+		 & poids & fils gauche & fils droit \\
+		\hline 0 & -1 & \textcolor{red}{1} & 2 \\
+		\hline 1 & \textcolor{red}{a} & -1 & -1\\
+		\hline  2 & -1 & 3 & 4 \\
+		\hline 3& b & -1 & -1 \\
+		\hline 4&-1 & 5 & 8 \\
+		\hline 5&-1 & 6 & 7 \\
+		\hline 6&e & -1 & -1 \\
+		\hline 7&c & -1 & -1 \\
+		\hline 8& -1 & 9 & 10 \\
+		\hline 9&f & -1 & -1\\
+		\hline 10&g & -1 & -1\\
+		\hline
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+
+\begin{frame}{Exemple: Décompression}
+	\begin{center}
+	a \underline{0}  0 0 10 10 10 1101 1100 1110 1111\\
+	\end{center}
+		\begin{center}	
+		\begin{tabular}{|c|c|c|c|}
+		\hline
+		 & poids & fils gauche & fils droit \\
+		\hline 0 & -1 & \textcolor{red}{1} & 2 \\
+		\hline 1 & \textcolor{red}{a} & -1 & -1\\
+		\hline  2 & -1 & 3 & 4 \\
+		\hline 3& b & -1 & -1 \\
+		\hline 4&-1 & 5 & 8 \\
+		\hline 5&-1 & 6 & 7 \\
+		\hline 6&e & -1 & -1 \\
+		\hline 7&c & -1 & -1 \\
+		\hline 8& -1 & 9 & 10 \\
+		\hline 9&f & -1 & -1\\
+		\hline 10&g & -1 & -1\\
+		\hline
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+
+\begin{frame}{Exemple: Décompression}
+	\begin{center}
+	aaaabbbcef \underline{1111}\\
+	\end{center}
+		\begin{center}	
+		\begin{tabular}{|c|c|c|c|}
+		\hline
+		 & poids & fils gauche & fils droit \\
+		\hline 0 & -1 & 1 & \textcolor{red}{2} \\
+		\hline 1 & a & -1 & -1\\
+		\hline  2 & -1 & 3 & \textcolor{red}{4} \\
+		\hline 3& b & -1 & -1 \\
+		\hline 4&-1 & 5 & \textcolor{red}{8} \\
+		\hline 5&-1 & 6 & 7 \\
+		\hline 6&e & -1 & -1 \\
+		\hline 7&c & -1 & -1 \\
+		\hline 8& -1 & 9 & \textcolor{red}{10} \\
+		\hline 9&f & -1 & -1\\
+		\hline 10&\textcolor{red}{g} & -1 & -1\\
+		\hline
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+
+
+
 \begin{frame}{Exemple: Démonstration}
 	\begin{center}
 	\textbf{Démonstration}
@@ -670,9 +759,9 @@ Le fichier compressé est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
 	\hline
 	nœud & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
 	\hline
-	père & -1 & 0 & 0 & 2 & 1 & 1 & \textbf{4} & 5 & \textbf{4} \\
+	père & -1 & 0 & 0 & 2 & 1 & 1 & \textcolor{red}{4} & 5 & \textcolor{red}{4} \\
 	\hline
-	bit & -1 & 0 & 1 & 1 & 1 & 0 & \textbf{1} & 1 & \textbf{1} \\
+	bit & -1 & 0 & 1 & 1 & 1 & 0 & \textcolor{red}{1} & 1 & \textcolor{red}{1} \\
 	\hline 
 	\end{tabular}
 	\end{center}
@@ -761,21 +850,21 @@ Le fichier compressé est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
 	\begin{flushleft}
 \begin{tabular}{|l|l|l|l|}
 \hline
- & La bible & Les Fleurs du Mal  & Au bonheurs \\
- & en anglais & & des Dames \\ 
+ & La bible & Madame   & Cyrano de  \\
+ & en anglais & Bovary & Bergerac\\ 
 \hline
-taille réelle & 883 158 & 180 199 & 952 753  \\\hline
-Zip & 3,44 & 2,51 & 2,57  \\
+taille réelle & 883 158 & 719 880 & 259 156  \\\hline
+Zip & 3,44 & 2,55 & 2,812  \\
 \hline
-Gzip & 3,44 & 2,51 & 2,644 \\
+Gzip & 3,44 & 2,55 & 2,815 \\
 \hline
-Bzip2 & 4,89 & 3,045 & 3,719 \\
+Bzip2 & 4,89 & 3,49 & 3,627 \\
 \hline
-XZ & 4,649 & 2,826 & 3,323 \\
+XZ & 4,649 & 3,14 & 3,238 \\
 \hline
-Huffman & 1,725 & 1,688 & 1,747  \\
+Huffman & 1,725 & 1,733 & 1,548  \\
 \hline
-Lempel-Ziv & 1,796 & 1,310 & 1,482 \\
+Lempel-Ziv & 1,796 & 1,443 & 1,341 \\
 \hline
 
 \end{tabular}
