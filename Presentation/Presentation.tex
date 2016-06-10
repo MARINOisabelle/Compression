@@ -48,7 +48,7 @@
 	\begin{itemize}
 	\item<2-5>  Compression avec perte de données
 		\begin{itemize}
-		\item<3-5> Exemple : MP3, PDF, MOV, ...  
+		\item<3-5> Exemple : MP3, PDF, MOV, JPEG, ...  
 		\end{itemize}
 	\item<4-5>  Compression sans perte de données
 	\begin{itemize}
@@ -63,9 +63,9 @@
 	\textbf{Caractéristique} :\\
 	
 	\begin{itemize}
-	\item  Un codage entropique
-	\item  repose sur la redondance de caractère
-	\item code un caractère non plus sur un octet mais sur un nombre de bit 
+	\item<2-4>  Un codage entropique
+	\item<3-4>  Repose sur la redondance de caractère
+	\item<4> Code un caractère non plus sur un octet mais sur un nombre de bit 
 	\end{itemize}
 	\end{center}
 \end{frame}
@@ -75,33 +75,33 @@
 	\textbf{Étape} :\\
 	
 \begin{itemize}
-	\item compte des redondances de caractères
-	\item création de l'arbre de compression en fonction des poids des caractères 
+	\item<2-6> Compte des redondances de caractères
+	\item<3-6> Création de l'arbre de compression en fonction des poids des caractères 
 		
-	\item récupération des nouveaux codes de chaque caractère
-	\item relecture du fichier pour écrire chaque caractère dans le fichier compresser avec son nouveau code
-	\item on complète le dernière octet par la convention un 1 puis le nombre de 0 nécessaire
+	\item<4-6> Récupération des nouveaux codes de chaque caractère
+	\item<5-6> Relecture du fichier pour écrire chaque caractère dans le fichier compresser avec son nouveau code
+	\item<6> On complète le dernière octet par la convention un 1 puis le nombre de 0 nécessaire
 	\end{itemize}
 
 \end{frame}
 \begin{frame}{Compression}
 	\textbf{Création de l'arbre}	\\
 	\begin{itemize}
-			\item on crée des feuilles qui sont des poids munie d'un caractère
-			\item on relie les deux feuilles de poids de plus faible par un nœud qui est un poids muni d'un fils gauche et droit
-			\item on relie les poids les deux poids les plus faibles par un nouveau  jusqu'à ne plus avoir qu'un seul nœud
+			\item<1-3> On crée des feuilles qui sont des poids munie d'un caractère
+			\item<2-3> On relie les deux feuilles de poids de plus faible par un nœud qui est un poids muni d'un fils gauche et droit
+			\item<3> On relie les poids les deux poids les plus faibles par un nouveau  jusqu'à ne plus avoir qu'un seul nœud
 		\end{itemize}
 \end{frame}
 \begin{frame}{Décompression}
 \textbf{Étape} :\\
 \begin{itemize}
-\item<1-5> récupération de l'arbre de compression
-\item<2-5> lecture du fichier compresser bit à bit et parcours de l'arbre :
+\item<1-5> Récupération de l'arbre de compression
+\item<2-5> Lecture du fichier compresser bit à bit et parcours de l'arbre :
 	\begin{itemize}
-		\item<3-5> lecture d'un 0 on se déplace à gauche et sinon à droite
-		\item<4-5> lorsque l'on tombe sur une feuille on écrit son caractère associé dans le fichier de décompression
+		\item<3-5> Lecture d'un 0 on se déplace à gauche et sinon à droite
+		\item<4-5> Lorsque l'on tombe sur une feuille on écrit son caractère associé dans le fichier de décompression
 	\end{itemize}
-\item<5> attention à ne pas lire les bits complétant le dernière octet du fichier
+\item<5> Attention à ne pas lire les bits complétant le dernière octet du fichier
 \end{itemize}
 \end{frame}
 
@@ -131,7 +131,7 @@
 \begin{frame}{Exemple}
 	\begin{center}
 
-	\textbf{Etape 3} \\
+	\textbf{Étape 3} \\
 
 	\begin{tikzpicture}
 	\node (0) at (0,0) {2};
@@ -151,7 +151,7 @@
 \end{frame}
 \begin{frame}{Exemple}
 	\begin{center}
-	\textbf{Etape 4} \\
+	\textbf{Étape 4} \\
 
 	\begin{tikzpicture}
 	\node (0) at (0,0) {2};
@@ -174,7 +174,7 @@
 \end{frame}
 \begin{frame}{Exemple}
 	\begin{center}
-	\textbf{Etape 5} \\
+	\textbf{Étape 5} \\
 
 	\begin{tikzpicture}
 	\node (0) at (0,0) {2};
@@ -200,7 +200,7 @@
 \end{frame}
 \begin{frame}{Exemple}
 	\begin{center}
-	\textbf{Etape 6} \\
+	\textbf{Étape 6} \\
 
 	\begin{tikzpicture}
 	\node (0) at (3,0) {2};
@@ -230,29 +230,29 @@
 \begin{frame}{Exemple}
 \begin{center}
 
-\textbf{Ecriture compresser}\\
+\textbf{Écriture compressée}\\
 les nouveaux codes sont a='0' b='10' c='1101' e='1100'\\
 g='1111' f='1110'\\
-Le fichier compresser est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
+Le fichier compressé est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
 
 \end{center}
 \end{frame}
 \begin{frame}{Exemple: décompression}
 		
-	\begin{tabular}{|c|c|c|}
+	\begin{tabular}{|c|c|c|c|}
 	\hline
-	poids & fils gauche & fils droit \\
-	\hline -1 & 1 & 2 \\
-	\hline a & -1 & -1\\
-	\hline -1 & 3 & 4 \\
-	\hline b & -1 & -1 \\
-	\hline -1 & 5 & 8 \\
-	\hline -1 & 6 & 7 \\
-	\hline e & -1 & -1 \\
-	\hline c & -1 & -1 \\
-	\hline -1 & 9 & 10 \\
-	\hline f & -1 & -1\\
-	\hline g & -1 & -1\\
+	 & poids & fils gauche & fils droit \\
+	\hline 0 & -1 & 1 & 2 \\
+	\hline 1 & a & -1 & -1\\
+	\hline  2 & -1 & 3 & 4 \\
+	\hline 3& b & -1 & -1 \\
+	\hline 4&-1 & 5 & 8 \\
+	\hline 5&-1 & 6 & 7 \\
+	\hline 6&e & -1 & -1 \\
+	\hline 7&c & -1 & -1 \\
+	\hline 8& -1 & 9 & 10 \\
+	\hline 9&f & -1 & -1\\
+	\hline 10&g & -1 & -1\\
 	\hline
 	\end{tabular}
 \end{frame}
@@ -746,11 +746,11 @@ Le fichier compresser est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
 \begin{frame}{Différences de structures}
 	\begin{center}
 	 \begin{itemize}
-		\item stockage d'information de compression
-		\item nombre de lecture à la compression
-		\item base de compression 
-		\item limite de taux de compression	
-		\item temps d’exécution  
+		\item<1-5> Stockage d'information de compression
+		\item<2-5> Nombre de lecture à la compression
+		\item<3-5> Base de compression 
+		\item<4-5> Limite de taux de compression	
+		\item<5> Temps d’exécution  
 	 
 	 \end{itemize}
 	\end{center}
@@ -765,7 +765,7 @@ Le fichier compresser est donc 0 0 0 0 10 10 10 1101 1100 1110 1111
  & en anglais & & des Dames \\ 
 \hline
 taille réelle & 883 158 & 180 199 & 952 753  \\\hline
-zip & 3,44 & 2,51 & 2,57  \\
+Zip & 3,44 & 2,51 & 2,57  \\
 \hline
 Gzip & 3,44 & 2,51 & 2,644 \\
 \hline
@@ -790,7 +790,7 @@ Lempel-Ziv & 1,796 & 1,310 & 1,482 \\
  &  PDF & MP3 & JPG & MOV \\ 
 \hline
 taille réelle &  198 931 & 8 843 546 & 3 988 442 & 54301053 \\\hline
-zip  & 1,246 & 1,065 & 1,002 & 1,0003 \\
+Zip  & 1,246 & 1,065 & 1,002 & 1,0003 \\
 \hline
 Gzip & 1,247 & 1,065 & 1,002 & 1,0001 \\
 \hline
@@ -811,9 +811,9 @@ Lempel-Ziv & 0,933 & 0,979 & 0,929 & 0,9269\\
 \begin{frame}{Conclusion}
 	\begin{center}
 		\begin{itemize}
-		\item différence de performance entre Huffman Et Lempel-Ziv
-		\item alliance de différent algorithmes plus efficaces
-		\item de nouveaux algorithme plus performant à venir
+		\item<2-4> Différence de performance entre Huffman et Lempel-Ziv
+		\item<3-4> Alliance de différent algorithmes plus efficaces
+		\item<4> De nouveaux algorithme plus performant à venir
 		\end{itemize}
 	\end{center}
 \end{frame}
